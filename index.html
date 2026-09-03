@@ -8,6 +8,12 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="ikon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="ikon-192.png">
+<!-- iOS Safari manifest.json'daki display:standalone'u eski sürümlerde
+     görmezden gelebiliyor; ana ekrana eklenince tam ekran (Safari
+     çubuğu olmadan) açılması için bunlar gerekiyor. -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kur'an">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>

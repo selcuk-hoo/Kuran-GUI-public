@@ -250,6 +250,7 @@ function hatalariCiz() {
     kat.className = "kategori";
     kat.textContent = KATEGORI_ADI[h.kategori] || h.kategori;
     li.appendChild(kat);
+    if (h.dogru_hali) li.appendChild(document.createTextNode(` — doğrusu: ${h.dogru_hali}`));
     if (h.aciklama) li.appendChild(document.createTextNode(` — ${h.aciklama}`));
     const t = document.createElement("span");
     t.className = "tarih";
@@ -388,6 +389,7 @@ function kelimeSec(sira) {
   document.querySelectorAll(`.kelime[data-sira="${sira}"]`)
     .forEach((s) => s.classList.add("secili"));
   el("hata-kelime").textContent = metin;
+  el("hata-dogru-hali").value = "";
   el("hata-not").value = "";
   el("hata-bolum").hidden = false;
   el("hata-bolum").scrollIntoView({ block: "nearest" });
@@ -449,6 +451,7 @@ async function hataKaydet(olay) {
       kelime_sira: k ? k.sira : null,
       kelime: k ? k.metin : null,
       kategori,
+      dogru_hali: el("hata-dogru-hali").value.trim() || null,
       aciklama: el("hata-not").value.trim() || null,
       tarih: simdi(),
     };
@@ -492,13 +495,51 @@ function bilgiGoster(baslik, metin, onay) {
   });
 }
 
+// Dışa aktarılan dosya çoğunlukla bir yapay zekaya yükleyip analiz
+// ettirmek için kullanılıyor — çeviri/hata kaydı tek başına "ne
+// yanlış gitti"yi göstermiyor, ayetin kaç kelime olduğu ve hataya
+// bağlı kelimenin kökü/lemma/babı da lazım. Bu bağlamı IndexedDB'ye
+// KALICI OLARAK yazmıyoruz (hesaplanmış veri, tekrar üretilebilir);
+// yalnızca dışa aktarırken veri dosyalarından anlık ekliyoruz.
+async function kelimeSayisi(sure, ayet) {
+  const veri = await sureYukle(sure);
+  const a = veri.ayetler.find((x) => x.a === ayet);
+  return a ? new Set(a.p.filter((p) => p[0] === 1).map((p) => p[2])).size : null;
+}
+
+async function kelimeMorfolojisi(sure, ayet, sira) {
+  if (sira == null) return {};
+  const veri = await sureYukle(sure);
+  const a = veri.ayetler.find((x) => x.a === ayet);
+  const m = a && (a.k || [])[sira - 1];
+  if (!m) return {};
+  const [kok, lemma, vf] = m;
+  return { kok: kok || null, lemma: lemma || null, vf: vf || null };
+}
+
 async function disaAktar() {
+  const ceviriler = await kayit.hepsi("ceviri");
+  const hatalar = await kayit.hepsi("hata");
+
+  const ceviriZengin = [];
+  for (const c of ceviriler) {
+    ceviriZengin.push({ ...c, kelime_sayisi: await kelimeSayisi(c.sure, c.ayet) });
+  }
+  const hataZengin = [];
+  for (const h of hatalar) {
+    hataZengin.push({
+      ...h,
+      kelime_sayisi: await kelimeSayisi(h.sure, h.ayet),
+      ...(await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira)),
+    });
+  }
+
   const paket = {
     bicim: "kuran-calisma",
-    surum: 1,
+    surum: 2,
     tarih: simdi(),
-    ceviri: await kayit.hepsi("ceviri"),
-    hata: await kayit.hepsi("hata"),
+    ceviri: ceviriZengin,
+    hata: hataZengin,
   };
   const ad = "kuran-calisma.json";
   dosyaIndir(ad, JSON.stringify(paket, null, 1), "application/json");
@@ -541,15 +582,28 @@ async function iceAktarIsle(temiz) {
     + `Cihazdaki ${mevcut} kayıt SİLİNİP bunlarla değiştirilecek.`, true);
   if (!onay) return;
 
+  // Yalnızca gerçekten saklanan alanları al — dışa aktarımda eklenen
+  // hesaplanmış bağlam (kelime_sayisi, kok, lemma, vf) tekrar
+  // veritabanına yazılmasın, dosya elle düzenlenmişse de zararsız
+  // kalsın.
+  const CEVIRI_ALANLARI = ["sure", "ayet", "metin", "tarih"];
+  const HATA_ALANLARI = [
+    "sure", "ayet", "kelime_sira", "kelime", "kategori",
+    "dogru_hali", "aciklama", "tarih",
+  ];
+  const sec = (nesne, alanlar) => {
+    const cikti = {};
+    for (const a of alanlar) if (nesne[a] !== undefined) cikti[a] = nesne[a];
+    return cikti;
+  };
+
   await kayit.temizle("ceviri");
   await kayit.temizle("hata");
   for (const c of paket.ceviri) {
-    const { id, ...kalan } = c;
-    await kayit.ekle("ceviri", kalan);
+    await kayit.ekle("ceviri", sec(c, CEVIRI_ALANLARI));
   }
   for (const h of paket.hata) {
-    const { id, ...kalan } = h;
-    await kayit.ekle("hata", kalan);
+    await kayit.ekle("hata", sec(h, HATA_ALANLARI));
   }
   await bilgiGoster("İçe aktarıldı",
     `${paket.ceviri.length} çeviri, ${paket.hata.length} hata kaydı yüklendi.`);
@@ -597,6 +651,7 @@ async function ankiAktar() {
     if (m[1]) arka.push(`Lemma: <span dir="rtl">${kacis(m[1])}</span>`);
     if (m[2]) arka.push(`Bab: ${kacis(m[2])}`);
     arka.push(`Kategori: ${kacis(KATEGORI_ADI[h.kategori] || h.kategori)}`);
+    if (h.dogru_hali) arka.push(`<br>Doğrusu: ${kacis(h.dogru_hali)}`);
     if (h.aciklama) arka.push(`<br>Kendi notum: ${kacis(h.aciklama)}`);
     satirlar.push(on + "\t" + arka.join("<br>"));
   }

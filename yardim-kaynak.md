@@ -81,7 +81,11 @@ tartışmalı olduğu yerdir. Sonra kendi çevirinle karşılaştır.
 
 ### Adım 6 — Farkı sınıflandır
 
-Ayrıldığın **kelimeye dokun**. Kategori seç, istersen not yaz,
+Ayrıldığın **kelimeye dokun**. Kategori seç. İkisi de isteğe bağlı ama
+ayrı ayrı işe yarıyor: **"Doğru hali"** kelimenin gerçek anlamını
+kısaca yazar (meale bakınca öğrendiğin şey), **"Not"** ise ne
+sandığını / nasıl yanıldığını. İkisini birlikte yazmak, hem Anki
+kartını hazırlar hem sonradan bakınca ne öğrendiğini hatırlatır.
 `Hatayı kaydet`. Kaydettiğin kelimenin altı çizili görünür.
 
 ---
@@ -197,7 +201,9 @@ analiz isteyebilirsin. Sorulabilecek şeyler:
 - "Hata kaydı düşmediğim ama çevirimin mealden ayrıldığı yerler var mı?"
 
 Sonuncusu en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele
-**fark etmediklerin**.
+**fark etmediklerin**. Dosya her hata kaydına ayetin kaç kelime
+olduğunu, kelimeye bağlıysa kökünü/lemma'sını/babını otomatik ekler —
+elle bir şey yapmana gerek yok.
 
 ---
 

@@ -1,10 +1,11 @@
-# Cloudflare Pages bu dosyayı okuyup başlık ekliyor. sw.js ve surum.js
-# HER ZAMAN ağdan taze gelmeli — güncelleme denetimi (app.js'teki
-# kayit.update() çağrısı) tarayıcının bunları CDN önbelleğinden değil
-# doğrudan sunucudan almasına dayanıyor. Aksi hâlde eski bir sürüm
-# CDN'de saatlerce/günlerce takılı kalabilir.
-/sw.js
-  Cache-Control: no-store
-
-/surum.js
+# Çevrimdışı çalışma bizim servis çalışanımızın KENDİ önbelleğine
+# (Cache Storage) dayanıyor — o, sürüm bazlı ve tamamen bizim
+# kontrolümüzde. Tarayıcının AYRI, bizim yönetmediğimiz normal HTTP
+# önbelleği ikinci ve çakışan bir katman: bir dosya orada eski/bozuk
+# bir hâliyle takılırsa (yaşandı — bkz. git geçmişi, ERR_FAILED
+# olayı), servis çalışanı "taze" diye çektiğinde bile aslında o eski
+# kopyayı alabiliyor. Bu yüzden HER dosya için HTTP önbelleğini
+# tamamen kapatıyoruz; performans kaybı yok, çünkü servis çalışanı
+# kuruluysa istekler zaten ağa hiç gitmiyor.
+/*
   Cache-Control: no-store

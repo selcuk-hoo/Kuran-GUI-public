@@ -215,17 +215,3 @@ olabilir — bu yüzden ara sıra dışa aktarmak önemli.
 **`İçe aktar` dosyayı seçtirmiyor**
 Dosyayı, telefonun indirilenler klasöründen ara — bazı dosya
 yöneticileri farklı bir klasörü varsayılan gösteriyor.
-
----
-
-## 10. Neler var, neler yok
-
-**Var:** kendi çevirini kaydetme, meal karşılaştırma, doğrulama geçişi,
-beş kategorili hata günlüğü, morfoloji verisi (kök, lemma, bab), Anki
-dışa aktarımı, yedekleme.
-
-**Bilerek yok:** kök arama ekranı, istatistik paneli, tefsir
-entegrasyonu, genel i'rab gösterimi, hesap/giriş sistemi.
-
-**Bilinen sınır:** doğrulama geçişi yalnızca **bitişik** harf-i cerleri
-işaretler. Ayrı yazılan edatlar (8:11'deki `عَلَىٰ` gibi) işaretlenmez.

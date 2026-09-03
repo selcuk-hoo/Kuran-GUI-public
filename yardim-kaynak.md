@@ -34,7 +34,8 @@ kadar pasiftir
 
 **Bu ayetteki hata kayıtların** — bu ayet için not aldıysan burada
 
-**Alt çubuk** — `Verimi dışa aktar`, `İçe aktar`, `Anki`
+**Alt çubuk** — `Kayıtlarımı dışa aktar`, `Kayıtları içe aktar`,
+`Kelime kartı indir (Anki)`
 
 ---
 
@@ -165,10 +166,14 @@ paylaşılmaz.
 
 Bunun bir bedeli var: **tarayıcının site verilerini silersen ya da
 telefonu değiştirirsen, kayıtların da gider.** Tek koruma, ara sıra
-**`Verimi dışa aktar`** yapmak — tek bir dosya (`kuran-calisma.json`)
-üretir, telefonunun indirilenler klasörüne kaydedersin.
+**`Kayıtlarımı dışa aktar`** yapmak — iki dosya üretir:
+`kuran-calisma.json` (yedek + geri yükleme için) ve `calisma.md` (bir
+sohbete yükleyip okutmak için, bkz. bölüm 8). İkisi de telefonunun
+indirilenler klasörüne kaydedilir.
 
-`İçe aktar` ile geri yüklersin — dosya seçiciden bu dosyayı seçersin.
+`Kayıtları içe aktar` ile geri yüklersin — dosya seçiciden
+`kuran-calisma.json` dosyasını seçersin (`calisma.md` yalnızca okumak
+için, geri yüklenmez).
 
 **Aynı ayeti iki farklı cihazda çevirme** — kayıtlar otomatik
 birleşmez, biri diğerini görmez.
@@ -178,10 +183,10 @@ birleşmez, biri diğerini görmez.
 ## 7. Anki'ye aktarma
 
 [Anki](https://apps.ankiweb.net), aralıklı tekrarla kelime ezberleten
-ayrı bir program. Alt çubuktaki **`Anki`** düğmesi, hata kaydı
-düştüğün kelimelerden (rastgele bir liste değil, yalnızca
-takıldıkların) bir kart dosyası üretir. Anki'de **Dosya > İçe Aktar**
-ile açılır.
+ayrı bir program. Alt çubuktaki **`Kelime kartı indir (Anki)`**
+düğmesi, hata kaydı düştüğün kelimelerden (rastgele bir liste değil,
+yalnızca takıldıkların) bir kart dosyası üretir. Anki'de
+**Dosya > İçe Aktar** ile açılır.
 
 - Ön yüz: kelime, ayet konumu ve kelimenin **ayet içindeki hâli** —
   kalıbıyla birlikte görürsün
@@ -193,17 +198,26 @@ Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.
 
 ## 8. Kayıtlarını analiz ettirmek
 
-`Verimi dışa aktar` ile çıkan JSON'u bir yapay zeka sohbetine yükleyip
-analiz isteyebilirsin. Sorulabilecek şeyler:
+`Kayıtlarımı dışa aktar` iki farklı iş için iki farklı dosya üretir:
+
+- **`calisma.md`** — okumak için. Her ayette Arapça, kendi çevirin ve
+  dört meal yan yana; bir sohbete yükleyip "çevirilerimle mealleri
+  satır satır karşılaştır" diyebilirsin.
+- **`kuran-calisma.json`** — saymak için. "Kaç edilgen fiilde hata
+  yaptım", "kategori dağılımım nasıl" gibi sayısal sorular için daha
+  uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa
+  kökü/lemma'sı/babı otomatik eklenmiş durumda.
+
+Sorulabilecek şeyler:
 
 - "Çevirilerimle mealleri karşılaştır, tekrar eden örüntü var mı?"
 - "Hata kayıtlarımın dağılımına bak, neye çalışmalıyım?"
 - "Hata kaydı düşmediğim ama çevirimin mealden ayrıldığı yerler var mı?"
 
 Sonuncusu en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele
-**fark etmediklerin**. Dosya her hata kaydına ayetin kaç kelime
-olduğunu, kelimeye bağlıysa kökünü/lemma'sını/babını otomatik ekler —
-elle bir şey yapmana gerek yok.
+**fark etmediklerin** — bunu program bulamaz, meal ile senin çevirin
+arasındaki farkın gerçek bir hata mı yoksa üslup tercihi mi olduğuna
+ancak elle karşılaştırınca karar verilebiliyor.
 
 ---
 
@@ -218,6 +232,6 @@ Tarayıcının site verileri silinmiş olabilir. Bağlantıyı tekrar aç,
 **"Ana ekrana ekle"**yi tekrarla. Önceki çevirilerin kaybolmuş
 olabilir — bu yüzden ara sıra dışa aktarmak önemli.
 
-**`İçe aktar` dosyayı seçtirmiyor**
+**`Kayıtları içe aktar` dosyayı seçtirmiyor**
 Dosyayı, telefonun indirilenler klasöründen ara — bazı dosya
 yöneticileri farklı bir klasörü varsayılan gösteriyor.

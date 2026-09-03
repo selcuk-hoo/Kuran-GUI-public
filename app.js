@@ -156,10 +156,6 @@ function kelimeMetni(sira) {
     .map((p) => p[1]).join(" ");
 }
 
-function kelimeSayisi() {
-  return durum.ayetVerisi.p.reduce((n, p) => Math.max(n, p[0] === 1 ? p[2] : 0), 0);
-}
-
 function ayetCiz() {
   const v = durum.ayetVerisi;
   const s = sureBilgisi(durum.sure);
@@ -501,7 +497,7 @@ function bilgiGoster(baslik, metin, onay) {
 // bağlı kelimenin kökü/lemma/babı da lazım. Bu bağlamı IndexedDB'ye
 // KALICI OLARAK yazmıyoruz (hesaplanmış veri, tekrar üretilebilir);
 // yalnızca dışa aktarırken veri dosyalarından anlık ekliyoruz.
-async function kelimeSayisi(sure, ayet) {
+async function ayetinKelimeSayisi(sure, ayet) {
   const veri = await sureYukle(sure);
   const a = veri.ayetler.find((x) => x.a === ayet);
   return a ? new Set(a.p.filter((p) => p[0] === 1).map((p) => p[2])).size : null;
@@ -517,19 +513,112 @@ async function kelimeMorfolojisi(sure, ayet, sira) {
   return { kok: kok || null, lemma: lemma || null, vf: vf || null };
 }
 
+// calisma.md, export.py'nin (sunucu sürümü) ürettiğiyle aynı biçimi
+// tarayıcıda üretir: her ayette Arapça + kendi çevirin + dört meal +
+// varsa hata kayıtların yan yana. Bir sohbete yükleyip SATIR SATIR
+// karşılaştırma için bu format kuran-calisma.json'dan daha okunaklı;
+// sayısal analiz (kategori dağılımı, zamanla değişim) için JSON kalsın.
+async function calismaMDUret(ceviriler, hatalar) {
+  if (!ceviriler.length) return null;
+  const satirlar = [];
+  const yaz = (s) => satirlar.push(s);
+
+  const ayetAnahtari = new Map();
+  ceviriler.forEach((c) => ayetAnahtari.set(`${c.sure}:${c.ayet}`, { sure: c.sure, ayet: c.ayet }));
+  const ayetler = Array.from(ayetAnahtari.values())
+    .sort((a, b) => a.sure - b.sure || a.ayet - b.ayet);
+
+  yaz("# Kur'an çalışma kaydı\n");
+  yaz("Bu dosya, kendi çevirilerimi ve anlamadığım yerlere düştüğüm");
+  yaz("notları içeriyor. Mealler karşılaştırma için birlikte veriliyor.\n");
+  yaz("## Özet\n");
+  yaz(`- Çeviri kaydı: **${ceviriler.length}** (${ayetler.length} farklı ayet)`);
+  yaz(`- Hata kaydı: **${hatalar.length}**`);
+  const tarihler = ceviriler.map((c) => c.tarih).sort();
+  yaz(`- Tarih aralığı: ${tarihler[0].slice(0, 10)} — ${tarihler[tarihler.length - 1].slice(0, 10)}`);
+
+  const sureSayilari = new Map();
+  ayetler.forEach((a) => sureSayilari.set(a.sure, (sureSayilari.get(a.sure) || 0) + 1));
+  const sureListesi = Array.from(sureSayilari.entries())
+    .sort((a, b) => a[0] - b[0])
+    .map(([no, n]) => `${sureBilgisi(no).ad_tr} (${n} ayet)`)
+    .join(", ");
+  yaz(`- Çalışılan sureler: ${sureListesi}`);
+
+  yaz("\n## Hata kategorilerinin dağılımı\n");
+  if (hatalar.length) {
+    const dagitim = new Map();
+    hatalar.forEach((h) => dagitim.set(h.kategori, (dagitim.get(h.kategori) || 0) + 1));
+    yaz("| Kategori | Adet | Oran |");
+    yaz("|---|---:|---:|");
+    Array.from(dagitim.entries()).sort((a, b) => b[1] - a[1]).forEach(([kat, n]) => {
+      yaz(`| ${KATEGORI_ADI[kat] || kat} | ${n} | %${Math.round(100 * n / hatalar.length)} |`);
+    });
+  } else {
+    yaz("_Hata kaydı yok._");
+  }
+
+  const tekrar = new Map();
+  hatalar.forEach((h) => { if (h.kelime) tekrar.set(h.kelime, (tekrar.get(h.kelime) || 0) + 1); });
+  const coklu = Array.from(tekrar.entries()).filter(([, n]) => n > 1);
+  if (coklu.length) {
+    yaz("\n## Birden çok kez takıldığım kelimeler\n");
+    coklu.forEach(([k, n]) => yaz(`- ${k} — ${n} kez`));
+  }
+
+  yaz("\n---\n");
+  yaz("## Ayet ayet kayıtlar\n");
+
+  for (const { sure, ayet } of ayetler) {
+    const s = sureBilgisi(sure);
+    const veri = await sureYukle(sure);
+    const a = veri.ayetler.find((x) => x.a === ayet);
+    if (!a) continue;
+
+    yaz(`\n### ${s.ad_tr} ${sure}:${ayet}\n`);
+    if (a.b) {
+      yaz(`_(sure başı besmelesi: ${a.b} — ayetin kendi kelimelerine dahil değil)_\n`);
+    }
+    yaz(`**Arapça:** ${a.p.map((p) => p[1]).join(" ")}\n`);
+
+    ceviriler.filter((c) => c.sure === sure && c.ayet === ayet).forEach((c) => {
+      yaz(`**Kendi çevirim** (${c.tarih.slice(0, 10)}):`);
+      yaz("> " + c.metin.replace(/\n/g, "\n> ") + "\n");
+    });
+
+    yaz("**Mealler:**\n");
+    a.m.forEach((metin, i) => { if (metin) yaz(`- _${MEAL_ADLARI[i]}:_ ${metin}`); });
+
+    const ayetHatalari = hatalar.filter((h) => h.sure === sure && h.ayet === ayet);
+    if (ayetHatalari.length) {
+      yaz("\n**Takıldığım yerler:**\n");
+      ayetHatalari.forEach((h) => {
+        let parca = "- ";
+        if (h.kelime) parca += `${h.kelime} (kelime ${h.kelime_sira}) — `;
+        parca += `**${KATEGORI_ADI[h.kategori] || h.kategori}**`;
+        if (h.dogru_hali) parca += ` — doğrusu: ${h.dogru_hali}`;
+        if (h.aciklama) parca += ` — ${h.aciklama}`;
+        yaz(parca);
+      });
+    }
+  }
+
+  return satirlar.join("\n") + "\n";
+}
+
 async function disaAktar() {
   const ceviriler = await kayit.hepsi("ceviri");
   const hatalar = await kayit.hepsi("hata");
 
   const ceviriZengin = [];
   for (const c of ceviriler) {
-    ceviriZengin.push({ ...c, kelime_sayisi: await kelimeSayisi(c.sure, c.ayet) });
+    ceviriZengin.push({ ...c, kelime_sayisi: await ayetinKelimeSayisi(c.sure, c.ayet) });
   }
   const hataZengin = [];
   for (const h of hatalar) {
     hataZengin.push({
       ...h,
-      kelime_sayisi: await kelimeSayisi(h.sure, h.ayet),
+      kelime_sayisi: await ayetinKelimeSayisi(h.sure, h.ayet),
       ...(await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira)),
     });
   }
@@ -541,11 +630,17 @@ async function disaAktar() {
     ceviri: ceviriZengin,
     hata: hataZengin,
   };
-  const ad = "kuran-calisma.json";
-  dosyaIndir(ad, JSON.stringify(paket, null, 1), "application/json");
+  const md = await calismaMDUret(ceviriler, hatalar);
+
+  dosyaIndir("kuran-calisma.json", JSON.stringify(paket, null, 1), "application/json");
+  if (md) dosyaIndir("calisma.md", md, "text/markdown");
+
   await bilgiGoster("Dışa aktarıldı",
-    `${paket.ceviri.length} çeviri, ${paket.hata.length} hata kaydı `
-    + `"${ad}" dosyasına yazıldı.`);
+    md
+      ? `${paket.ceviri.length} çeviri, ${paket.hata.length} hata kaydı iki dosyaya yazıldı: `
+        + `"kuran-calisma.json" (sayısal analiz için) ve "calisma.md" (okuyup karşılaştırmak için).`
+      : `${paket.ceviri.length} çeviri, ${paket.hata.length} hata kaydı `
+        + `"kuran-calisma.json" dosyasına yazıldı.`);
 }
 
 async function iceAktarDosya(dosya) {

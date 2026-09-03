@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#faf7f0">
+<title>Kur'an Çalışma Aracı</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="ikon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="ikon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- app.js'ten ÖNCE ve eski söz dizimiyle: app.js hiç ayrıştırılamasa
+     bile hatayı ekrana yazsın. Tablette konsol yok. -->
+<div id="js-hata" hidden></div>
+<script>
+(function () {
+  function goster(m) {
+    var k = document.getElementById("js-hata");
+    if (!k) return;
+    k.hidden = false;
+    k.textContent = "Arayüz hatası — " + m;
+  }
+  window.onerror = function (m, kaynak, satir, sutun) {
+    goster(m + "  (" + (kaynak || "?").split("/").pop() + ":" + satir + ":" + sutun + ")");
+    return false;
+  };
+  window.addEventListener("unhandledrejection", function (o) {
+    goster("işlem başarısız: " + (o.reason && o.reason.message ? o.reason.message : o.reason));
+  });
+  window.setTimeout(function () {
+    if (!window.__arayuzHazir) goster("app.js yüklenmedi veya çalışmadı.");
+  }, 5000);
+})();
+</script>
+<script src="surum.js"></script>
+
+<header>
+  <nav class="gezinme">
+    <button id="onceki" type="button">‹ Önceki</button>
+    <form id="atla-form" autocomplete="off">
+      <label for="atla-sure">Sure</label>
+      <input id="atla-sure" type="text" inputmode="numeric" size="4"
+             autocomplete="off" aria-label="Sure numarası">
+      <label for="atla-ayet">Ayet</label>
+      <input id="atla-ayet" type="text" inputmode="numeric" size="4"
+             autocomplete="off" aria-label="Ayet numarası">
+      <button type="submit">Git</button>
+    </form>
+    <button id="sonraki" type="button">Sonraki ›</button>
+    <a class="yardim-link" href="yardim.html">Yardım</a>
+  </nav>
+  <p id="konum" class="konum"></p>
+  <p id="gezinme-hata" class="gezinme-hata" hidden></p>
+</header>
+
+<main>
+  <section id="ayet-bolum">
+    <p id="besmele" class="besmele" dir="rtl" lang="ar" hidden></p>
+    <p id="arapca" class="arapca" dir="rtl" lang="ar"></p>
+    <p class="ipucu">Bir kelimeye dokununca hata kaydı formu açılır.</p>
+  </section>
+
+  <section id="ceviri-bolum" dir="ltr">
+    <h2>Kendi çevirin</h2>
+    <textarea id="ceviri-metin" rows="5"
+      placeholder="Ayeti kendi cümlelerinle çevir…"></textarea>
+    <div class="satir">
+      <button id="ceviri-kaydet" type="button">Çeviriyi kaydet</button>
+      <span id="ceviri-durum" class="durum"></span>
+    </div>
+  </section>
+
+  <section id="dogrulama-bolum" dir="ltr" hidden>
+    <h2>Doğrulama geçişi</h2>
+    <p class="ipucu">
+      Çevirini bir daha oku. Bu ayette aşağıdakiler var — nerede olduklarını
+      işaretledim, ne anlama geldiklerini söylemiyorum. Muhatap kim, fiil
+      etken mi edilgen mi, edat neyi bağlıyor?
+    </p>
+    <ul id="dogrulama-liste" class="dogrulama-liste"></ul>
+    <div class="satir">
+      <button id="kontrol-ettim" type="button">Kontrol ettim, mealleri aç</button>
+    </div>
+  </section>
+
+  <section id="meal-bolum" dir="ltr">
+    <button id="meal-goster" type="button" disabled>Mealleri göster</button>
+    <p id="meal-kilit" class="kilit">
+      Mealler, kendi çevirini kaydedene kadar görünmez.
+    </p>
+    <div id="mealler" class="mealler" hidden></div>
+  </section>
+
+  <section id="hata-bolum" dir="ltr" hidden>
+    <h2>Hata kaydı — <bdi id="hata-kelime" class="arapca-kucuk" dir="rtl" lang="ar"></bdi></h2>
+    <form id="hata-form">
+      <fieldset>
+        <legend>Kategori</legend>
+        <label><input type="radio" name="kategori" value="kok_bilmiyorum" checked> Kökü bilmiyorum</label>
+        <label><input type="radio" name="kategori" value="anlam_tutmadi"> Anlam tutmadı</label>
+        <label><input type="radio" name="kategori" value="irab"> İ'rab</label>
+        <label><input type="radio" name="kategori" value="baglam"> Bağlam</label>
+        <label><input type="radio" name="kategori" value="kalip_valans"> Kalıp/edat anlamı değiştirdi</label>
+      </fieldset>
+      <label for="hata-not">Not</label>
+      <textarea id="hata-not" rows="3" placeholder="İsteğe bağlı…"></textarea>
+      <div class="satir">
+        <button type="submit">Hatayı kaydet</button>
+        <button type="button" id="hata-iptal">Vazgeç</button>
+        <span id="hata-durum" class="durum"></span>
+      </div>
+    </form>
+  </section>
+
+  <section id="kayitli-hatalar" dir="ltr" hidden>
+    <h2>Bu ayetteki hata kayıtların</h2>
+    <ul id="hata-liste"></ul>
+  </section>
+
+  <div class="arac-cubugu" dir="ltr">
+    <button id="disa-aktar" type="button">Verimi dışa aktar</button>
+    <button id="ice-aktar" type="button">İçe aktar</button>
+    <button id="yapistir" type="button">Yapıştır</button>
+    <button id="anki-aktar" type="button">Anki</button>
+    <!-- accept KOYMA: Android dosya seçicisi .json uzantısını tanımayıp
+         dosyaları seçilemez yapıyor. İçeriği JS zaten denetliyor. -->
+    <input id="dosya-sec" type="file" hidden>
+    <span class="bosluk"></span>
+    <span id="kurulum-durumu"></span>
+  </div>
+</main>
+
+<dialog id="yapistir-kutusu">
+  <h2>Metni yapıştırarak içe aktar</h2>
+  <p>Dosya seçici çalışmıyorsa, dışa aktarılan dosyanın içeriğini
+     buraya yapıştır.</p>
+  <p class="ipucu">Dosya seçici çalışıyorsa onu tercih et; uzun metinler
+     bazı klavyelerde yapıştırılırken kesilebiliyor.</p>
+  <textarea id="yapistir-metin" rows="6" spellcheck="false"
+            autocorrect="off" autocapitalize="off" autocomplete="off"
+            placeholder='{"bicim":"kuran-calisma", …'></textarea>
+  <div class="satir">
+    <button id="yapistir-tamam" type="button">İçe aktar</button>
+    <button id="yapistir-vazgec" type="button">Vazgeç</button>
+  </div>
+</dialog>
+
+<dialog id="bilgi-kutusu">
+  <h2 id="bilgi-baslik"></h2>
+  <p id="bilgi-metin"></p>
+  <div class="satir">
+    <button id="bilgi-tamam" type="button">Tamam</button>
+    <button id="bilgi-vazgec" type="button" hidden>Vazgeç</button>
+  </div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

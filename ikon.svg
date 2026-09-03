@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#faf7f0"/>
+  <rect x="56" y="56" width="400" height="400" rx="64" fill="none"
+        stroke="#7a4a12" stroke-width="14"/>
+  <text x="256" y="330" text-anchor="middle" font-size="220"
+        font-family="Amiri Quran, Scheherazade New, Traditional Arabic, serif"
+        fill="#14110d">ق</text>
+</svg>

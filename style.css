@@ -1,0 +1,328 @@
+/* Sade, yüksek kontrast, tek sütun. Build adımı yok, harici kaynak yok. */
+
+/* Scheherazade New — SIL Open Font License, doğrudan uygulamayla
+   birlikte gömülü. Google Fonts CDN'e BİLEREK bağlanmıyoruz: Google
+   servisleri olmayan (GMS'siz) Android cihazlarda o alan adlarına
+   erişim genelde engelli/kısıtlı oluyor, uygulama internetsiz de
+   çalışmalı. Yalnızca Kur'an metninin kullandığı Arapça blok
+   (U+0621–U+06ED) alt kümesi indirildi, ~77 KB. */
+@font-face {
+  font-family: "Scheherazade New";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("scheherazade-new.woff2") format("woff2");
+  unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFC;
+}
+
+:root {
+  --metin: #14110d;
+  --soluk: #5c554a;
+  --cizgi: #d6cfc2;
+  --zemin: #faf7f0;
+  --vurgu: #7a4a12;
+  --secili: #f0e3c8;
+  --genislik: 44rem;
+}
+
+* { box-sizing: border-box; }
+
+/* display:grid / flex, tarayıcının [hidden] kuralını ezer. */
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  padding: 1.5rem 1rem 5rem;
+  background: var(--zemin);
+  color: var(--metin);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+header, main { max-width: var(--genislik); margin: 0 auto; }
+
+h2 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--soluk);
+  font-weight: normal;
+  margin: 0 0 0.6rem;
+}
+
+/* --- gezinme --- */
+
+.gezinme {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--cizgi);
+}
+
+#atla-form { display: flex; align-items: center; gap: 0.4rem; }
+#atla-form label { color: var(--soluk); font-size: 0.85rem; }
+#atla-form input { width: 4.5rem; }
+
+#js-hata {
+  max-width: var(--genislik);
+  margin: 0 auto 1rem;
+  padding: 0.8rem 1rem;
+  background: #8a2b12;
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.gezinme-hata {
+  margin: 0.5rem 0 0;
+  padding: 0.5rem 0.7rem;
+  color: #8a2b12;
+  background: #fbeee6;
+  border: 1px solid #e0c3b2;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+
+/* Bekleme bildirimi hata DEĞİL: nötr görünsün */
+.gezinme-hata.bekliyor {
+  color: var(--soluk);
+  background: #f2efe9;
+  border-color: var(--cizgi);
+}
+
+.konum {
+  margin: 0.6rem 0 0;
+  color: var(--soluk);
+  font-size: 0.9rem;
+}
+
+button, input, textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--metin);
+  background: #fff;
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  padding: 0.35rem 0.6rem;
+}
+
+button { cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--vurgu); color: var(--vurgu); }
+button:disabled { color: #a09a90; cursor: not-allowed; background: #f2efe9; }
+
+textarea { width: 100%; resize: vertical; line-height: 1.5; }
+
+/* --- Arapça --- */
+
+.arapca {
+  /* Yazı tipi yoksa sistem serif'ine düşer. */
+  font-family: "Scheherazade New", "Amiri Quran", "Traditional Arabic", serif;
+  font-size: 34px;
+  line-height: 2.1;
+  margin: 2rem 0 1rem;
+  text-align: right;
+}
+
+.besmele {
+  font-family: "Scheherazade New", "Amiri Quran", "Traditional Arabic", serif;
+  font-size: 24px;
+  line-height: 2.0;
+  color: var(--soluk);
+  text-align: center;
+  margin: 1.5rem 0 0;
+}
+
+.arapca-kucuk {
+  font-family: "Scheherazade New", "Amiri Quran", "Traditional Arabic", serif;
+  font-size: 26px;
+  line-height: 1.8;
+}
+
+.kelime {
+  cursor: pointer;
+  padding: 0 0.1em;
+  border-radius: 3px;
+  border-bottom: 1px solid transparent;
+}
+
+.kelime:hover { background: var(--secili); }
+.kelime.secili { background: var(--secili); border-bottom-color: var(--vurgu); }
+.kelime.isaretli { border-bottom: 2px solid var(--vurgu); }
+
+.isaret { color: var(--vurgu); }
+
+/* doğrulama geçişinde işaretlenen kelimeler */
+.kelime.ozellik {
+  background: #e7eef2;
+  box-shadow: 0 2px 0 0 #6b8b9e;
+}
+
+.dogrulama-liste { list-style: none; margin: 0.8rem 0; padding: 0; }
+
+.dogrulama-liste li {
+  margin: 0.5rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--cizgi);
+}
+
+.dogrulama-liste .ad { color: var(--soluk); font-size: 0.9rem; }
+.dogrulama-liste .sayi { color: var(--vurgu); font-weight: bold; }
+
+.dogrulama-liste .kelimeler {
+  font-family: "Scheherazade New", "Amiri Quran", "Traditional Arabic", serif;
+  font-size: 22px;
+  line-height: 1.9;
+  margin-top: 0.2rem;
+}
+
+.dogrulama-liste .yok { color: var(--soluk); font-style: italic; }
+
+.dogrulama-liste .uyari {
+  color: #8a2b12;
+  background: #fbeee6;
+  border: 1px solid #e0c3b2;
+  border-radius: 3px;
+  padding: 0.6rem 0.8rem;
+}
+
+.ipucu, .kilit {
+  color: var(--soluk);
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
+}
+
+/* --- bölümler --- */
+
+section { margin-top: 2rem; }
+
+.satir {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.durum { color: var(--vurgu); font-size: 0.85rem; }
+
+/* --- mealler: üç sütun yan yana --- */
+
+.mealler {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1rem;
+  border-top: 1px solid var(--cizgi);
+  padding-top: 1rem;
+}
+
+.meal h3 {
+  margin: 0 0 0.4rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--soluk);
+  font-weight: normal;
+}
+
+.meal p { margin: 0; font-size: 0.95rem; line-height: 1.55; }
+
+@media (max-width: 40rem) {
+  .mealler { grid-template-columns: 1fr; }
+  .arapca { font-size: 30px; }
+}
+
+/* Dokunmatik: parmakla kelime seçmek fareyle tıklamaktan zor.
+   Hedefleri büyüt, satır aralığını aç ki komşu kelimeye basılmasın. */
+@media (pointer: coarse) {
+  body { font-size: 18px; }
+
+  .arapca { line-height: 2.5; }
+
+  .kelime {
+    padding: 0.18em 0.22em;
+    margin: 0.06em 0;
+  }
+
+  button, input, textarea {
+    font-size: 1rem;
+    padding: 0.6rem 0.9rem;
+    min-height: 44px;          /* dokunma hedefi alt sınırı */
+  }
+
+  #atla-form input { width: 5.5rem; }
+
+  fieldset label {
+    padding: 0.5rem 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  fieldset input[type="radio"] { width: 1.2em; height: 1.2em; }
+
+  .yardim-link { padding: 0.5rem 0; display: inline-block; }
+}
+
+/* --- hata formu --- */
+
+fieldset {
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  margin: 0 0 0.75rem;
+  padding: 0.6rem 0.8rem;
+}
+
+legend { color: var(--soluk); font-size: 0.85rem; padding: 0 0.3rem; }
+fieldset label { display: block; margin: 0.2rem 0; font-size: 0.95rem; }
+
+#hata-liste { margin: 0; padding-left: 1.2rem; }
+#hata-liste li { margin: 0.35rem 0; font-size: 0.9rem; }
+#hata-liste .kategori { color: var(--vurgu); }
+#hata-liste .tarih { color: var(--soluk); font-size: 0.8rem; }
+
+/* --- PWA'ya özgü --- */
+
+.arac-cubugu {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--cizgi);
+}
+
+.arac-cubugu .bosluk { flex: 1; }
+
+#kurulum-durumu {
+  font-size: 0.85rem;
+  color: var(--soluk);
+}
+
+#kurulum-durumu.hazir { color: #2b6b2b; }
+#kurulum-durumu.calisiyor { color: var(--vurgu); }
+
+dialog {
+  max-width: 32rem;
+  width: calc(100% - 2rem);
+  border: 1px solid var(--cizgi);
+  border-radius: 4px;
+  background: var(--zemin);
+  color: var(--metin);
+  padding: 1.2rem;
+}
+
+dialog::backdrop { background: rgba(20, 17, 13, 0.45); }
+
+dialog h2 { margin-top: 0; }
+dialog textarea { width: 100%; font-family: ui-monospace, Menlo, monospace;
+                  font-size: 0.8rem; }
+dialog p { font-size: 0.95rem; }

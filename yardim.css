@@ -1,0 +1,100 @@
+/* Yalnızca yardım sayfası. Ana ekranın stilini genişletir. */
+
+body.yardim { padding-bottom: 6rem; }
+
+body.yardim main { max-width: 42rem; }
+
+body.yardim h1 {
+  font-size: 1.6rem;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--cizgi);
+}
+
+body.yardim h2 {
+  font-size: 1.15rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--metin);
+  margin: 2.5rem 0 0.8rem;
+}
+
+body.yardim h3 {
+  font-size: 1rem;
+  color: var(--vurgu);
+  margin: 1.6rem 0 0.4rem;
+}
+
+body.yardim p { margin: 0.7rem 0; }
+
+body.yardim ul { margin: 0.7rem 0; padding-left: 1.3rem; }
+body.yardim li { margin: 0.3rem 0; }
+
+body.yardim pre {
+  background: #fff;
+  border: 1px solid var(--cizgi);
+  border-radius: 3px;
+  padding: 0.7rem 0.9rem;
+  overflow-x: auto;
+}
+
+body.yardim code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.88em;
+}
+
+body.yardim p > code, body.yardim li > code, body.yardim td > code {
+  background: #efe9dc;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+}
+
+body.yardim pre code { background: none; padding: 0; }
+
+body.yardim blockquote {
+  margin: 1rem 0;
+  padding: 0.1rem 0 0.1rem 1rem;
+  border-left: 3px solid var(--cizgi);
+  color: var(--soluk);
+}
+
+body.yardim table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+body.yardim th, body.yardim td {
+  border: 1px solid var(--cizgi);
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+body.yardim th {
+  background: #f0ebe1;
+  font-weight: normal;
+  color: var(--soluk);
+}
+
+body.yardim hr {
+  border: 0;
+  border-top: 1px solid var(--cizgi);
+  margin: 2.5rem 0;
+}
+
+body.yardim a { color: var(--vurgu); }
+
+/* ana ekrandaki bağlantı */
+.yardim-link {
+  color: var(--soluk);
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-bottom: 1px solid var(--cizgi);
+  padding-bottom: 1px;
+}
+
+.yardim-link:hover { color: var(--vurgu); border-bottom-color: var(--vurgu); }
+
+body.yardim .geri { margin: 0 0 1.5rem; }
+body.yardim .geri a { color: var(--vurgu); text-decoration: none; }

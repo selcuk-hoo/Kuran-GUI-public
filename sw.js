@@ -60,7 +60,14 @@ self.addEventListener("fetch", (olay) => {
   olay.respondWith((async () => {
     // Önce önbellek: çevrimdışı çalışmanın tamamı buna dayanıyor
     const bulunan = await caches.match(istek, { ignoreSearch: true });
-    if (bulunan) return bulunan;
+    // Yönlendirilmiş (redirected) bir yanıtı gezinmeye (navigasyona)
+    // döndürmek tarayıcıda ERR_FAILED'e yol açıyor — fetch
+    // spesifikasyonunun kısıtı. Önbellekte böyle bozuk bir kayıt
+    // kalmışsa (ör. barındırma o an .html uzantısını yönlendiriyorken
+    // kurulmuşsa) yokmuş gibi davranıp ağdan tazesini alıyoruz.
+    if (bulunan && !(istek.mode === "navigate" && bulunan.redirected)) {
+      return bulunan;
+    }
     try {
       const cevap = await fetch(istek);
       if (cevap.ok && new URL(istek.url).origin === location.origin) {

@@ -77,8 +77,8 @@
 <hr>
 <h2>6. Verin ve yedekleme</h2>
 <p>Çevirilerin ve hata kayıtların <strong>yalnızca bu cihazdaki tarayıcının deposunda</strong> tutulur. Hiçbir yere gönderilmez, sunucuya gitmez, kimseyle paylaşılmaz.</p>
-<p>Bunun bir bedeli var: <strong>tarayıcının site verilerini silersen ya da telefonu değiştirirsen, kayıtların da gider.</strong> Tek koruma, ara sıra <strong><code>Kayıtlarımı dışa aktar</code></strong> yapmak — iki dosya üretir: <code>kuran-calisma.json</code> (yedek + geri yükleme için) ve <code>calisma.md</code> (bir sohbete yükleyip okutmak için, bkz. bölüm 8). İkisi de telefonunun indirilenler klasörüne kaydedilir.</p>
-<p><code>Kayıtları içe aktar</code> ile geri yüklersin — dosya seçiciden <code>kuran-calisma.json</code> dosyasını seçersin (<code>calisma.md</code> yalnızca okumak için, geri yüklenmez).</p>
+<p>Bunun bir bedeli var: <strong>tarayıcının site verilerini silersen ya da telefonu değiştirirsen, kayıtların da gider.</strong> Tek koruma, ara sıra <strong><code>Kayıtlarımı dışa aktar</code></strong> yapmak — iki dosya üretir: <code>kuran-calisma.json</code> (yedek + geri yükleme için) ve <code>kuran-calisma.md</code> (bir sohbete yükleyip okutmak için, bkz. bölüm 8). İkisi de telefonunun indirilenler klasörüne kaydedilir.</p>
+<p><code>Kayıtları içe aktar</code> ile geri yüklersin — dosya seçiciden <code>kuran-calisma.json</code> dosyasını seçersin (<code>kuran-calisma.md</code> yalnızca okumak için, geri yüklenmez).</p>
 <p><strong>Aynı ayeti iki farklı cihazda çevirme</strong> — kayıtlar otomatik birleşmez, biri diğerini görmez.</p>
 <hr>
 <h2>7. Anki&#x27;ye aktarma</h2>
@@ -88,7 +88,7 @@
 <hr>
 <h2>8. Kayıtlarını analiz ettirmek</h2>
 <p><code>Kayıtlarımı dışa aktar</code> iki farklı iş için iki farklı dosya üretir:</p>
-<ul><li><strong><code>calisma.md</code></strong> — okumak için. Her ayette Arapça, kendi çevirin ve dört meal yan yana; bir sohbete yükleyip &quot;çevirilerimle mealleri satır satır karşılaştır&quot; diyebilirsin.</li><li><strong><code>kuran-calisma.json</code></strong> — saymak için. &quot;Kaç edilgen fiilde hata yaptım&quot;, &quot;kategori dağılımım nasıl&quot; gibi sayısal sorular için daha uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa kökü/lemma&#x27;sı/babı otomatik eklenmiş durumda.</li></ul>
+<ul><li><strong><code>kuran-calisma.md</code></strong> — okumak için. Her ayette Arapça, kendi çevirin ve dört meal yan yana; bir sohbete yükleyip &quot;çevirilerimle mealleri satır satır karşılaştır&quot; diyebilirsin.</li><li><strong><code>kuran-calisma.json</code></strong> — saymak için. &quot;Kaç edilgen fiilde hata yaptım&quot;, &quot;kategori dağılımım nasıl&quot; gibi sayısal sorular için daha uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa kökü/lemma&#x27;sı/babı otomatik eklenmiş durumda.</li></ul>
 <p>Sorulabilecek şeyler:</p>
 <ul><li>&quot;Çevirilerimle mealleri karşılaştır, tekrar eden örüntü var mı?&quot;</li><li>&quot;Hata kayıtlarımın dağılımına bak, neye çalışmalıyım?&quot;</li><li>&quot;Hata kaydı düşmediğim ama çevirimin mealden ayrıldığı yerler var mı?&quot;</li></ul>
 <p>Sonuncusu en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele <strong>fark etmediklerin</strong> — bunu program bulamaz, meal ile senin çevirin arasındaki farkın gerçek bir hata mı yoksa üslup tercihi mi olduğuna ancak elle karşılaştırınca karar verilebiliyor.</p>

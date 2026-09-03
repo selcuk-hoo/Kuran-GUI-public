@@ -513,7 +513,7 @@ async function kelimeMorfolojisi(sure, ayet, sira) {
   return { kok: kok || null, lemma: lemma || null, vf: vf || null };
 }
 
-// calisma.md, export.py'nin (sunucu sürümü) ürettiğiyle aynı biçimi
+// kuran-calisma.md, export.py'nin (sunucu sürümü) ürettiğiyle aynı biçimi
 // tarayıcıda üretir: her ayette Arapça + kendi çevirin + dört meal +
 // varsa hata kayıtların yan yana. Bir sohbete yükleyip SATIR SATIR
 // karşılaştırma için bu format kuran-calisma.json'dan daha okunaklı;
@@ -633,12 +633,12 @@ async function disaAktar() {
   const md = await calismaMDUret(ceviriler, hatalar);
 
   dosyaIndir("kuran-calisma.json", JSON.stringify(paket, null, 1), "application/json");
-  if (md) dosyaIndir("calisma.md", md, "text/markdown");
+  if (md) dosyaIndir("kuran-calisma.md", md, "text/markdown");
 
   await bilgiGoster("Dışa aktarıldı",
     md
       ? `${paket.ceviri.length} çeviri, ${paket.hata.length} hata kaydı iki dosyaya yazıldı: `
-        + `"kuran-calisma.json" (sayısal analiz için) ve "calisma.md" (okuyup karşılaştırmak için).`
+        + `"kuran-calisma.json" (sayısal analiz için) ve "kuran-calisma.md" (okuyup karşılaştırmak için).`
       : `${paket.ceviri.length} çeviri, ${paket.hata.length} hata kaydı `
         + `"kuran-calisma.json" dosyasına yazıldı.`);
 }

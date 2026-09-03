@@ -167,12 +167,12 @@ paylaşılmaz.
 Bunun bir bedeli var: **tarayıcının site verilerini silersen ya da
 telefonu değiştirirsen, kayıtların da gider.** Tek koruma, ara sıra
 **`Kayıtlarımı dışa aktar`** yapmak — iki dosya üretir:
-`kuran-calisma.json` (yedek + geri yükleme için) ve `calisma.md` (bir
+`kuran-calisma.json` (yedek + geri yükleme için) ve `kuran-calisma.md` (bir
 sohbete yükleyip okutmak için, bkz. bölüm 8). İkisi de telefonunun
 indirilenler klasörüne kaydedilir.
 
 `Kayıtları içe aktar` ile geri yüklersin — dosya seçiciden
-`kuran-calisma.json` dosyasını seçersin (`calisma.md` yalnızca okumak
+`kuran-calisma.json` dosyasını seçersin (`kuran-calisma.md` yalnızca okumak
 için, geri yüklenmez).
 
 **Aynı ayeti iki farklı cihazda çevirme** — kayıtlar otomatik
@@ -200,7 +200,7 @@ Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.
 
 `Kayıtlarımı dışa aktar` iki farklı iş için iki farklı dosya üretir:
 
-- **`calisma.md`** — okumak için. Her ayette Arapça, kendi çevirin ve
+- **`kuran-calisma.md`** — okumak için. Her ayette Arapça, kendi çevirin ve
   dört meal yan yana; bir sohbete yükleyip "çevirilerimle mealleri
   satır satır karşılaştır" diyebilirsin.
 - **`kuran-calisma.json`** — saymak için. "Kaç edilgen fiilde hata

@@ -10,7 +10,7 @@
 
 const el = (id) => document.getElementById(id);
 
-const MEAL_ADLARI = ["Diyanet", "Elmalılı Yazır", "Y. N. Öztürk"];
+const MEAL_ADLARI = ["Diyanet İşleri", "Diyanet Vakfı", "Elmalılı Yazır", "Y. N. Öztürk"];
 const KATEGORI_ADI = {
   kok_bilmiyorum: "kökü bilmiyorum",
   anlam_tutmadi: "anlam tutmadı",

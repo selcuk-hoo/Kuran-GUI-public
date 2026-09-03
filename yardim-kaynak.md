@@ -73,10 +73,10 @@ göreceksin.
 
 ### Adım 5 — Mealleri karşılaştır
 
-Üç meal yan yana gelir: **Diyanet**, **Elmalılı Yazır**, **Y. N.
-Öztürk**.
+Dört meal yan yana gelir: **Diyanet İşleri**, **Diyanet Vakfı**,
+**Elmalılı Yazır**, **Y. N. Öztürk**.
 
-Üçünü de oku. Meallerin *birbirinden* ayrıldığı yer, metnin gerçekten
+Hepsini oku. Meallerin *birbirinden* ayrıldığı yer, metnin gerçekten
 tartışmalı olduğu yerdir. Sonra kendi çevirinle karşılaştır.
 
 ### Adım 6 — Farkı sınıflandır

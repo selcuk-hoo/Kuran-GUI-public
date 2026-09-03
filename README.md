@@ -23,7 +23,7 @@ kendi deposunda) tutulur. Hiçbir yere gönderilmez, sunucu yoktur.
 ## Veri kaynakları
 
 - Kur'an metni ve Türkçe mealler: [Tanzil](https://tanzil.net)
-  (Diyanet, Elmalılı Hamdi Yazır, Yaşar Nuri Öztürk)
+  (Diyanet İşleri, Diyanet Vakfı, Elmalılı Hamdi Yazır, Yaşar Nuri Öztürk)
 - Morfoloji: [Quranic Arabic Corpus](https://corpus.quran.com) v0.4'ün
   [furqan.co](https://furqan.co) forku
 

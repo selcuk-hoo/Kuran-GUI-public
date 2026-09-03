@@ -514,39 +514,20 @@ async function iceAktarDosya(dosya) {
   } catch (e) {
     return bilgiGoster("Okunamadı", "Dosya açılamadı: " + e.message);
   }
-  return iceAktarMetin(ham);
+  // Bazı editörler dosyanın başına BOM ekliyor.
+  const temiz = ham.replace(/^﻿/, "").trim();
+  if (!temiz) {
+    return bilgiGoster("Boş", "Seçilen dosya boş görünüyor.");
+  }
+  return iceAktarIsle(temiz);
 }
 
-async function iceAktarMetin(ham) {
-  // Bazı Android klavyeleri/pano yöneticileri BOM ekliyor ya da uzun
-  // metni yapıştırırken kesiyor. Kesilmeyi ayırt edip somut bir sebep
-  // göstermek, "bir şeyler ters" demekten daha faydalı.
-  let temiz = ham.replace(/^\uFEFF/, "").trim();
-
-  if (!temiz) {
-    return bilgiGoster("Boş", "Yapıştırma alanı boş görünüyor.");
-  }
-
+async function iceAktarIsle(temiz) {
   let paket;
   try {
     paket = JSON.parse(temiz);
   } catch (e) {
-    const uzunluk = temiz.length;
-    // "{" ile başlayıp düzgün kapanmıyorsa muhtemelen kesilmiş; hiç
-    // "{" ile başlamıyorsa zaten bizim JSON'umuz değil, farklı sorun.
-    const jsonGibiBasliyor = temiz[0] === "{" || temiz[0] === "[";
-    const kesikMi = jsonGibiBasliyor
-      && !temiz.endsWith("}") && !temiz.endsWith("]");
-    let ipucu;
-    if (kesikMi) {
-      ipucu = `Metin "${temiz.slice(-25)}" ile bitiyor — sonu eksik `
-        + "görünüyor. Bazı klavyeler uzun metni yapıştırırken kesiyor. "
-        + "Dosya seçiciyle (İçe aktar) denemen daha güvenilir.";
-    } else {
-      ipucu = `Ayrıştırma hatası: ${e.message}`;
-    }
-    return bilgiGoster("Okunamadı",
-      `İçerik geçerli JSON değil (${uzunluk} karakter yapıştırıldı). ${ipucu}`);
+    return bilgiGoster("Okunamadı", `İçerik geçerli JSON değil: ${e.message}`);
   }
   if (!paket || paket.bicim !== "kuran-calisma"
       || !Array.isArray(paket.ceviri) || !Array.isArray(paket.hata)) {
@@ -671,16 +652,6 @@ el("atla-form").addEventListener("submit", (o) => {
 el("disa-aktar").addEventListener("click", disaAktar);
 el("anki-aktar").addEventListener("click", ankiAktar);
 el("ice-aktar").addEventListener("click", () => el("dosya-sec").click());
-el("yapistir").addEventListener("click", () => {
-  el("yapistir-metin").value = "";
-  el("yapistir-kutusu").showModal();
-});
-el("yapistir-vazgec").addEventListener("click", () => el("yapistir-kutusu").close());
-el("yapistir-tamam").addEventListener("click", () => {
-  const ham = el("yapistir-metin").value.trim();
-  el("yapistir-kutusu").close();
-  if (ham) iceAktarMetin(ham);
-});
 el("dosya-sec").addEventListener("change", (o) => {
   const d = o.target.files[0];
   o.target.value = "";

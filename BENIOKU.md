@@ -52,9 +52,11 @@ Port 8080 bilerek seçildi; sunucu sürümünün 8000'iyle çakışmasın diye.
 
 ### Uygulamayı güncellemek
 
-Kodda değişiklik olursa `sw.js` içindeki `SURUM` değeri artırılır,
-sonra `sh kur.sh` bir kez daha çalıştırılıp sayfa açılır. Service
-worker yeni sürümü indirir. Çalışma verisi (IndexedDB) etkilenmez.
+Kodda değişiklik olursa `pwa_hazirla.py` çalıştırılır — `sw.js` ve
+`surum.js` içindeki sürüm damgasını içerikten otomatik hesaplayıp
+yazar, elle artırmaya gerek yoktur. Sonra `sh kur.sh` bir kez daha
+çalıştırılıp sayfa açılır; service worker yeni sürümü indirir.
+Çalışma verisi (IndexedDB) etkilenmez.
 
 ## Dosyalar
 
@@ -72,27 +74,17 @@ Sunucu sürümünden geçerken, bilgisayarda bir kez:
 python3 pwa_aktar.py
 ```
 
-`kuran-calisma-YYYY-AA-GG.json` üretir. Tablette uygulamayı açıp
-**İçe aktar** ile bu dosyayı seçersin.
+`kuran-calisma.json` üretir. Tablette uygulamayı açıp **İçe aktar**
+ile bu dosyayı seçersin.
 
 Sonraki yedekler için uygulamadaki **Verimi dışa aktar** düğmesi
 yeterli — bilgisayar gerekmez.
 
-### Dosya seçici çalışmıyorsa
+### Dosya seçici
 
-Bazı Android dosya yöneticileri `.json` uzantısını tanımıyor ve
-dosyayı seçtirmiyor. Bunun için **Yapıştır** düğmesi var: dosyanın
-içeriğini kopyalayıp kutuya yapıştırırsın. Termux'te içeriği panoya
-almak için:
-
-```
-termux-clipboard-set < kuran-calisma-*.json
-```
-
-(`termux-clipboard-set` yoksa: `pkg install termux-api`)
-
-`accept` filtresi bilerek kaldırıldı — filtre koyunca dosyalar
-seçilemez hâle geliyordu. İçeriği uygulama zaten denetliyor.
+`accept` filtresi bilerek konmadı — bazı Android dosya yöneticileri
+`.json` uzantısını tanımıyor ve filtre koyunca dosyalar seçilemez hâle
+geliyordu. İçeriği uygulama zaten denetliyor.
 
 ## Yeniden üretme
 
@@ -105,5 +97,6 @@ python3 pwa_hazirla.py     # veri/ dosyalarını üret
 python3 pwa_dogrula.py     # kaynağa karşı denetle
 ```
 
-`sw.js` içindeki `SURUM` değerini de değiştir, yoksa cihazlardaki eski
-önbellek yenilenmez.
+`pwa_hazirla.py`, `sw.js` ve `surum.js` içindeki sürüm damgasını
+içerikten otomatik yeniden hesaplar; elle bir şey değiştirmene gerek
+yok.

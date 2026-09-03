@@ -121,10 +121,9 @@
   </section>
 
   <div class="arac-cubugu" dir="ltr">
-    <button id="disa-aktar" type="button">Verimi dışa aktar</button>
-    <button id="ice-aktar" type="button">İçe aktar</button>
-    <button id="yapistir" type="button">Yapıştır</button>
-    <button id="anki-aktar" type="button">Anki</button>
+    <button id="disa-aktar" type="button">Kayıtlarımı dışa aktar</button>
+    <button id="ice-aktar" type="button">Kayıtları içe aktar</button>
+    <button id="anki-aktar" type="button">Kelime kartı indir (Anki)</button>
     <!-- accept KOYMA: Android dosya seçicisi .json uzantısını tanımayıp
          dosyaları seçilemez yapıyor. İçeriği JS zaten denetliyor. -->
     <input id="dosya-sec" type="file" hidden>
@@ -132,21 +131,6 @@
     <span id="kurulum-durumu"></span>
   </div>
 </main>
-
-<dialog id="yapistir-kutusu">
-  <h2>Metni yapıştırarak içe aktar</h2>
-  <p>Dosya seçici çalışmıyorsa, dışa aktarılan dosyanın içeriğini
-     buraya yapıştır.</p>
-  <p class="ipucu">Dosya seçici çalışıyorsa onu tercih et; uzun metinler
-     bazı klavyelerde yapıştırılırken kesilebiliyor.</p>
-  <textarea id="yapistir-metin" rows="6" spellcheck="false"
-            autocorrect="off" autocapitalize="off" autocomplete="off"
-            placeholder='{"bicim":"kuran-calisma", …'></textarea>
-  <div class="satir">
-    <button id="yapistir-tamam" type="button">İçe aktar</button>
-    <button id="yapistir-vazgec" type="button">Vazgeç</button>
-  </div>
-</dialog>
 
 <dialog id="bilgi-kutusu">
   <h2 id="bilgi-baslik"></h2>

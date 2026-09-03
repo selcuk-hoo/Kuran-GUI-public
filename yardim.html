@@ -13,21 +13,12 @@
 <h1>Kullanım Kılavuzu</h1>
 <p>Bu araç meal okumak için değil. Amaç şu: ayeti kendin çevir, sonra mealleri aç ve <strong>kendi çevirinle meal arasındaki farkı gör</strong>. Fark nerede çıkıyorsa eksiğin oradadır. Araç o eksiği not almanı sağlar.</p>
 <p>Bu yüzden bir kural var ve esnetilmiyor: <strong>çevirini kaydetmeden mealler görünmez.</strong> Önce meale bakarsan artık kendi okumanı test etmiyorsun, meali ezberliyorsun.</p>
-<p>Bu kılavuz, tablette/telefonda/bilgisayarda çalışan uygulama (PWA) sürümünü anlatıyor — önerilen kullanım şekli bu. Bilgisayarda alternatif olarak duran ayrı bir sunucu sürümü var; onun kurulumu ve komutları en sonda, tek bir yerde: <strong>Ek — Bilgisayarda sunucu sürümü</strong>.</p>
+<p>Kayıtların yalnızca <strong>senin cihazında</strong> tutulur. Bu bağlantıyı kullanan başka biri olsa bile, kimse kimsenin çevirisini görmez — her kişinin kayıtları kendi tarayıcısında ayrı ayrı durur.</p>
 <hr>
 <h2>1. Kurulum</h2>
-<p>Bir kez yapılır. Kurulumdan sonra internet ya da bir siteye ihtiyaç yok.</p>
-<h3>Gerekenler</h3>
-<ul><li>Python 3.10+ (yalnızca kurulum sunucusu için)</li><li>Depo cihazda: <code>git clone https://github.com/selcuk-hoo/Kuran-GUI.git</code></li></ul>
-<h3>Adımlar</h3>
-<pre><code>cd Kuran-GUI/pwa
-sh kur.sh</code></pre>
-<p>Betik dosyaları kısa süreliğine sunar. Sonra:</p>
-<p>1. Tarayıcıda <strong>http://127.0.0.1:8080/</strong> adresini aç 2. Sağ altta ilerleme yazacak; <strong>&quot;çevrimdışı hazır (sürüm …)&quot;</strong> olana kadar bekle. Bu yazı artık kalıcıdır, kaybolmaz — istediğin an bakıp kontrol edebilirsin. 3. Tarayıcı menüsünden <strong>&quot;Ana ekrana ekle&quot;</strong> 4. Terminale dönüp <strong>Ctrl+C</strong> ile sunucuyu kapat</p>
-<p>Bitti. Bundan sonra ikona basınca açılır; sunucu bir daha gerekmez — yeni bir güncelleme geldiğinde aynı iki komutu tekrar çalıştırıp sayfayı bir kez açman yeterli (bkz. bölüm 10, &quot;Güncelleme sonrası eski hâli görünüyor&quot;).</p>
-<blockquote><p>Kurulum sırasında terminalde yalnızca hatalar görünür. Sessizlik iyiye işarettir.</p></blockquote>
-<h3>Neden kısa bir sunucu gerekiyor</h3>
-<p>Tarayıcılar çevrimdışı çalışmayı ve kalıcı depolamayı yalnızca <code>localhost</code> ya da <code>https</code> üzerinden kuruyor; dosyaları doğrudan açmak (<code>file://</code>) yetmiyor. Sunucu sadece bunun için kısa süreliğine çalışır.</p>
+<p>Bu sayfayı zaten açtıysan kurulum aslında bitti — geriye tek şey kalıyor:</p>
+<p>1. Tarayıcı menüsünden <strong>&quot;Ana ekrana ekle&quot;</strong> de 2. Bundan sonra ikondan açılır, internet gerekmez</p>
+<p>Adresi bir kayıp cihazda ya da yeni bir telefonda yeniden açman gerekirse, aynı bağlantıyı kullan; kimden aldıysan ondan iste.</p>
 <h3>Arapça yazı tipi</h3>
 <p>Scheherazade New, uygulamayla birlikte gömülü geliyor — ayrıca bir şey kurmana gerek yok.</p>
 <hr>
@@ -40,7 +31,7 @@ sh kur.sh</code></pre>
 <p><strong>Doğrulama geçişi</strong> — çeviriyi kaydedince açılır</p>
 <p><strong>Mealleri göster</strong> — çeviri kaydedilip doğrulama geçişi tamamlanana kadar pasiftir</p>
 <p><strong>Bu ayetteki hata kayıtların</strong> — bu ayet için not aldıysan burada</p>
-<p><strong>Alt çubuk</strong> — <code>Verimi dışa aktar</code>, <code>İçe aktar</code>, <code>Yapıştır</code>, <code>Anki</code></p>
+<p><strong>Alt çubuk</strong> — <code>Kayıtlarımı dışa aktar</code>, <code>Kayıtları içe aktar</code>, <code>Kelime kartı indir (Anki)</code></p>
 <hr>
 <h2>3. Çalışma döngüsü</h2>
 <h3>Adım 1 — Ayeti oku</h3>
@@ -51,7 +42,7 @@ sh kur.sh</code></pre>
 <p><code>Çeviriyi kaydet</code>. Mealler <strong>açılmaz</strong>; altta doğrulama geçişi çıkar.</p>
 <h3>Adım 4 — Doğrulama geçişi</h3>
 <p>Program bu ayette kaç tane <strong>edilgen fiil</strong>, kaç tane <strong>2. şahıs (muhatap)</strong> ve kaç tane <strong>harf-i cer öneki</strong> olduğunu söyler, o kelimeleri işaretler — ama ne anlama geldiklerini söylemez.</p>
-<p>Bu üç eksen rastgele seçilmedi. Kendi kayıtlarının analizi, en çok buralarda hata yapıp <strong>hatayı fark etmediğini</strong> gösterdi: muhatabı karıştırmak (tekil &quot;sana&quot; yerine çoğul), edilgeni etken okumak, edatın anlamı nasıl çevirdiğini kaçırmak.</p>
+<p>Bu üç eksen rastgele seçilmedi. En çok bu üç noktada hata yapılıp <strong>hatanın fark edilmediği</strong> görüldü: muhatabı karıştırmak (tekil &quot;sana&quot; yerine çoğul), edilgeni etken okumak, edatın anlamı nasıl çevirdiğini kaçırmak.</p>
 <p>Şimdi çevirine dön ve sadece şuna bak:</p>
 <ul><li><strong>Muhatap kim?</strong> Tekil mi çoğul mu, sen mi onlar mı?</li><li><strong>Fiil etken mi edilgen mi?</strong></li><li><strong>Edat neyi neye bağlıyor?</strong></li></ul>
 <p>Hatayı bulursan kaydet. Bulamazsan da sorun değil — mealler açılınca göreceksin.</p>
@@ -78,7 +69,7 @@ sh kur.sh</code></pre>
 <blockquote><p><em>Sorun metnin dışında.</em></p></blockquote>
 <h3>Kalıp/edat anlamı değiştirdi</h3>
 <p>Kelimeyi de gramerini de biliyorsun, ama anlam bir kalıptan ya da edattan geliyor: <code>عدل</code> &quot;adil olmak&quot; ama <code>عدل بـ</code> &quot;denk tutmak&quot;; <code>ربط</code> &quot;bağlamak&quot; ama <code>ربط على القلب</code> &quot;metanet vermek&quot;.</p>
-<blockquote><p><em>Sorun tek kelimede değil, kurduğu birliktelikte. Anki&#x27;ye kelimeyi tek başına değil, edatıyla yaz.</em></p></blockquote>
+<blockquote><p><em>Sorun tek kelimede değil, kurduğu birliktelikte. Kelime kartına kelimeyi tek başına değil, edatıyla yaz.</em></p></blockquote>
 <p><strong>Kararsızsan en dar olanı seç.</strong> &quot;Kökü bilmiyorum&quot; en somut, &quot;bağlam&quot; en geniştir. Her şeye &quot;bağlam&quot; dersen kayıtların sana bir şey söylemez.</p>
 <hr>
 <h2>5. Gezinme</h2>
@@ -92,58 +83,33 @@ sh kur.sh</code></pre>
 <p><strong>Her kaydetme yeni bir kayıttır.</strong> Aynı ayeti tekrar çevirirsen eskisi silinmez. Ekranda en son yazdığın görünür.</p>
 <p><strong>Aynı kelimeye birden çok hata kaydı</strong> yazabilirsin.</p>
 <hr>
-<h2>7. Verin ve yedekleme</h2>
+<h2>7. Kayıtların ve yedekleme</h2>
 <p>Çevirilerin ve hata kayıtların <strong>tarayıcının kendi deposunda</strong>, cihazda tutulur. Hiçbir yere gönderilmez, sunucu yoktur.</p>
-<p><strong>Ara sıra <code>Verimi dışa aktar</code> yap.</strong> Sabit adlı tek bir dosya (<code>kuran-calisma.json</code>) üretir. Tarayıcının site verilerini silmek kayıtları da siler — tek koruma bu.</p>
-<p><code>İçe aktar</code> ile geri yüklersin — dosya seçiciyi tercih et. <strong><code>Yapıştır</code></strong> yedek yoldur; bazı klavyeler uzun metni yapıştırırken sessizce kesiyor, o zaman &quot;içerik geçerli JSON değil&quot; uyarısı çıkar (uyarı artık kaç karakter geldiğini ve kesilip kesilmediğini de söylüyor). Termux&#x27;te panoya almak için:</p>
-<pre><code>termux-clipboard-set &lt; kuran-calisma.json</code></pre>
+<p><strong>Ara sıra <code>Kayıtlarımı dışa aktar</code> yap.</strong> Sabit adlı tek bir dosya (<code>kuran-calisma.json</code>) üretir. Tarayıcının site verilerini silmek kayıtları da siler — tek koruma bu.</p>
+<p><code>Kayıtları içe aktar</code> ile geri yüklersin — dosya seçiciden <code>kuran-calisma.json</code> dosyasını seç.</p>
 <h3>Tek cihaz kuralı</h3>
 <p>Farklı cihazlardaki (ya da tarayıcılardaki) kayıtlar otomatik birleşmez — her biri kendi deposunda tutulur. <strong>İki cihazda birden çeviri yazma</strong>; biri kaybolur. Bir cihazı &quot;çalışma cihazı&quot; seç, diğerinde yalnızca oku, ya da düzenli dışa/içe aktarımla elle senkron tut.</p>
 <hr>
-<h2>8. Anki&#x27;ye aktarma</h2>
-<p>Alt çubuktaki <strong><code>Anki</code></strong> düğmesi, hata kaydı düştüğün kelimeleri kart dosyasına çevirir. Anki&#x27;de <strong>Dosya &gt; İçe Aktar</strong>.</p>
+<h2>8. Kelime kartı indirme (Anki)</h2>
+<p>Alt çubuktaki <strong><code>Kelime kartı indir (Anki)</code></strong> düğmesi, hata kaydı düştüğün kelimeleri, Anki adlı aralıklı-tekrar programıyla açılabilen bir kart dosyasına çevirir. Anki&#x27;de <strong>Dosya &gt; İçe Aktar</strong>.</p>
 <ul><li>Sadece takıldığın kelimeler çıkar, rastgele liste değil</li><li>Ön yüz: kelime, ayet konumu ve kelimenin <strong>ayet içindeki hâli</strong> — kalıbıyla birlikte görürsün</li><li>Arka yüz: kök, lemma, bab ve senin yazdığın not</li></ul>
+<p>Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.</p>
 <hr>
 <h2>9. Kayıtlarını analiz ettirmek</h2>
-<p><code>Verimi dışa aktar</code> ile çıkan JSON&#x27;u bir sohbete yükleyip analiz isteyebilirsin.</p>
+<p><code>Kayıtlarımı dışa aktar</code> ile çıkan JSON&#x27;u bir sohbete yükleyip analiz isteyebilirsin.</p>
 <p>Sorulabilecek şeyler:</p>
 <ul><li>&quot;Çevirilerimle mealleri karşılaştır, tekrar eden örüntü var mı?&quot;</li><li>&quot;Hata kayıtlarımın dağılımına bak, neye çalışmalıyım?&quot;</li><li>&quot;Hata kaydı düşmediğim ama çevirimin mealden ayrıldığı yerler var mı?&quot;</li></ul>
 <p>Sonuncusu en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele <strong>fark etmediklerin</strong>.</p>
-<p>Bilgisayarda daha okunaklı bir döküm de üretilebiliyor — bkz. Ek.</p>
 <hr>
 <h2>10. Bir şeyler ters giderse</h2>
-<p><strong>İkona basınca açılmıyor / boş geliyor</strong> Tarayıcının site verileri silinmiş olabilir. <code>cd Kuran-GUI/pwa &amp;&amp; sh kur.sh</code> ile yeniden kur. Çevirilerin ayrı yerde tutulur ama önce yedek almış olman iyi olur.</p>
-<p><strong>Güncelleme sonrası eski hâli görünüyor</strong> Sayfayı yenile. Değişmezse <code>sh kur.sh</code> çalıştırıp sayfayı tazele — gerekirse tarayıcıyı tamamen kapatıp yeniden aç (yalnızca sekmeyi değil). Hâlâ olmazsa tarayıcı ayarlarından bu site için &quot;Site verilerini temizle&quot; yapıp adresi yeniden aç.</p>
-<p><strong><code>İçe aktar</code> dosyayı seçtirmiyor</strong> <code>Yapıştır</code> düğmesini kullan (bölüm 7).</p>
-<p><strong>Kurulumda <code>Address already in use</code></strong> Başka bir kopya çalışıyor: <code>pkill -f kur.py</code></p>
+<p><strong>İkona basınca açılmıyor / boş geliyor</strong> Tarayıcının site verileri silinmiş olabilir. Aynı bağlantıyı yeniden aç, kendini yeniden kurar. Çevirilerin ayrı yerde tutulur ama önce yedek almış olman iyi olur.</p>
+<p><strong>Güncelleme sonrası eski hâli görünüyor</strong> Sayfayı yenile. Değişmezse tarayıcıyı tamamen kapatıp (yalnızca sekmeyi değil) yeniden aç. Hâlâ olmazsa tarayıcı ayarlarından bu site için &quot;Site verilerini temizle&quot; yapıp adresi yeniden aç.</p>
 <hr>
 <h2>11. Neler var, neler yok</h2>
-<p><strong>Var:</strong> kendi çevirini kaydetme, meal karşılaştırma, doğrulama geçişi, beş kategorili hata günlüğü, morfoloji verisi (kök, lemma, bab), Anki dışa aktarımı, yedekleme.</p>
+<p><strong>Var:</strong> kendi çevirini kaydetme, meal karşılaştırma, doğrulama geçişi, beş kategorili hata günlüğü, morfoloji verisi (kök, lemma, bab), Anki kartı indirme, yedekleme.</p>
 <p><strong>Bilerek yok ve eklenmeyecek:</strong> kök arama ekranı, istatistik paneli, tefsir entegrasyonu, genel i&#x27;rab gösterimi.</p>
 <p>Genel i&#x27;rab paneli özellikle yapılmadı. Kayıtların, sorunun her yerde değil üç dar eksende olduğunu gösterdi; her kelimeye i&#x27;rab basmak o üçünü gürültüde kaybederdi.</p>
 <p><strong>Bilinen sınır:</strong> doğrulama geçişi yalnızca <strong>bitişik</strong> harf-i cerleri işaretler. Ayrı yazılan edatlar (8:11&#x27;deki <code>عَلَىٰ</code> gibi) işaretlenmez.</p>
-<hr>
-<h2>Ek — Bilgisayarda sunucu sürümü</h2>
-<p>Tablette/telefonda yukarıdaki uygulama (PWA) sürümünü kullan. Bilgisayarda, özellikle klavyeyle uzun çeviri yazarken, bu depoda duran ayrı bir sunucu sürümü de rahatça çalışır.</p>
-<h3>Kurulum</h3>
-<pre><code>cd Kuran-GUI
-python3 import.py     # veritabanını kur — bir kez, idempotent
-python3 app.py</code></pre>
-<p>Tarayıcıda <code>http://127.0.0.1:8000</code> adresini aç. Veri, uygulama sürümünden farklı olarak tarayıcı deposunda değil, <code>kuran.db</code> dosyasındadır; yedeklemek için kopyalaman yeter.</p>
-<p><strong><code>kuran.db</code> ile uygulamanın (PWA) tarayıcı deposu birleştirilemez</strong> — bölüm 7&#x27;deki tek cihaz kuralı burada da geçerli.</p>
-<h3>PWA&#x27;ya veri aktarma</h3>
-<p>Sunucu sürümünde biriken çevirileri uygulamaya taşımak için:</p>
-<pre><code>python3 pwa_aktar.py</code></pre>
-<p>Ürettiği dosyayı uygulamada <code>İçe aktar</code> ya da <code>Yapıştır</code> ile al.</p>
-<h3>Anki</h3>
-<pre><code>python3 anki.py</code></pre>
-<h3>Kayıt dökümü</h3>
-<pre><code>python3 export.py          # calisma.md — ayet ayet, mealleriyle
-python3 export.py --ozet   # yalnızca istatistik</code></pre>
-<h3>Sorun giderme</h3>
-<p><strong>Program eski sürüm gibi davranıyor</strong> İki sebep olabilir. Önce: başka bir terminalde eski bir kopya çalışıyor olabilir — <code>pkill -f &quot;python3 app.py&quot;</code>, sonra tekrar başlat ve açılıştaki <code>klasör:</code> satırının doğru yeri gösterdiğini kontrol et. Sonra: açılışta <code>morfoloji: YÜKLENMEMİŞ</code> yazıyorsa <code>python3 import.py</code> çalıştır. <strong>Kodu her güncellediğinde <code>import.py</code> çalıştır.</strong></p>
-<p><strong><code>ModuleNotFoundError</code></strong> Program yalnızca standart kütüphaneyi kullanır. Python sürümün eski olabilir; 3.10+ gerekir (<code>python3 --version</code>).</p>
-<p><strong>Hız ölçmek için</strong> Sunucu çalışırken başka bir terminalde <code>python3 olcum.py</code>.</p>
 </main>
 </body>
 </html>

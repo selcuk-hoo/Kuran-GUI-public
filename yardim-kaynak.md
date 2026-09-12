@@ -158,8 +158,8 @@ Tevbe suresinde besmele yoktur.
 **Durak işaretleri** (ۚ ۖ ۗ ۩) metinde durur ama dokunulmaz — kelime
 değildirler.
 
-**Her kaydetme yeni bir kayıttır.** Aynı ayeti tekrar çevirirsen eskisi
-silinmez. Ekranda en son yazdığın görünür.
+**Aynı ayete tekrar çeviri yazman üzerine yazar.** Eski hâli kaybolur
+— düzeltme yapmak istediğinde bunu bil.
 
 **Aynı kelimeye birden çok hata kaydı** yazabilirsin.
 

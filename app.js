@@ -332,6 +332,21 @@ async function uyariCiz() {
   el("dogrulama-bolum").hidden = false;
 }
 
+// Bazı mealler birkaç ayeti tek blokta veriyor; aynı metin arka
+// arkaya tekrar eder (ör. 15:58-59-60). O bloktaki ilk/son ayet
+// numaralarını döndürür, tek ayetse null.
+function mealBlokAraligi(meal_indeksi) {
+  const ayetler = durum.sureVerisi.ayetler;
+  const suraki = ayetler.findIndex((a) => a.a === durum.ayet);
+  const metin = durum.ayetVerisi.m[meal_indeksi];
+  if (!metin) return null;
+  let ilk = suraki;
+  let son = suraki;
+  while (ilk > 0 && ayetler[ilk - 1].m[meal_indeksi] === metin) ilk--;
+  while (son < ayetler.length - 1 && ayetler[son + 1].m[meal_indeksi] === metin) son++;
+  return ilk === son ? null : { ilk: ayetler[ilk].a, son: ayetler[son].a };
+}
+
 function mealleriCiz() {
   const kap = el("mealler");
   kap.textContent = "";
@@ -343,6 +358,13 @@ function mealleriCiz() {
     const p = document.createElement("p");
     p.textContent = metin;
     d.appendChild(h); d.appendChild(p);
+    const aralik = mealBlokAraligi(i);
+    if (aralik) {
+      const not = document.createElement("p");
+      not.className = "ipucu";
+      not.textContent = `Bu meal ${aralik.ilk}-${aralik.son}'i birlikte veriyor.`;
+      d.appendChild(not);
+    }
     kap.appendChild(d);
   });
   kap.hidden = false;
@@ -430,7 +452,15 @@ async function ceviriKaydet() {
     const nesne = {
       sure: durum.sure, ayet: durum.ayet, metin, tarih: simdi(),
     };
-    nesne.id = await kayit.ekle("ceviri", nesne);
+    // Aynı ayete tekrar yazınca YENİ kayıt değil, ÜZERİNE YAZILIR —
+    // eskiden her kaydetme ayrı bir satır bırakıyordu, aynı ayete
+    // dönüp küçük bir düzeltme yapmak bile kaydı çoğaltıyordu.
+    if (durum.ceviri && durum.ceviri.id != null) {
+      nesne.id = durum.ceviri.id;
+      await kayit.guncelle("ceviri", nesne);
+    } else {
+      nesne.id = await kayit.ekle("ceviri", nesne);
+    }
     durum.ceviri = nesne;
     durumYaz(el("ceviri-durum"), "kaydedildi", 0);
     el("meal-kilit").hidden = true;
@@ -559,10 +589,17 @@ async function calismaMDUret(ceviriler, hatalar) {
   const gercekHatalar = hatalar.filter((h) => h.kategori !== "meal_farki");
   const mealFarkiSayisi = hatalar.length - gercekHatalar.length;
 
+  // Ayet başına hata yanıltıcı — ayet uzunluğu 3 kelimeden 50'ye kadar
+  // değişiyor. 100 kelimede hata, uzunluktan bağımsız karşılaştırılabilir.
+  let toplamKelime = 0;
+  for (const a of ayetler) toplamKelime += await ayetinKelimeSayisi(a.sure, a.ayet);
+  const yuzKelimedeHata = toplamKelime ? (100 * gercekHatalar.length / toplamKelime).toFixed(1) : "0";
+
   yaz("## Özet\n");
-  yaz(`- Çeviri kaydı: **${ceviriler.length}** (${ayetler.length} farklı ayet)`);
+  yaz(`- Çeviri kaydı: **${ceviriler.length}** (${ayetler.length} farklı ayet, ${toplamKelime} kelime)`);
   yaz(`- Hata kaydı: **${gercekHatalar.length}**`
     + (mealFarkiSayisi ? ` (+ ${mealFarkiSayisi} meal farkı notu — hata sayılmaz, ayrı)` : ""));
+  yaz(`- 100 kelimede hata: **${yuzKelimedeHata}**`);
   const tarihler = ceviriler.map((c) => c.tarih).sort();
   yaz(`- Tarih aralığı: ${tarihler[0].slice(0, 10)} — ${tarihler[tarihler.length - 1].slice(0, 10)}`);
 

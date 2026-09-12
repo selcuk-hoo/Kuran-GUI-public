@@ -587,12 +587,28 @@ async function calismaMDUret(ceviriler, hatalar) {
     yaz("_Hata kaydı yok._");
   }
 
-  const tekrar = new Map();
-  gercekHatalar.forEach((h) => { if (h.kelime) tekrar.set(h.kelime, (tekrar.get(h.kelime) || 0) + 1); });
-  const coklu = Array.from(tekrar.entries()).filter(([, n]) => n > 1);
-  if (coklu.length) {
-    yaz("\n## Birden çok kez takıldığım kelimeler\n");
-    coklu.forEach(([k, n]) => yaz(`- ${k} — ${n} kez`));
+  // Kelimenin YÜZEY biçimine değil KÖKÜNE bakılır (جَعَلَ / جَعَلْنَـٰهُ /
+  // جَعَلُوا۟ aynı köktür); aynı ayetteki birden çok kayıt tek olay
+  // sayılır; TÜM geçmişe bakılır (yalnızca bu dışa aktarıma değil) —
+  // kokAyetSayaci() zaten bunların hepsini doğru yapıyor (Adım 1/3).
+  const kokAyetler = await kokAyetSayaci();
+  const kokOrnekleri = new Map();
+  for (const h of gercekHatalar) {
+    if (h.kelime_sira == null || !h.kelime) continue;
+    const { kok } = await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira);
+    if (!kok) continue;
+    if (!kokOrnekleri.has(kok)) kokOrnekleri.set(kok, new Set());
+    kokOrnekleri.get(kok).add(h.kelime);
+  }
+  const cokTekrarlanan = Array.from(kokAyetler.entries())
+    .filter(([, ayetSeti]) => ayetSeti.size > 1)
+    .sort((a, b) => b[1].size - a[1].size);
+  if (cokTekrarlanan.length) {
+    yaz("\n## Birden çok ayette tekrar eden kökler\n");
+    cokTekrarlanan.forEach(([kok, ayetSeti]) => {
+      const ornekler = kokOrnekleri.has(kok) ? Array.from(kokOrnekleri.get(kok)).join(" / ") : kok;
+      yaz(`- ${ornekler} — ${ayetSeti.size} farklı ayette`);
+    });
   }
 
   yaz("\n---\n");

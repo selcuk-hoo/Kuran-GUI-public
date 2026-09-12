@@ -18,7 +18,8 @@ kişinin kayıtları kendi tarayıcısında ayrı ayrı durur.
 
 Yukarıdan aşağıya:
 
-**Gezinme çubuğu** — `‹ Önceki`, sure/ayet kutuları + `Git`, `Sonraki ›`
+**Gezinme çubuğu** — `‹ Önceki`, sure/ayet kutuları + `Git`, `Sonraki ›`,
+`Kart çalış` (bkz. bölüm 7)
 
 **Konum satırı** — hangi ayettesin, surede kaç ayet var
 
@@ -163,6 +164,10 @@ değildirler.
 
 **Aynı kelimeye birden çok hata kaydı** yazabilirsin.
 
+**Bazı mealler birkaç ayeti tek blokta veriyor.** Böyle bir ayette
+mealin altında "Bu meal 58-60'ı birlikte veriyor" gibi bir not
+görürsün — metin gerçekten aynı, hata değil.
+
 ---
 
 ## 6. Verin ve yedekleme
@@ -175,7 +180,7 @@ Bunun bir bedeli var: **tarayıcının site verilerini silersen ya da
 telefonu değiştirirsen, kayıtların da gider.** Tek koruma, ara sıra
 **`Kayıtlarımı dışa aktar`** yapmak — iki dosya üretir:
 `kuran-calisma.json` (yedek + geri yükleme için) ve `kuran-calisma.md` (bir
-sohbete yükleyip okutmak için, bkz. bölüm 8). İkisi de telefonunun
+sohbete yükleyip okutmak için, bkz. bölüm 9). İkisi de telefonunun
 indirilenler klasörüne kaydedilir.
 
 `Kayıtları içe aktar` ile geri yüklersin — dosya seçiciden
@@ -187,7 +192,31 @@ birleşmez, biri diğerini görmez.
 
 ---
 
-## 7. Anki'ye aktarma
+## 7. Kart çalışması
+
+Üstteki gezinme çubuğunda **`Kart çalış`**. Hata kaydı düştüğün
+kelimelerden kartlar hazırlayıp seni sınar — ayrı bir program
+kurmana gerek yok, uygulamanın kendi içinde.
+
+- Her kartta ayetin tamamı gelir, sorulan kelime vurgulu; "Bu kelime
+  burada ne anlama geliyor?" diye sorar, hiçbir ipucu vermez.
+- **`Kartı çevir`** deyince: doğru anlamı, o an ne sandığını ve
+  kök/lemma/bab bilgisini gösterir.
+- Kendini değerlendir: **Bilemedim / Zorlandım / Biliyordum.** Bu,
+  kartın bir dahaki sefere ne zaman karşına çıkacağını etkiler — sık
+  yanıldığın ve uzun süredir karşına çıkmamış kelimeler öncelikli.
+- Bir kartı bir daha görmek istemiyorsan **"Bu kartı çıkar"** de.
+- Bir oturum 15 kart; bitince **"15 kart daha"** ile devam edebilirsin.
+
+**"Hata değil, mealler farklı söylemiş"** diye işaretlediğin kelimeler
+kart havuzuna hiç girmez — onlar senin hatan değildi.
+
+Hiç hata kaydın yoksa "Kart çalış" boş olduğunu söyler; önce birkaç
+kelimeye hata kaydı düşmen gerekiyor.
+
+---
+
+## 8. Anki'ye aktarma
 
 [Anki](https://apps.ankiweb.net), aralıklı tekrarla kelime ezberleten
 ayrı bir program. Alt çubuktaki **`Kelime kartı indir (Anki)`**
@@ -197,19 +226,23 @@ yalnızca takıldıkların) bir kart dosyası üretir. Anki'de
 
 - Ön yüz: kelime, ayet konumu ve kelimenin **ayet içindeki hâli** —
   kalıbıyla birlikte görürsün
-- Arka yüz: kök, lemma, bab ve senin yazdığın not
+- Arka yüz: kök, lemma, bab, "Doğru hali" (doldurduysan) ve senin
+  yazdığın not
 
 Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.
 
 ---
 
-## 8. Kayıtlarını analiz ettirmek
+## 9. Kayıtlarını analiz ettirmek
 
 `Kayıtlarımı dışa aktar` iki farklı iş için iki farklı dosya üretir:
 
-- **`kuran-calisma.md`** — okumak için. Her ayette Arapça, kendi çevirin ve
-  dört meal yan yana; bir sohbete yükleyip "çevirilerimle mealleri
-  satır satır karşılaştır" diyebilirsin.
+- **`kuran-calisma.md`** — okumak için. Bir özetle başlar (kaç çeviri,
+  kaç hata, kategori dağılımı, 100 kelimede kaç hata — ayet başına
+  hata yanıltıcı olurdu, ayetler 3 ila 50 kelime arası değişiyor),
+  sonra her ayette Arapça, kendi çevirin ve dört meal yan yana; bir
+  sohbete yükleyip "çevirilerimle mealleri satır satır karşılaştır"
+  diyebilirsin.
 - **`kuran-calisma.json`** — saymak için. "Kaç edilgen fiilde hata
   yaptım", "kategori dağılımım nasıl" gibi sayısal sorular için daha
   uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa
@@ -228,7 +261,7 @@ ancak elle karşılaştırınca karar verilebiliyor.
 
 ---
 
-## 9. Bir şeyler ters giderse
+## 10. Bir şeyler ters giderse
 
 **Uygulama eski görünüyor / yeni bir özellik yok**
 Sayfayı yenile. Değişmezse tarayıcıyı tamamen kapatıp yeniden aç

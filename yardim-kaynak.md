@@ -18,8 +18,8 @@ kişinin kayıtları kendi tarayıcısında ayrı ayrı durur.
 
 Yukarıdan aşağıya:
 
-**Gezinme çubuğu** — `‹ Önceki`, sure/ayet kutuları + `Git`, `Sonraki ›`,
-`Kart çalış` (bkz. bölüm 7)
+**Gezinme çubuğu** — `Kelime Kartlarını Aç` (bkz. bölüm 7), `‹ Önceki`,
+sure/ayet kutuları + `Git`, `Sonraki ›`
 
 **Konum satırı** — hangi ayettesin, surede kaç ayet var
 
@@ -196,7 +196,7 @@ birleşmez, biri diğerini görmez.
 
 ## 7. Kart çalışması
 
-Üstteki gezinme çubuğunda **`Kart çalış`**. Hata kaydı düştüğün
+Üstteki gezinme çubuğunda **`Kelime Kartlarını Aç`**. Hata kaydı düştüğün
 kelimelerden kartlar hazırlayıp seni sınar — ayrı bir program
 kurmana gerek yok, uygulamanın kendi içinde.
 
@@ -213,7 +213,7 @@ kurmana gerek yok, uygulamanın kendi içinde.
 **"Hata değil, mealler farklı söylemiş"** diye işaretlediğin kelimeler
 kart havuzuna hiç girmez — onlar senin hatan değildi.
 
-Hiç hata kaydın yoksa "Kart çalış" boş olduğunu söyler; önce birkaç
+Hiç hata kaydın yoksa "Kelime Kartlarını Aç" boş olduğunu söyler; önce birkaç
 kelimeye hata kaydı düşmen gerekiyor.
 
 ---

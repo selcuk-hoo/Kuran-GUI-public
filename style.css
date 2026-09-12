@@ -63,6 +63,10 @@ h2 {
   border-bottom: 1px solid var(--cizgi);
 }
 
+/* Kart düğmesi kendi satırında dursun, gezinme (önceki/git/sonraki)
+   altta ayrı bir satıra insin. */
+#kart-calis { flex-basis: 100%; }
+
 #atla-form { display: flex; align-items: center; gap: 0.4rem; }
 #atla-form label { color: var(--soluk); font-size: 0.85rem; }
 #atla-form input { width: 4.5rem; }

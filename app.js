@@ -12,11 +12,13 @@ const el = (id) => document.getElementById(id);
 
 const MEAL_ADLARI = ["Diyanet İşleri", "Diyanet Vakfı", "Elmalılı Yazır", "Y. N. Öztürk"];
 const KATEGORI_ADI = {
-  kok_bilmiyorum: "kökü bilmiyorum",
-  anlam_tutmadi: "anlam tutmadı",
-  irab: "i'rab",
-  baglam: "bağlam",
-  kalip_valans: "kalıp/edat anlamı değiştirdi",
+  kok_bilmiyorum: "Kelimeyi hiç bilmiyordum",
+  turkce_karistirma: "Türkçedeki karşılığıyla karıştırdım",
+  anlam_tutmadi: "Kelimeyi biliyordum ama burada başka anlamda",
+  kalip_valans: "Kalıp ya da edat anlamı değiştirdi",
+  irab: "Kim yapıyor / kime söyleniyor karıştı",
+  baglam: "Cümleyi yanlış kurdum",
+  meal_farki: "Hata değil, mealler farklı söylemiş",
 };
 let durum = {
   sure: 1,
@@ -554,9 +556,13 @@ async function calismaMDUret(ceviriler, hatalar) {
   yaz("# Kur'an çalışma kaydı\n");
   yaz("Bu dosya, kendi çevirilerimi ve anlamadığım yerlere düştüğüm");
   yaz("notları içeriyor. Mealler karşılaştırma için birlikte veriliyor.\n");
+  const gercekHatalar = hatalar.filter((h) => h.kategori !== "meal_farki");
+  const mealFarkiSayisi = hatalar.length - gercekHatalar.length;
+
   yaz("## Özet\n");
   yaz(`- Çeviri kaydı: **${ceviriler.length}** (${ayetler.length} farklı ayet)`);
-  yaz(`- Hata kaydı: **${hatalar.length}**`);
+  yaz(`- Hata kaydı: **${gercekHatalar.length}**`
+    + (mealFarkiSayisi ? ` (+ ${mealFarkiSayisi} meal farkı notu — hata sayılmaz, ayrı)` : ""));
   const tarihler = ceviriler.map((c) => c.tarih).sort();
   yaz(`- Tarih aralığı: ${tarihler[0].slice(0, 10)} — ${tarihler[tarihler.length - 1].slice(0, 10)}`);
 
@@ -569,20 +575,20 @@ async function calismaMDUret(ceviriler, hatalar) {
   yaz(`- Çalışılan sureler: ${sureListesi}`);
 
   yaz("\n## Hata kategorilerinin dağılımı\n");
-  if (hatalar.length) {
+  if (gercekHatalar.length) {
     const dagitim = new Map();
-    hatalar.forEach((h) => dagitim.set(h.kategori, (dagitim.get(h.kategori) || 0) + 1));
+    gercekHatalar.forEach((h) => dagitim.set(h.kategori, (dagitim.get(h.kategori) || 0) + 1));
     yaz("| Kategori | Adet | Oran |");
     yaz("|---|---:|---:|");
     Array.from(dagitim.entries()).sort((a, b) => b[1] - a[1]).forEach(([kat, n]) => {
-      yaz(`| ${KATEGORI_ADI[kat] || kat} | ${n} | %${Math.round(100 * n / hatalar.length)} |`);
+      yaz(`| ${KATEGORI_ADI[kat] || kat} | ${n} | %${Math.round(100 * n / gercekHatalar.length)} |`);
     });
   } else {
     yaz("_Hata kaydı yok._");
   }
 
   const tekrar = new Map();
-  hatalar.forEach((h) => { if (h.kelime) tekrar.set(h.kelime, (tekrar.get(h.kelime) || 0) + 1); });
+  gercekHatalar.forEach((h) => { if (h.kelime) tekrar.set(h.kelime, (tekrar.get(h.kelime) || 0) + 1); });
   const coklu = Array.from(tekrar.entries()).filter(([, n]) => n > 1);
   if (coklu.length) {
     yaz("\n## Birden çok kez takıldığım kelimeler\n");
@@ -770,10 +776,12 @@ async function kartHavuzuOlustur() {
 }
 
 // kök başına kaç FARKLI ayette hata kaydı var — TÜM geçmişe bakar,
-// kart_disi/meal_farki ile filtrelenmez (bu bir zorluk sinyali, havuz
-// üyeliği değil).
+// kart_disi ile filtrelenmez (bu bir zorluk sinyali, havuz üyeliği
+// değil). meal_farki hariç: o gerçek bir hata değil, "zorluk" sinyaline
+// katılmamalı.
 async function kokAyetSayaci() {
-  const tumHata = (await kayit.hepsi("hata")).filter((h) => h.kelime_sira != null);
+  const tumHata = (await kayit.hepsi("hata"))
+    .filter((h) => h.kelime_sira != null && h.kategori !== "meal_farki");
   const kokAyetler = new Map();
   for (const h of tumHata) {
     const { kok } = await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira);

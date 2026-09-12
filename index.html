@@ -107,11 +107,13 @@
     <form id="hata-form">
       <fieldset>
         <legend>Kategori</legend>
-        <label><input type="radio" name="kategori" value="kok_bilmiyorum" checked> Kökü bilmiyorum</label>
-        <label><input type="radio" name="kategori" value="anlam_tutmadi"> Anlam tutmadı</label>
-        <label><input type="radio" name="kategori" value="irab"> İ'rab</label>
-        <label><input type="radio" name="kategori" value="baglam"> Bağlam</label>
-        <label><input type="radio" name="kategori" value="kalip_valans"> Kalıp/edat anlamı değiştirdi</label>
+        <label><input type="radio" name="kategori" value="kok_bilmiyorum" checked> Kelimeyi hiç bilmiyordum</label>
+        <label><input type="radio" name="kategori" value="turkce_karistirma"> Türkçedeki karşılığıyla karıştırdım</label>
+        <label><input type="radio" name="kategori" value="anlam_tutmadi"> Kelimeyi biliyordum ama burada başka anlamda</label>
+        <label><input type="radio" name="kategori" value="kalip_valans"> Kalıp ya da edat anlamı değiştirdi</label>
+        <label><input type="radio" name="kategori" value="irab"> Kim yapıyor / kime söyleniyor karıştı</label>
+        <label><input type="radio" name="kategori" value="baglam"> Cümleyi yanlış kurdum</label>
+        <label><input type="radio" name="kategori" value="meal_farki"> Hata değil, mealler farklı söylemiş</label>
       </fieldset>
       <label for="hata-dogru-hali">Doğru hali (isteğe bağlı)</label>
       <input id="hata-dogru-hali" type="text" autocomplete="off"

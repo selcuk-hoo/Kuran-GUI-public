@@ -92,33 +92,44 @@ kartını hazırlar hem sonradan bakınca ne öğrendiğini hatırlatır.
 Doğru kategoriyi seçmek önemli: bu kayıtların dağılımı, sıradaki
 çalışmanın ne olması gerektiğini söylüyor.
 
-### Kökü bilmiyorum
+### Kelimeyi hiç bilmiyordum
 Kelimenin kök harflerini çıkaramadın.
 > *Sorun kelime dağarcığında.*
 
-### Anlam tutmadı
+### Türkçedeki karşılığıyla karıştırdım
+Kelimeyi biliyordun ama zihnindeki Türkçe karşılığı seni yanlış yöne
+götürdü — Arapçadaki gerçek kapsamı Türkçedekiyle birebir örtüşmüyor.
+> *Sorun çeviri refleksinde, kelime dağarcığında değil.*
+
+### Kelimeyi biliyordum ama burada başka anlamda
 Kökü biliyorsun ama bu bağlamda verdiğin anlam tutmadı.
 > *Sorun kelimenin anlam yelpazesinde.*
 
-### İ'rab
+### Kalıp ya da edat anlamı değiştirdi
+Kelimeyi de gramerini de biliyorsun, ama anlam bir kalıptan ya da
+edattan geliyor: `عدل` "adil olmak" ama `عدل بـ` "denk tutmak";
+`ربط` "bağlamak" ama `ربط على القلب` "metanet vermek".
+> *Sorun tek kelimede değil, kurduğu birliktelikte. Kelime kartına
+> kelimeyi tek başına değil, edatıyla yaz.*
+
+### Kim yapıyor / kime söyleniyor karıştı
 Kelimeleri biliyorsun ama cümledeki görevini çıkaramadın: fâil mi
 mef'ûl mü, sıfat mı haber mi.
 > *Sorun gramerde.*
 
-### Bağlam
+### Cümleyi yanlış kurdum
 Kelimeleri de gramerini de çözdün, cümle yine de oturmadı. Öncesi
 sonrası, kime söylendiği bilinmeden anlaşılmıyor.
 > *Sorun metnin dışında.*
 
-### Kalıp/edat anlamı değiştirdi
-Kelimeyi de gramerini de biliyorsun, ama anlam bir kalıptan ya da
-edattan geliyor: `عدل` "adil olmak" ama `عدل بـ` "denk tutmak";
-`ربط` "bağlamak" ama `ربط على القلب` "metanet vermek".
-> *Sorun tek kelimede değil, kurduğu birliktelikte. Anki'ye kelimeyi
-> tek başına değil, edatıyla yaz.*
+### Hata değil, mealler farklı söylemiş
+Sen yanılmadın — üç meal birbirinden ayrılıyor, ayet gerçekten
+tartışmalı. Bunu ayrıca not almak istersen bu kategoriyi kullan;
+istatistiğe ve kelime kartı çalışmasına girmez, hata sayılmaz.
 
-**Kararsızsan en dar olanı seç.** "Kökü bilmiyorum" en somut, "bağlam"
-en geniştir. Her şeye "bağlam" dersen kayıtların sana bir şey söylemez.
+**Kararsızsan en dar olanı seç.** "Kelimeyi hiç bilmiyordum" en somut,
+"Cümleyi yanlış kurdum" en geniştir. Her şeye en geniş kategoriyi
+dersen kayıtların sana bir şey söylemez.
 
 ---
 

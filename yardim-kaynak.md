@@ -79,12 +79,14 @@ tartışmalı olduğu yerdir. Sonra kendi çevirinle karşılaştır.
 
 ### Adım 6 — Farkı sınıflandır
 
-Ayrıldığın **kelimeye dokun**. Kategori seç. İkisi de isteğe bağlı ama
-ayrı ayrı işe yarıyor: **"Doğru hali"** kelimenin gerçek anlamını
-kısaca yazar (meale bakınca öğrendiğin şey), **"Not"** ise ne
-sandığını / nasıl yanıldığını. İkisini birlikte yazmak, hem Anki
-kartını hazırlar hem sonradan bakınca ne öğrendiğini hatırlatır.
-`Hatayı kaydet`. Kaydettiğin kelimenin altı çizili görünür.
+Ayrıldığın **kelimeye dokun**. Bir kelime meali varsa (her kelimede
+yok) form açılınca hemen üstte görürsün — bu, "Doğru hali"ni yazarken
+ipucu olabilir. Kategori seç. İkisi de isteğe bağlı ama ayrı ayrı işe
+yarıyor: **"Doğru hali"** kelimenin gerçek anlamını kısaca yazar (meale
+bakınca öğrendiğin şey), **"Not"** ise ne sandığını / nasıl yanıldığını.
+İkisini birlikte yazmak, hem Anki kartını hazırlar hem sonradan bakınca
+ne öğrendiğini hatırlatır. `Hatayı kaydet`. Kaydettiğin kelimenin altı
+çizili görünür.
 
 ---
 
@@ -200,8 +202,8 @@ kurmana gerek yok, uygulamanın kendi içinde.
 
 - Her kartta ayetin tamamı gelir, sorulan kelime vurgulu; "Bu kelime
   burada ne anlama geliyor?" diye sorar, hiçbir ipucu vermez.
-- **`Kartı çevir`** deyince: doğru anlamı, o an ne sandığını ve
-  kök/lemma/bab bilgisini gösterir.
+- **`Kartı çevir`** deyince sırasıyla: kelimenin meali (yoksa yazdığın
+  "doğru hali"), kök/lemma/bab, en son o an ne sandığını gösterir.
 - Kendini değerlendir: **Bilemedim / Zorlandım / Biliyordum.** Bu,
   kartın bir dahaki sefere ne zaman karşına çıkacağını etkiler — sık
   yanıldığın ve uzun süredir karşına çıkmamış kelimeler öncelikli.

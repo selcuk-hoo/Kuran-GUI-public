@@ -8,7 +8,7 @@
 // verir; sürüm başka bir dosyada dursaydı (önceki tasarım) bu satır
 // hiç değişmediği için güncelleme hiç tetiklenmezdi. Bu satırı elle
 // değiştirme; pwa_hazirla.py her çalıştığında üzerine yazar.
-const SURUM = "kuran-34746f722730";
+const SURUM = "kuran-eb867f88afb9";
 
 const KABUK = [
   "./",

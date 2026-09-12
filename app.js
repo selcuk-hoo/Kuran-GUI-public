@@ -424,7 +424,7 @@ async function ayetYukle(sure, ayet) {
   }
 }
 
-function kelimeSec(sira) {
+async function kelimeSec(sira) {
   const metin = kelimeMetni(sira);
   durum.secilenKelime = { sira, metin };
   document.querySelectorAll(".kelime.secili")
@@ -436,6 +436,13 @@ function kelimeSec(sira) {
   el("hata-not").value = "";
   el("hata-bolum").hidden = false;
   el("hata-bolum").scrollIntoView({ block: "nearest" });
+
+  // Kelime meali de mealler gibi kendi çevirini kaydetmeden görünmez —
+  // aynı pedagojik kural: önce kendi çabanı harca.
+  const kmEl = el("hata-kelime-meali");
+  const meal = durum.ceviri ? await kelimeMeali(durum.sure, durum.ayet, sira) : null;
+  kmEl.textContent = meal ? `Kelime meali: ${meal}` : "";
+  kmEl.hidden = !meal;
 }
 
 function hataFormuKapat() {
@@ -566,6 +573,16 @@ async function kelimeMorfolojisi(sure, ayet, sira) {
   if (!m) return {};
   const [kok, lemma, vf] = m;
   return { kok: kok || null, lemma: lemma || null, vf: vf || null };
+}
+
+// Türkçe kelime kelime meali. Kaynak bazen birden çok Arapça kelimeyi
+// tek çeviri biriminde birleştirdiği için her sira'da karşılık olmayabilir
+// (null) — o zaman kelimenin anlamı önceki sıradaki metne gömülüdür.
+async function kelimeMeali(sure, ayet, sira) {
+  if (sira == null) return null;
+  const veri = await sureYukle(sure);
+  const a = veri.ayetler.find((x) => x.a === ayet);
+  return (a && (a.km || [])[sira - 1]) || null;
 }
 
 // kuran-calisma.md, export.py'nin (sunucu sürümü) ürettiğiyle aynı biçimi
@@ -941,7 +958,14 @@ async function kartGoster() {
   el("kart-cevir").hidden = false;
 
   const { kok, lemma, vf } = await kelimeMorfolojisi(kart.sure, kart.ayet, kart.kelime_sira);
-  el("kart-dogrusu").textContent = kart.dogruHali || "(kaydedilmemiş)";
+  const meal = await kelimeMeali(kart.sure, kart.ayet, kart.kelime_sira);
+  el("kart-dogrusu").textContent = meal || kart.dogruHali || "(kaydedilmemiş)";
+
+  const morfParca = [];
+  if (kok) morfParca.push(`Kök: ${kok}`);
+  if (lemma) morfParca.push(`Lemma: ${lemma}`);
+  if (vf) morfParca.push(`Bab: ${vf}`);
+  el("kart-morfoloji").textContent = morfParca.join(" · ");
 
   const sandigin = el("kart-sandigin");
   sandigin.textContent = "";
@@ -953,12 +977,6 @@ async function kartGoster() {
   } else {
     sandigin.textContent = "(not yok)";
   }
-
-  const morfParca = [];
-  if (kok) morfParca.push(`Kök: ${kok}`);
-  if (lemma) morfParca.push(`Lemma: ${lemma}`);
-  if (vf) morfParca.push(`Bab: ${vf}`);
-  el("kart-morfoloji").textContent = morfParca.join(" · ");
 }
 
 function kartOturumOzetiGoster() {

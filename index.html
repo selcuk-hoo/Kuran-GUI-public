@@ -56,6 +56,7 @@
       <button type="submit">Git</button>
     </form>
     <button id="sonraki" type="button">Sonraki ›</button>
+    <button id="kart-calis" type="button">Kart çalış</button>
     <a class="yardim-link" href="yardim.html">Yardım</a>
   </nav>
   <p id="konum" class="konum"></p>
@@ -63,6 +64,7 @@
 </header>
 
 <main>
+<div id="calisma-ekrani">
   <section id="ayet-bolum">
     <p id="besmele" class="besmele" dir="rtl" lang="ar" hidden></p>
     <p id="arapca" class="arapca" dir="rtl" lang="ar"></p>
@@ -139,6 +141,44 @@
     <span class="bosluk"></span>
     <span id="kurulum-durumu"></span>
   </div>
+</div>
+
+<section id="kart-ekrani" dir="ltr" hidden>
+  <p id="kart-ilerleme" class="konum"></p>
+
+  <div id="kart-govde">
+    <p id="kart-arapca" class="arapca" dir="rtl" lang="ar"></p>
+    <p class="ipucu">Bu kelime burada ne anlama geliyor?</p>
+    <button id="kart-cevir" type="button">Kartı çevir</button>
+
+    <div id="kart-arka" hidden>
+      <p><strong>Doğrusu:</strong> <span id="kart-dogrusu"></span></p>
+      <p><strong>Sen ne sanmıştın:</strong></p>
+      <p id="kart-sandigin"></p>
+      <p class="ipucu" id="kart-morfoloji"></p>
+      <div class="satir">
+        <button id="kart-bilemedim" type="button">Bilemedim</button>
+        <button id="kart-zorlandim" type="button">Zorlandım</button>
+        <button id="kart-biliyordum" type="button">Biliyordum</button>
+      </div>
+      <p><a href="#" id="kart-cikar">Bu kartı çıkar</a></p>
+    </div>
+  </div>
+
+  <div id="kart-bos" hidden>
+    <p>Çalışılacak kart yok — önce birkaç hata kaydı düşmen gerekiyor.</p>
+  </div>
+
+  <div id="kart-ozet" hidden>
+    <p id="kart-ozet-metin"></p>
+    <div class="satir">
+      <button id="kart-daha" type="button">15 kart daha</button>
+      <button id="kart-bitir" type="button">Bitir, ayete dön</button>
+    </div>
+  </div>
+
+  <p class="satir"><button id="kart-kapat" type="button">← Ayete dön</button></p>
+</section>
 </main>
 
 <dialog id="bilgi-kutusu">

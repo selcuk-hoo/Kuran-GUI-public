@@ -45,7 +45,7 @@ let vt = null;
 
 function vtAc() {
   return new Promise((coz, red) => {
-    const istek = indexedDB.open(VT_ADI, 1);
+    const istek = indexedDB.open(VT_ADI, 2);
     istek.onupgradeneeded = () => {
       const d = istek.result;
       if (!d.objectStoreNames.contains("ceviri")) {
@@ -55,6 +55,10 @@ function vtAc() {
       if (!d.objectStoreNames.contains("hata")) {
         const s = d.createObjectStore("hata", { keyPath: "id", autoIncrement: true });
         s.createIndex("ayet", ["sure", "ayet"]);
+      }
+      if (!d.objectStoreNames.contains("kart_gecmisi")) {
+        const s = d.createObjectStore("kart_gecmisi", { keyPath: "id", autoIncrement: true });
+        s.createIndex("hata_id", "hata_id");
       }
     };
     istek.onsuccess = () => coz(istek.result);
@@ -79,6 +83,7 @@ const kayit = {
   ayetinkiler: (depo, sure, ayet) =>
     beklet(islem(depo, "readonly").index("ayet").getAll([sure, ayet])),
   temizle: (depo) => beklet(islem(depo, "readwrite").clear()),
+  guncelle: (depo, nesne) => beklet(islem(depo, "readwrite").put(nesne)),
 };
 
 // --- veri ----------------------------------------------------------------
@@ -684,7 +689,7 @@ async function iceAktarIsle(temiz) {
   const CEVIRI_ALANLARI = ["sure", "ayet", "metin", "tarih"];
   const HATA_ALANLARI = [
     "sure", "ayet", "kelime_sira", "kelime", "kategori",
-    "dogru_hali", "aciklama", "tarih",
+    "dogru_hali", "aciklama", "tarih", "kart_disi",
   ];
   const sec = (nesne, alanlar) => {
     const cikti = {};
@@ -703,6 +708,217 @@ async function iceAktarIsle(temiz) {
   await bilgiGoster("İçe aktarıldı",
     `${paket.ceviri.length} çeviri, ${paket.hata.length} hata kaydı yüklendi.`);
   await ayetYukle(durum.sure, durum.ayet);
+}
+
+// --- kart çalışması --------------------------------------------------------
+//
+// Havuz: hata kayıtları, meal_farki hariç ve "bu kartı çıkar" denmemiş
+// olanlar. Aynı (sure, ayet, kelime_sira) için birden çok kayıt TEK
+// karta birleşir — açıklamalar alt alta, doğru hali en son kayıttan.
+// Vade/kuyruk YOK; her seçimde ağırlıklı rastgele 15 kart çekilir.
+
+const KART_CARPANI = { bilemedim: 2.0, zorlandim: 1.3, biliyordum: 0.6 };
+
+async function kartHavuzuOlustur() {
+  const uygunHatalar = (await kayit.hepsi("hata"))
+    .filter((h) => h.kelime_sira != null && h.kategori !== "meal_farki" && !h.kart_disi)
+    .sort((a, b) => new Date(a.tarih) - new Date(b.tarih));
+
+  const gruplar = new Map();
+  for (const h of uygunHatalar) {
+    const anahtar = `${h.sure}:${h.ayet}:${h.kelime_sira}`;
+    if (!gruplar.has(anahtar)) {
+      gruplar.set(anahtar, { sure: h.sure, ayet: h.ayet, kelime_sira: h.kelime_sira, kayitlar: [] });
+    }
+    gruplar.get(anahtar).kayitlar.push(h);
+  }
+
+  const kartlar = [];
+  for (const [anahtar, g] of gruplar) {
+    const { kok } = await kelimeMorfolojisi(g.sure, g.ayet, g.kelime_sira);
+    const sonKayit = g.kayitlar[g.kayitlar.length - 1];
+    kartlar.push({
+      anahtar,
+      sure: g.sure,
+      ayet: g.ayet,
+      kelime_sira: g.kelime_sira,
+      hataIdler: g.kayitlar.map((h) => h.id),
+      aciklamalar: g.kayitlar.map((h) => h.aciklama).filter(Boolean),
+      dogruHali: sonKayit.dogru_hali || sonKayit.aciklama || "",
+      kok: kok || null,
+    });
+  }
+  return kartlar;
+}
+
+// kök başına kaç FARKLI ayette hata kaydı var — TÜM geçmişe bakar,
+// kart_disi/meal_farki ile filtrelenmez (bu bir zorluk sinyali, havuz
+// üyeliği değil).
+async function kokAyetSayaci() {
+  const tumHata = (await kayit.hepsi("hata")).filter((h) => h.kelime_sira != null);
+  const kokAyetler = new Map();
+  for (const h of tumHata) {
+    const { kok } = await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira);
+    if (!kok) continue;
+    if (!kokAyetler.has(kok)) kokAyetler.set(kok, new Set());
+    kokAyetler.get(kok).add(`${h.sure}:${h.ayet}`);
+  }
+  return kokAyetler;
+}
+
+async function kartAgirlikliSecim(adet, haricAnahtarlar) {
+  const havuz = (await kartHavuzuOlustur()).filter((k) => !haricAnahtarlar.has(k.anahtar));
+  if (!havuz.length) return [];
+
+  const kokAyetler = await kokAyetSayaci();
+  const tumGecmis = await kayit.hepsi("kart_gecmisi");
+
+  const agirlikli = havuz.map((k) => {
+    const kokTekrar = k.kok && kokAyetler.has(k.kok)
+      ? Math.max(0, kokAyetler.get(k.kok).size - 1) : 0;
+    const ilgiliGecmis = tumGecmis
+      .filter((g) => k.hataIdler.includes(g.hata_id))
+      .sort((a, b) => new Date(b.tarih) - new Date(a.tarih));
+    let gunGecti = 30;
+    let carpan = 1.0;
+    if (ilgiliGecmis.length) {
+      gunGecti = Math.max(0, Math.floor(
+        (Date.now() - new Date(ilgiliGecmis[0].tarih)) / 86400000));
+      carpan = KART_CARPANI[ilgiliGecmis[0].sonuc] ?? 1.0;
+    }
+    const agirlik = (1 + kokTekrar) * Math.min(gunGecti, 30) * carpan;
+    return { kart: k, agirlik: Math.max(agirlik, 0.0001) };
+  });
+
+  const secilenler = [];
+  const kalan = agirlikli.slice();
+  const n = Math.min(adet, kalan.length);
+  for (let i = 0; i < n; i++) {
+    const toplam = kalan.reduce((s, x) => s + x.agirlik, 0);
+    let esik = Math.random() * toplam;
+    let idx = 0;
+    while (idx < kalan.length - 1 && esik > kalan[idx].agirlik) {
+      esik -= kalan[idx].agirlik;
+      idx++;
+    }
+    secilenler.push(kalan[idx].kart);
+    kalan.splice(idx, 1);
+  }
+  return secilenler;
+}
+
+let kartDurumu = null;
+
+async function kartCalismayaBasla() {
+  el("calisma-ekrani").hidden = true;
+  el("kart-ekrani").hidden = false;
+  kartDurumu = {
+    kuyruk: [], indeks: 0, aktifKart: null,
+    gosterilenler: new Set(),
+    sonuclar: { bilemedim: 0, zorlandim: 0, biliyordum: 0 },
+  };
+  await kartYeniParti();
+}
+
+async function kartYeniParti() {
+  const yeniler = await kartAgirlikliSecim(15, kartDurumu.gosterilenler);
+  el("kart-ozet").hidden = true;
+  if (!yeniler.length) {
+    el("kart-govde").hidden = true;
+    el("kart-bos").hidden = false;
+    return;
+  }
+  el("kart-bos").hidden = true;
+  yeniler.forEach((k) => kartDurumu.gosterilenler.add(k.anahtar));
+  kartDurumu.kuyruk = yeniler;
+  kartDurumu.indeks = 0;
+  await kartGoster();
+}
+
+async function kartGoster() {
+  if (kartDurumu.indeks >= kartDurumu.kuyruk.length) {
+    return kartOturumOzetiGoster();
+  }
+  el("kart-govde").hidden = false;
+  const kart = kartDurumu.kuyruk[kartDurumu.indeks];
+  kartDurumu.aktifKart = kart;
+  el("kart-ilerleme").textContent = `Kart ${kartDurumu.indeks + 1} / ${kartDurumu.kuyruk.length}`;
+
+  const veri = await sureYukle(kart.sure);
+  const a = veri.ayetler.find((x) => x.a === kart.ayet);
+  const arapca = el("kart-arapca");
+  arapca.textContent = "";
+  const parca = document.createDocumentFragment();
+  a.p.forEach((p) => {
+    const span = document.createElement("span");
+    span.className = p[0] === 0 ? "isaret" : "kelime" + (p[2] === kart.kelime_sira ? " kart-hedef" : "");
+    span.textContent = p[1];
+    parca.appendChild(span);
+    parca.appendChild(document.createTextNode(" "));
+  });
+  arapca.appendChild(parca);
+
+  el("kart-arka").hidden = true;
+  el("kart-cevir").hidden = false;
+
+  const { kok, lemma, vf } = await kelimeMorfolojisi(kart.sure, kart.ayet, kart.kelime_sira);
+  el("kart-dogrusu").textContent = kart.dogruHali || "(kaydedilmemiş)";
+
+  const sandigin = el("kart-sandigin");
+  sandigin.textContent = "";
+  if (kart.aciklamalar.length) {
+    kart.aciklamalar.forEach((ac, i) => {
+      if (i > 0) sandigin.appendChild(document.createElement("br"));
+      sandigin.appendChild(document.createTextNode(ac));
+    });
+  } else {
+    sandigin.textContent = "(not yok)";
+  }
+
+  const morfParca = [];
+  if (kok) morfParca.push(`Kök: ${kok}`);
+  if (lemma) morfParca.push(`Lemma: ${lemma}`);
+  if (vf) morfParca.push(`Bab: ${vf}`);
+  el("kart-morfoloji").textContent = morfParca.join(" · ");
+}
+
+function kartOturumOzetiGoster() {
+  el("kart-govde").hidden = true;
+  el("kart-ozet").hidden = false;
+  const s = kartDurumu.sonuclar;
+  const toplam = s.bilemedim + s.zorlandim + s.biliyordum;
+  el("kart-ozet-metin").textContent = toplam
+    ? `${toplam} kart, ${s.biliyordum} tanesi biliniyordu.`
+    : "Bu oturumda kart değerlendirilmedi.";
+}
+
+async function kartDegerlendir(sonuc) {
+  const kart = kartDurumu.aktifKart;
+  const tarih = simdi();
+  for (const hataId of kart.hataIdler) {
+    await kayit.ekle("kart_gecmisi", { hata_id: hataId, tarih, sonuc });
+  }
+  kartDurumu.sonuclar[sonuc] = (kartDurumu.sonuclar[sonuc] || 0) + 1;
+  kartDurumu.indeks++;
+  await kartGoster();
+}
+
+async function kartCikar() {
+  const kart = kartDurumu.aktifKart;
+  const tumHata = await kayit.hepsi("hata");
+  for (const h of tumHata) {
+    if (kart.hataIdler.includes(h.id)) {
+      await kayit.guncelle("hata", { ...h, kart_disi: true });
+    }
+  }
+  kartDurumu.indeks++;
+  await kartGoster();
+}
+
+function kartKapat() {
+  el("kart-ekrani").hidden = true;
+  el("calisma-ekrani").hidden = false;
+  kartDurumu = null;
 }
 
 async function ankiAktar() {
@@ -801,6 +1017,18 @@ el("atla-form").addEventListener("submit", (o) => {
 });
 el("disa-aktar").addEventListener("click", disaAktar);
 el("anki-aktar").addEventListener("click", ankiAktar);
+el("kart-calis").addEventListener("click", kartCalismayaBasla);
+el("kart-kapat").addEventListener("click", kartKapat);
+el("kart-cevir").addEventListener("click", () => {
+  el("kart-arka").hidden = false;
+  el("kart-cevir").hidden = true;
+});
+el("kart-bilemedim").addEventListener("click", () => kartDegerlendir("bilemedim"));
+el("kart-zorlandim").addEventListener("click", () => kartDegerlendir("zorlandim"));
+el("kart-biliyordum").addEventListener("click", () => kartDegerlendir("biliyordum"));
+el("kart-cikar").addEventListener("click", (olay) => { olay.preventDefault(); kartCikar(); });
+el("kart-daha").addEventListener("click", kartYeniParti);
+el("kart-bitir").addEventListener("click", kartKapat);
 el("ice-aktar").addEventListener("click", () => el("dosya-sec").click());
 el("dosya-sec").addEventListener("change", (o) => {
   const d = o.target.files[0];

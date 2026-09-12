@@ -22,6 +22,8 @@
   --zemin: #faf7f0;
   --vurgu: #7a4a12;
   --secili: #f0e3c8;
+  --dogru-zemin: #e7ead9;
+  --dogru-vurgu: #6b7f4a;
   --genislik: 44rem;
 }
 
@@ -175,6 +177,33 @@ textarea { width: 100%; resize: vertical; line-height: 1.5; }
 .kelime.kart-hedef {
   background: var(--secili);
   box-shadow: 0 2px 0 0 var(--vurgu);
+}
+
+/* kart arkası: doğrusu ve tahmin birbirine karışmasın diye ikisi de
+   kutulanır — doğrusu dolgun (vurgulu), tahmin sadece çerçeveli
+   (nötr) — göz kutunun ağırlığından bile hangisinin doğru olduğunu
+   anlasın, etiketi okumaya gerek kalmadan. */
+.kart-blok {
+  padding: 0.6rem 0.9rem;
+  margin: 0 0 0.7rem;
+  border-radius: 3px;
+}
+
+.kart-etiket {
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--soluk);
+}
+
+.kart-dogru {
+  background: var(--dogru-zemin);
+  border-left: 3px solid var(--dogru-vurgu);
+}
+
+.kart-tahmin {
+  border: 1px solid var(--cizgi);
 }
 
 .dogrulama-liste { list-style: none; margin: 0.8rem 0; padding: 0; }

@@ -155,10 +155,15 @@
     <button id="kart-cevir" type="button">Kartı çevir</button>
 
     <div id="kart-arka" hidden>
-      <p><strong>Doğrusu:</strong> <span id="kart-dogrusu"></span></p>
-      <p class="ipucu" id="kart-morfoloji"></p>
-      <p><strong>Sen ne sanmıştın:</strong></p>
-      <p id="kart-sandigin"></p>
+      <div class="kart-blok kart-dogru">
+        <p class="kart-etiket">Doğrusu</p>
+        <p id="kart-dogrusu"></p>
+        <p class="ipucu" id="kart-morfoloji"></p>
+      </div>
+      <div class="kart-blok kart-tahmin">
+        <p class="kart-etiket">Sen ne sanmıştın</p>
+        <p id="kart-sandigin"></p>
+      </div>
       <div class="satir">
         <button id="kart-bilemedim" type="button">Bilemedim</button>
         <button id="kart-zorlandim" type="button">Zorlandım</button>

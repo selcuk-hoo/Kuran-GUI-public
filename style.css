@@ -157,10 +157,14 @@ textarea { width: 100%; resize: vertical; line-height: 1.5; }
 
 .isaret { color: var(--vurgu); }
 
-/* doğrulama geçişinde işaretlenen kelimeler */
-.kelime.ozellik {
-  background: #e7eef2;
-  box-shadow: 0 2px 0 0 #6b8b9e;
+/* kökü geçmişte başka ayette yanlış çevrilmiş kelime — KIRMIZI DEĞİL,
+   kırmızı "hata yaptın" der, bu yalnızca "dikkat" uyarısı. Alt çizgi
+   (border-bottom/box-shadow değil) diğer işaretlerle karışmasın diye. */
+.kelime.uyari {
+  text-decoration: underline;
+  text-decoration-color: #d38b00;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 /* kart ekranında sorulan hedef kelime */

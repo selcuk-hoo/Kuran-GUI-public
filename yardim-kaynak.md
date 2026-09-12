@@ -57,18 +57,14 @@ yanlış tahmin ettiğini görmek, hiç tahmin etmemekten öğreticidir.
 
 ### Adım 4 — Doğrulama geçişi
 
-Program bu ayette kaç tane **edilgen fiil**, kaç tane **2. şahıs
-(muhatap)** ve kaç tane **harf-i cer öneki** olduğunu söyler, o
-kelimeleri işaretler — ama ne anlama geldiklerini söylemez.
+Ayet metninde **turuncu alt çizgili** kelimeler varsa, bunların kökünü
+geçmişte başka bir ayette yanlış çevirmişsin — üstlerine gelince
+("2:255:3 — كتب: 6:9 ve 13:16'da yanlış çevirmiştin" gibi) nerede
+yanıldığını hatırlatır, doğru anlamı söylemez. Bir ayette en fazla üç
+kelime işaretlenir. Hiç yoksa bu, o kökle ilk kez karşılaştığın
+anlamına gelir.
 
-Şimdi çevirine dön ve sadece şuna bak:
-
-- **Muhatap kim?** Tekil mi çoğul mu, sen mi onlar mı?
-- **Fiil etken mi edilgen mi?**
-- **Edat neyi neye bağlıyor?**
-
-Hatayı bulursan kaydet. Bulamazsan da sorun değil — mealler açılınca
-göreceksin.
+Şimdi çevirine dön: bu kelimeyi yine aynı şekilde mi çevirdin?
 
 `Kontrol ettim, mealleri aç` ile devam.
 

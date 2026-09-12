@@ -18,12 +18,6 @@ const KATEGORI_ADI = {
   baglam: "bağlam",
   kalip_valans: "kalıp/edat anlamı değiştirdi",
 };
-const OZELLIK_ADI = {
-  edilgen: "Edilgen fiil",
-  muhatap: "2. şahıs (muhatap)",
-  edat: "Harf-i cer öneki",
-};
-
 let durum = {
   sure: 1,
   ayet: 1,
@@ -35,7 +29,7 @@ let durum = {
   secilenKelime: null,
   mealAcik: false,
   kontrolEdildi: false,
-  ozellikSiralari: new Set(),
+  uyariSiralari: new Map(),
 };
 
 // --- IndexedDB ------------------------------------------------------------
@@ -197,7 +191,7 @@ function ayetCiz() {
       const x = document.createElement("span");
       x.className = "kelime"
         + (isaretli.has(p[2]) ? " isaretli" : "")
-        + (durum.ozellikSiralari.has(p[2]) ? " ozellik" : "");
+        + (durum.uyariSiralari.has(p[2]) ? " uyari" : "");
       x.textContent = p[1];
       x.dataset.sira = p[2];
       x.title = `${durum.sure}:${durum.ayet}:${p[2]}`;
@@ -226,7 +220,7 @@ function ayetCiz() {
   el("dogrulama-liste").textContent = "";
   el("kontrol-ettim").hidden = false;
 
-  if (durum.ceviri) dogrulamaCiz();
+  if (durum.ceviri) uyariCiz();
 
   hataFormuKapat();
   hatalariCiz();
@@ -261,54 +255,78 @@ function hatalariCiz() {
   });
 }
 
-function dogrulamaCiz() {
-  const o = durum.ayetVerisi.o;
-  const ozellikler = [
-    { anahtar: "edilgen", siralar: o.edilgen },
-    { anahtar: "muhatap", siralar: o.muhatap, kirilim: o.kirilim },
-    { anahtar: "edat", siralar: o.edat },
-  ];
+// "6:9" "13:16" -> "6:9 ve 13:16"; çok fazlaysa ilk üçü + kalan sayısı.
+function ayetListesiYaz(anahtarlar) {
+  const sirali = anahtarlar
+    .map((a) => a.split(":").map(Number))
+    .sort((a, b) => a[0] - b[0] || a[1] - b[1])
+    .map(([s, a]) => `${s}:${a}`);
+  const gosterilen = sirali.slice(0, 3);
+  let yazi = gosterilen.length === 1
+    ? gosterilen[0]
+    : gosterilen.slice(0, -1).join(", ") + " ve " + gosterilen[gosterilen.length - 1];
+  if (sirali.length > 3) yazi += ` (+${sirali.length - 3})`;
+  return yazi;
+}
 
-  durum.ozellikSiralari = new Set();
-  ozellikler.forEach((x) => x.siralar.forEach((s) => durum.ozellikSiralari.add(s)));
+// Bu ayetteki hangi kelimelerin KÖKÜ, geçmiş hata kayıtlarında başka
+// ayetlerde de geçiyor — "daha önce burada zorlanmıştın" uyarısı.
+// Doğru anlamı söylemez, yalnızca nerede yanıldığını hatırlatır.
+async function uyariKelimeleriBul() {
+  const v = durum.ayetVerisi;
+  const siralar = Array.from(new Set(v.p.filter((p) => p[0] === 1).map((p) => p[2])));
+  const kokAyetler = await kokAyetSayaci();
+  const buradaki = `${durum.sure}:${durum.ayet}`;
+
+  const adaylar = [];
+  for (const sira of siralar) {
+    const { kok } = await kelimeMorfolojisi(durum.sure, durum.ayet, sira);
+    if (!kok) continue;
+    const ayetSeti = kokAyetler.get(kok);
+    if (!ayetSeti) continue;
+    const digerleri = Array.from(ayetSeti).filter((a) => a !== buradaki);
+    if (!digerleri.length) continue;
+    adaylar.push({
+      sira, kelime: kelimeMetni(sira),
+      kokTekrar: digerleri.length,
+      digerleriYazi: ayetListesiYaz(digerleri),
+    });
+  }
+  adaylar.sort((a, b) => b.kokTekrar - a.kokTekrar);
+  return adaylar.slice(0, 3);
+}
+
+async function uyariCiz() {
+  const adaylar = await uyariKelimeleriBul();
+  durum.uyariSiralari = new Map(adaylar.map((a) => [a.sira, a]));
+
   document.querySelectorAll(".kelime").forEach((s) => {
-    s.classList.toggle("ozellik", durum.ozellikSiralari.has(Number(s.dataset.sira)));
+    const sira = Number(s.dataset.sira);
+    const aday = durum.uyariSiralari.get(sira);
+    s.classList.toggle("uyari", !!aday);
+    const temel = `${durum.sure}:${durum.ayet}:${sira}`;
+    s.title = aday ? `${temel} — ${aday.kelime}: ${aday.digerleriYazi}'de yanlış çevirmiştin` : temel;
   });
 
   const liste = el("dogrulama-liste");
   liste.textContent = "";
-  ozellikler.forEach((x) => {
+  if (!adaylar.length) {
     const li = document.createElement("li");
-    const ad = document.createElement("span");
-    ad.className = "ad";
-    ad.textContent = OZELLIK_ADI[x.anahtar] + ": ";
-    li.appendChild(ad);
-
-    const sayi = document.createElement("span");
-    sayi.className = "sayi";
-    sayi.textContent = x.siralar.length;
-    li.appendChild(sayi);
-
-    if (x.kirilim && Object.keys(x.kirilim).length) {
-      const k = document.createElement("span");
-      k.className = "ad";
-      k.textContent = " (" + Object.entries(x.kirilim)
-        .map(([e, n]) => `${e}: ${n}`).join(", ") + ")";
-      li.appendChild(k);
-    }
-
-    const kap = document.createElement("div");
-    if (x.siralar.length) {
-      kap.className = "kelimeler";
-      kap.dir = "rtl"; kap.lang = "ar";
-      kap.textContent = x.siralar.map(kelimeMetni).join("   ");
-    } else {
-      kap.className = "yok";
-      kap.textContent = "yok";
-    }
-    li.appendChild(kap);
+    li.className = "yok";
+    li.textContent = "Bu ayette daha önce zorlandığın bir kök yok.";
     liste.appendChild(li);
-  });
+  } else {
+    adaylar.forEach((a) => {
+      const li = document.createElement("li");
+      const k = document.createElement("bdi");
+      k.className = "kelimeler";
+      k.dir = "rtl"; k.lang = "ar";
+      k.textContent = a.kelime;
+      li.appendChild(k);
+      li.appendChild(document.createTextNode(` — ${a.digerleriYazi}'de yanlış çevirmiştin`));
+      liste.appendChild(li);
+    });
+  }
   el("dogrulama-bolum").hidden = false;
 }
 
@@ -364,7 +382,7 @@ async function ayetYukle(sure, ayet) {
     durum.ayetVerisi = a;
     durum.ceviri = ceviriler.length ? ceviriler[ceviriler.length - 1] : null;
     durum.hatalar = await kayit.ayetinkiler("hata", sure, ayet);
-    durum.ozellikSiralari = new Set();
+    durum.uyariSiralari = new Map();
 
     bekleniyorTemizle();
     gezinmeHatasi("");
@@ -416,7 +434,7 @@ async function ceviriKaydet() {
     el("meal-kilit").hidden = true;
     durum.kontrolEdildi = false;
     el("meal-goster").disabled = true;
-    dogrulamaCiz();
+    await uyariCiz();
   } catch (e) {
     durumYaz(el("ceviri-durum"), "Kaydedilemedi: " + e.message, 4000);
   }

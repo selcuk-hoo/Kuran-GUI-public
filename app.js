@@ -1324,15 +1324,18 @@ el("nadir-cevir").addEventListener("click", () => {
 });
 el("nadir-sonraki").addEventListener("click", nadirYeniKelime);
 
-// Tanıtım yalnızca ilk girişte. Kapatıldığı bilgisi localStorage'da —
-// çeviri/hata kayıtlarıyla ilgisi yok, yedeklenmesine de gerek yok.
+// Tanıtım, "bir daha gösterme" işaretlenene kadar her açılışta çıkar.
+// Sadece kapatmak yetmiyor: refleksle kapatan biri yöntemi hiç
+// okumadan aracı kullanmaya başlamasın. Tercih localStorage'da —
+// çeviri/hata kayıtlarıyla ilgisi yok, yedeklenmesi gerekmez.
 (function tanitim() {
-  let gorulmus = false;
-  try { gorulmus = localStorage.getItem("tanitim-gorundu") === "1"; } catch (e) { /* yok say */ }
-  el("tanitim").hidden = gorulmus;
+  let gizle = false;
+  try { gizle = localStorage.getItem("tanitim-gizle") === "1"; } catch (e) { /* yok say */ }
+  el("tanitim").hidden = gizle;
   el("tanitim-kapat").addEventListener("click", () => {
     el("tanitim").hidden = true;
-    try { localStorage.setItem("tanitim-gorundu", "1"); } catch (e) { /* yok say */ }
+    if (!el("tanitim-gizle").checked) return;
+    try { localStorage.setItem("tanitim-gizle", "1"); } catch (e) { /* yok say */ }
   });
 })();
 document.querySelectorAll('input[name="nadir-zorluk"]').forEach((r) => {

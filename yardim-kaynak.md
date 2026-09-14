@@ -473,7 +473,7 @@ olduğuna ancak okuyarak karar verilebiliyor.
 
 ## 11. Bir şeyler ters giderse
 
-**Ana ekrandaki ikon açılmıyor / boş geliyor**
+**Telefonun ana ekranındaki ikon açılmıyor / boş geliyor**
 Tarayıcının site verileri silinmiş olabilir. Bağlantıyı tekrar aç,
 **"Ana ekrana ekle"**yi tekrarla. Önceki çevirilerin kaybolmuş
 olabilir — bu yüzden ara sıra dışa aktarmak önemli.

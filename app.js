@@ -107,6 +107,12 @@ function sureBilgisi(no) {
   return (durum.dizin || []).find((s) => s.no === no);
 }
 
+// Kart ekranlarında ayetin nereden geldiğini yazar: "Bakara 2:255".
+function kartKonumYazisi(sure, ayet) {
+  const s = sureBilgisi(sure);
+  return `${s ? s.ad_tr + " " : ""}${sure}:${ayet}`;
+}
+
 function simdi() {
   const d = new Date();
   const p = (n) => String(n).padStart(2, "0");
@@ -821,6 +827,9 @@ async function sekmeGoster(sekme) {
   el("kart-ekrani").hidden = sekme !== "kart";
   el("nadir-ekrani").hidden = sekme !== "nadir";
   el("ayet-gezinme").hidden = sekme !== "calisma";
+  // Konum satırı çalışma ekranının ayetini gösterir; kart ekranlarında
+  // yanıltıcı olur (kart başka ayetten gelir, satır sabit kalırdı).
+  el("konum").hidden = sekme !== "calisma";
 
   document.querySelectorAll(".sekmeler button").forEach((b) => {
     b.classList.toggle("aktif", b.dataset.sekme === sekme);
@@ -948,6 +957,7 @@ async function kartYeniParti() {
   if (!yeniler.length) {
     el("kart-govde").hidden = true;
     el("kart-bos").hidden = false;
+    el("kart-ilerleme").textContent = "";
     return;
   }
   el("kart-bos").hidden = true;
@@ -964,7 +974,9 @@ async function kartGoster() {
   el("kart-govde").hidden = false;
   const kart = kartDurumu.kuyruk[kartDurumu.indeks];
   kartDurumu.aktifKart = kart;
-  el("kart-ilerleme").textContent = `Kart ${kartDurumu.indeks + 1} / ${kartDurumu.kuyruk.length}`;
+  el("kart-ilerleme").textContent =
+    `Kart ${kartDurumu.indeks + 1} / ${kartDurumu.kuyruk.length}`
+    + ` · ${kartKonumYazisi(kart.sure, kart.ayet)}`;
 
   const veri = await sureYukle(kart.sure);
   const a = veri.ayetler.find((x) => x.a === kart.ayet);
@@ -1152,6 +1164,8 @@ async function nadirYeniKelime() {
 
   const secilen = nadirAgirlikliSecim(havuz);
   nadirGosterilenler.add(`${secilen.sure}:${secilen.ayet}:${secilen.sira}`);
+
+  el("nadir-konum").textContent = kartKonumYazisi(secilen.sure, secilen.ayet);
 
   const veri = await sureYukle(secilen.sure);
   const a = veri.ayetler.find((x) => x.a === secilen.ayet);

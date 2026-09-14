@@ -55,17 +55,27 @@ h2 {
 
 /* --- sekmeler: hangi ekrandayız --- */
 
+/* Sekmeler dar ekranda alt satıra sarıyor; Yardım ortada asılı kalmasın
+   diye ilk satırın hizasında durur (align-items: center olsaydı iki
+   sekme satırının ortasına denk geliyordu). */
 .sekmeler-satir {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   border-bottom: 1px solid var(--cizgi);
 }
 
+.sekmeler-satir .yardim-link { padding: 0.5rem 0; }
+
+/* Yatay kaydırma DEĞİL sarma: telefonda üç etiket (toplam ~433px) tek
+   satıra sığmıyordu ve üçüncü sekme kaydırma kabının içinde tamamen
+   görünmez oluyordu — kaydırılabildiğine dair bir işaret de yok.
+   Sarınca telefonda iki satır olur, hepsi görünür; masaüstünde zaten
+   tek satıra sığıyor. */
 .sekmeler {
   display: flex;
   gap: 0;
-  overflow-x: auto;
+  flex-wrap: wrap;
   flex: 1;
 }
 
@@ -325,6 +335,30 @@ section { margin-top: 2rem; }
 @media (max-width: 40rem) {
   .mealler { grid-template-columns: 1fr; }
   .arapca { font-size: 30px; }
+
+  /* Üç sekme etiketi toplam ~433px; telefonda kullanılabilir genişlik
+     ~328px. Yan yana tek satıra sığmadığı için dar ekranda üç EŞİT
+     sütuna dönüşür ve etiketler kendi içinde alt satıra sarar — yoksa
+     üçüncü sekme kaydırma kabının içinde tamamen görünmez kalıyordu.
+     column-reverse: Yardım sekmelerin ÜSTÜNE geçer, aksi hâlde yanda
+     sekmelerden yer çalıyordu. */
+  .sekmeler-satir { flex-direction: column-reverse; align-items: stretch; gap: 0.2rem; }
+  .sekmeler-satir .yardim-link { align-self: flex-end; }
+  .sekmeler { flex-wrap: nowrap; }
+
+  .sekmeler button {
+    flex: 1 1 0;
+    min-width: 0;
+    white-space: normal;
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 0.45rem 0.25rem;
+  }
+
+  /* Üçü de tam iki satır olsun diye kırılma noktası sabitlenir;
+     yoksa "Çeviri Çalışma" tek satırda kalıp diğer ikisiyle
+     hizalanmıyordu. */
+  .sekmeler button span { display: block; }
 }
 
 /* Dokunmatik: parmakla kelime seçmek fareyle tıklamaktan zor.

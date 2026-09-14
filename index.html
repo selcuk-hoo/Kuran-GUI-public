@@ -46,9 +46,12 @@
 <header>
   <div class="sekmeler-satir">
     <nav class="sekmeler">
-      <button type="button" data-sekme="calisma" class="aktif">Çeviri Çalışma</button>
-      <button type="button" data-sekme="kart">Hatalı Kelime Kartları</button>
-      <button type="button" data-sekme="nadir">Rastgele Kelime Kartları</button>
+      <!-- Etiketler iki parçaya bölünmüş: dar ekranda her parça kendi
+           satırına geçer (bkz. style.css), üçü de iki satır olur ve
+           hizalar tutar. Geniş ekranda satır içi kalıp tek satır olur. -->
+      <button type="button" data-sekme="calisma" class="aktif"><span>Çeviri</span> <span>Çalışma</span></button>
+      <button type="button" data-sekme="kart"><span>Hatalı Kelime</span> <span>Kartları</span></button>
+      <button type="button" data-sekme="nadir"><span>Rastgele Kelime</span> <span>Kartları</span></button>
     </nav>
     <a class="yardim-link" href="yardim.html">Yardım</a>
   </div>
@@ -206,6 +209,7 @@
   <p id="nadir-yukleniyor" class="ipucu" hidden>Yükleniyor…</p>
 
   <div id="nadir-govde">
+    <p id="nadir-konum" class="konum"></p>
     <p id="nadir-arapca" class="arapca" dir="rtl" lang="ar"></p>
     <p class="ipucu">Bu kelime burada ne anlama geliyor?</p>
     <button id="nadir-cevir" type="button">Kartı çevir</button>

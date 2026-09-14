@@ -53,6 +53,27 @@ h2 {
   margin: 0 0 0.6rem;
 }
 
+/* --- site başlığı --- */
+
+/* İkon + ad, sekmelerin üstünde. Telefonda dikey yer kıymetli olduğu
+   için tek satır, küçük punto ve alt açıklama yok — programı ilk kez
+   açan zaten tanıtım kutusunu görüyor. */
+.site-basligi {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+}
+
+.site-basligi img { width: 30px; height: 30px; flex: none; }
+
+.site-basligi h1 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: normal;
+  letter-spacing: 0.01em;
+}
+
 /* --- sekmeler: hangi ekrandayız --- */
 
 /* Sekmeler dar ekranda alt satıra sarıyor; Yardım ortada asılı kalmasın
@@ -364,6 +385,10 @@ section { margin-top: 2rem; }
      üçüncü sekme kaydırma kabının içinde tamamen görünmez kalıyordu.
      column-reverse: Yardım sekmelerin ÜSTÜNE geçer, aksi hâlde yanda
      sekmelerden yer çalıyordu. */
+  .site-basligi { gap: 0.45rem; margin-bottom: 0.5rem; }
+  .site-basligi img { width: 26px; height: 26px; }
+  .site-basligi h1 { font-size: 1.02rem; }
+
   .sekmeler-satir { flex-direction: column-reverse; align-items: stretch; gap: 0.2rem; }
   .sekmeler-satir .yardim-link { align-self: flex-end; }
   .sekmeler { flex-wrap: nowrap; }
@@ -454,6 +479,21 @@ fieldset label { display: block; margin: 0.2rem 0; font-size: 0.95rem; }
 
 #kurulum-durumu.hazir { color: #2b6b2b; }
 #kurulum-durumu.calisiyor { color: var(--vurgu); }
+
+/* --- alt bilgi (iletişim) --- */
+
+.alt-bilgi {
+  max-width: var(--genislik);
+  margin: 2.5rem auto 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--cizgi);
+  font-size: 0.85rem;
+  color: var(--soluk);
+}
+
+.alt-bilgi p { margin: 0; }
+.alt-bilgi a { color: var(--soluk); }
+.alt-bilgi a:hover { color: var(--vurgu); }
 
 dialog {
   max-width: 32rem;

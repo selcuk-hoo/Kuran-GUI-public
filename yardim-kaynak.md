@@ -479,3 +479,6 @@ olabilir — bu yüzden ara sıra dışa aktarmak önemli.
 **`Kayıtları içe aktar` dosyayı seçtirmiyor**
 Dosyayı, telefonun indirilenler klasöründen ara — bazı dosya
 yöneticileri farklı bir klasörü varsayılan gösteriyor.
+
+**Burada yazmayan bir sorun / bir öneri**
+Şu adrese yazabilirsin: selchuk_hoo@yahoo.com

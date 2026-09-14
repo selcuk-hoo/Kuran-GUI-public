@@ -44,11 +44,15 @@
 <script src="surum.js"></script>
 
 <header>
-  <nav class="gezinme">
-    <div class="gezinme-kartlar">
-      <button id="kart-calis" type="button">Kelime Kartlarını Aç</button>
-      <button id="nadir-calis" type="button">Nadir Kelimeler</button>
-    </div>
+  <div class="sekmeler-satir">
+    <nav class="sekmeler">
+      <button type="button" data-sekme="calisma" class="aktif">Çeviri Çalışma</button>
+      <button type="button" data-sekme="kart">Hatalı Kelime Kartları</button>
+      <button type="button" data-sekme="nadir">Rastgele Kelime Kartları</button>
+    </nav>
+    <a class="yardim-link" href="yardim.html">Yardım</a>
+  </div>
+  <nav class="gezinme" id="ayet-gezinme">
     <button id="onceki" type="button">‹ Önceki</button>
     <form id="atla-form" autocomplete="off">
       <label for="atla-sure">Sure</label>
@@ -60,7 +64,6 @@
       <button type="submit">Git</button>
     </form>
     <button id="sonraki" type="button">Sonraki ›</button>
-    <a class="yardim-link" href="yardim.html">Yardım</a>
   </nav>
   <p id="konum" class="konum"></p>
   <p id="gezinme-hata" class="gezinme-hata" hidden></p>
@@ -187,8 +190,6 @@
       <button id="kart-bitir" type="button">Bitir, ayete dön</button>
     </div>
   </div>
-
-  <p class="satir"><button id="kart-kapat" type="button">← Ayete dön</button></p>
 </section>
 
 <section id="nadir-ekrani" dir="ltr" hidden>
@@ -215,10 +216,8 @@
         <p id="nadir-dogrusu"></p>
         <p class="ipucu" id="nadir-morfoloji"></p>
       </div>
-      <div class="kart-blok kart-notr">
-        <p class="kart-etiket">Diyanet Vakfı meali (tüm ayet)</p>
-        <p id="nadir-vakfi"></p>
-      </div>
+      <p class="kart-etiket">Mealler (tüm ayet)</p>
+      <div id="nadir-mealler" class="mealler"></div>
       <div class="satir">
         <button id="nadir-sonraki" type="button">Sonraki kelime</button>
       </div>
@@ -228,8 +227,6 @@
   <div id="nadir-bos" hidden>
     <p>Gösterilecek nadir kelime bulunamadı.</p>
   </div>
-
-  <p class="satir"><button id="nadir-kapat" type="button">← Ayete dön</button></p>
 </section>
 </main>
 

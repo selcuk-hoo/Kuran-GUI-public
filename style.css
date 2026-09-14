@@ -53,7 +53,57 @@ h2 {
   margin: 0 0 0.6rem;
 }
 
-/* --- gezinme --- */
+/* --- sekmeler: hangi ekrandayız --- */
+
+.sekmeler-satir {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--cizgi);
+}
+
+.sekmeler {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  flex: 1;
+}
+
+.sekmeler button {
+  flex: 0 0 auto;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background: none;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  color: var(--soluk);
+  white-space: nowrap;
+}
+
+.sekmeler button:hover:not(:disabled) {
+  border-color: var(--cizgi);
+  color: var(--metin);
+}
+
+.sekmeler button.aktif {
+  color: var(--metin);
+  border-bottom-color: var(--vurgu);
+  font-weight: bold;
+}
+
+/* Sekmelerin yanındaki Yardım bağlantısı da aynı aileden görünsün —
+   varsayılan mavi/altı çizili yerine soluk metin, hover'da koyulaşır. */
+.yardim-link {
+  color: var(--soluk);
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.yardim-link:hover { color: var(--vurgu); }
+
+/* --- gezinme (Önceki/Git/Sonraki) --- */
 
 .gezinme {
   display: flex;
@@ -64,11 +114,6 @@ h2 {
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--cizgi);
 }
-
-/* Kart düğmeleri kendi satırında dursun, gezinme (önceki/git/sonraki)
-   altta ayrı bir satıra insin. */
-.gezinme-kartlar { display: flex; gap: 0.75rem; flex-basis: 100%; }
-.gezinme-kartlar button { flex: 1; }
 
 #atla-form { display: flex; align-items: center; gap: 0.4rem; }
 #atla-form label { color: var(--soluk); font-size: 0.85rem; }
@@ -203,7 +248,7 @@ textarea { width: 100%; resize: vertical; line-height: 1.5; }
   border-left: 3px solid var(--dogru-vurgu);
 }
 
-.kart-tahmin, .kart-notr {
+.kart-tahmin {
   border: 1px solid var(--cizgi);
 }
 

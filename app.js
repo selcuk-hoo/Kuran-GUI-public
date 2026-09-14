@@ -804,6 +804,34 @@ async function iceAktarIsle(temiz) {
   await ayetYukle(durum.sure, durum.ayet);
 }
 
+// --- sekmeler: üç ekran arasında geçiş -------------------------------------
+//
+// Çeviri Çalışma / Hatalı Kelime Kartları / Rastgele Kelime Kartları.
+// Önceki/Git/Sonraki yalnızca Çeviri Çalışma sekmesindeyken görünür —
+// aksi hâlde arka planda görünmeden ayeti değiştirebiliyordu.
+
+let aktifSekme = "calisma";
+
+async function sekmeGoster(sekme) {
+  if (sekme === aktifSekme) return;
+  const onceki = aktifSekme;
+  aktifSekme = sekme;
+
+  el("calisma-ekrani").hidden = sekme !== "calisma";
+  el("kart-ekrani").hidden = sekme !== "kart";
+  el("nadir-ekrani").hidden = sekme !== "nadir";
+  el("ayet-gezinme").hidden = sekme !== "calisma";
+
+  document.querySelectorAll(".sekmeler button").forEach((b) => {
+    b.classList.toggle("aktif", b.dataset.sekme === sekme);
+  });
+
+  if (onceki === "kart") kartDurumu = null;
+
+  if (sekme === "kart") await kartCalismayaBasla();
+  else if (sekme === "nadir") await nadirCalismayaBasla();
+}
+
 // --- kart çalışması --------------------------------------------------------
 //
 // Havuz: hata kayıtları, meal_farki hariç ve "bu kartı çıkar" denmemiş
@@ -906,8 +934,6 @@ async function kartAgirlikliSecim(adet, haricAnahtarlar) {
 let kartDurumu = null;
 
 async function kartCalismayaBasla() {
-  el("calisma-ekrani").hidden = true;
-  el("kart-ekrani").hidden = false;
   kartDurumu = {
     kuyruk: [], indeks: 0, aktifKart: null,
     gosterilenler: new Set(),
@@ -1013,9 +1039,8 @@ async function kartCikar() {
 }
 
 function kartKapat() {
-  el("kart-ekrani").hidden = true;
-  el("calisma-ekrani").hidden = false;
   kartDurumu = null;
+  sekmeGoster("calisma");
 }
 
 // --- nadir kelimeler --------------------------------------------------------
@@ -1100,8 +1125,6 @@ function nadirAgirlikliSecim(havuz) {
 }
 
 async function nadirCalismayaBasla() {
-  el("calisma-ekrani").hidden = true;
-  el("nadir-ekrani").hidden = false;
   el("nadir-govde").hidden = true;
   el("nadir-bos").hidden = true;
   nadirGosterilenler.clear();
@@ -1156,14 +1179,20 @@ async function nadirYeniKelime() {
   if (vf) morfParca.push(`Bab: ${vf}`);
   el("nadir-morfoloji").textContent = morfParca.join(" · ");
 
-  // Vakfı cümlesi kelime kelime hizalı değil, o yüzden içinde ilgili
+  // Mealler kelime kelime hizalı değil, o yüzden içlerinde ilgili
   // kelimeyi vurgulamıyoruz — yanlış yeri işaretleme riski var.
-  el("nadir-vakfi").textContent = a.m[1] || "(meal yok)";
-}
-
-function nadirKapat() {
-  el("nadir-ekrani").hidden = true;
-  el("calisma-ekrani").hidden = false;
+  const mealKap = el("nadir-mealler");
+  mealKap.textContent = "";
+  a.m.forEach((metin, i) => {
+    const d = document.createElement("div");
+    d.className = "meal";
+    const h = document.createElement("h3");
+    h.textContent = MEAL_ADLARI[i];
+    const p = document.createElement("p");
+    p.textContent = metin;
+    d.appendChild(h); d.appendChild(p);
+    mealKap.appendChild(d);
+  });
 }
 
 async function ankiAktar() {
@@ -1262,8 +1291,9 @@ el("atla-form").addEventListener("submit", (o) => {
 });
 el("disa-aktar").addEventListener("click", disaAktar);
 el("anki-aktar").addEventListener("click", ankiAktar);
-el("kart-calis").addEventListener("click", kartCalismayaBasla);
-el("kart-kapat").addEventListener("click", kartKapat);
+document.querySelectorAll(".sekmeler button").forEach((b) => {
+  b.addEventListener("click", () => sekmeGoster(b.dataset.sekme));
+});
 el("kart-cevir").addEventListener("click", () => {
   el("kart-arka").hidden = false;
   el("kart-cevir").hidden = true;
@@ -1274,8 +1304,6 @@ el("kart-biliyordum").addEventListener("click", () => kartDegerlendir("biliyordu
 el("kart-cikar").addEventListener("click", (olay) => { olay.preventDefault(); kartCikar(); });
 el("kart-daha").addEventListener("click", kartYeniParti);
 el("kart-bitir").addEventListener("click", kartKapat);
-el("nadir-calis").addEventListener("click", nadirCalismayaBasla);
-el("nadir-kapat").addEventListener("click", nadirKapat);
 el("nadir-cevir").addEventListener("click", () => {
   el("nadir-arka").hidden = false;
   el("nadir-cevir").hidden = true;

@@ -12,14 +12,21 @@ Kayıtların yalnızca **senin cihazında** tutulur. Bu bağlantıyı
 kullanan başka biri olsa bile, kimse kimsenin çevirisini görmez — her
 kişinin kayıtları kendi tarayıcısında ayrı ayrı durur.
 
+Bu döngünün dışında, tekrar için iki kart çalışması da var (bölüm 7)
+— biri kendi hatalarına döner, biri Kur'an'ın geri kalanından nadir
+kelimelerle tanıştırır. Ama önce asıl döngüyü öğren.
+
 ---
 
-## 1. Ekran
+## 1. Ekranlar
 
-Yukarıdan aşağıya:
+Üç sekme var, üstte: `Çeviri Çalışma`, `Hatalı Kelime Kartları`,
+`Rastgele Kelime Kartları` (ikinci ve üçüncüsü bölüm 7'de). Hangisindeysen
+sekme altı çizgiyle işaretlenir. Asıl çalışma **Çeviri Çalışma**'da
+geçer, aşağıdakiler onun düzeni — yukarıdan aşağıya:
 
-**Gezinme çubuğu** — `Kelime Kartlarını Aç` ve `Nadir Kelimeler` (bkz.
-bölüm 7), `‹ Önceki`, sure/ayet kutuları + `Git`, `Sonraki ›`
+**Sekme çubuğu** — aktif sekmeyi gösterir; `‹ Önceki` / sure-ayet
+kutuları + `Git` / `Sonraki ›` yalnızca bu sekmedeyken görünür.
 
 **Konum satırı** — hangi ayettesin, surede kaç ayet var
 
@@ -196,9 +203,14 @@ birleşmez, biri diğerini görmez.
 
 ## 7. Kart çalışması
 
-Üstteki gezinme çubuğunda **`Kelime Kartlarını Aç`**. Hata kaydı düştüğün
-kelimelerden kartlar hazırlayıp seni sınar — ayrı bir program
-kurmana gerek yok, uygulamanın kendi içinde.
+Asıl döngü (bölüm 2) seni ancak çevirdiğin ayetlerle yüzleştirir. İki
+kart sekmesi bunu tamamlar — biri geride bıraktığın hataları unutmana
+izin vermez, öbürü henüz sıra gelmemiş kelimelerle önceden tanıştırır.
+
+**`Hatalı Kelime Kartları`** — bir kelimede yanıldığını not aldıysan,
+o kayıp gitmesin diye buraya düşer. Kartlar hazırlayıp seni sınar;
+Anki gibi ayrı bir program kurmana gerek yok, hepsi uygulamanın
+içinde.
 
 - Her kartta ayetin tamamı gelir, sorulan kelime vurgulu; "Bu kelime
   burada ne anlama geliyor?" diye sorar, hiçbir ipucu vermez.
@@ -208,23 +220,28 @@ kurmana gerek yok, uygulamanın kendi içinde.
   kartın bir dahaki sefere ne zaman karşına çıkacağını etkiler — sık
   yanıldığın ve uzun süredir karşına çıkmamış kelimeler öncelikli.
 - Bir kartı bir daha görmek istemiyorsan **"Bu kartı çıkar"** de.
-- Bir oturum 15 kart; bitince **"15 kart daha"** ile devam edebilirsin.
+- Bir oturum 15 kart; bitince **"15 kart daha"** ile devam edebilir ya
+  da **"Bitir, ayete dön"** ile Çeviri Çalışma sekmesine dönebilirsin.
 
 **"Hata değil, mealler farklı söylemiş"** diye işaretlediğin kelimeler
 kart havuzuna hiç girmez — onlar senin hatan değildi.
 
-Hiç hata kaydın yoksa "Kelime Kartlarını Aç" boş olduğunu söyler; önce birkaç
+Hiç hata kaydın yoksa bu sekme boş olduğunu söyler; önce birkaç
 kelimeye hata kaydı düşmen gerekiyor.
 
-**`Nadir Kelimeler`** ayrı bir düğme, hata kaydına bakmaz. Kur'an'da az
-geçen kökleri gösterir — henüz çevirmediğin ayetler dahil, tüm kitaptan.
-Ne kadar nadirse o kadar sık karşına çıkar; **Orta/Zor/Çok Zor** ile bu
-nadirlik vurgusunu ayarlayabilirsin (Çok Zor'da en az geçen kelimeler
-çok daha sık çıkar), seçimin hatırlanır. Kartı çevirince kelimenin meali,
-kök/lemma/bab ve ayetin tam Diyanet Vakfı meali görünür (kelime orada
-ayrıca işaretlenmez, cümle içinde kendin ararsın). Burada senin bir
-notun yok, tekrar/hafıza kaydı da tutulmaz — "Sonraki kelime" ile
-devam edersin.
+**`Rastgele Kelime Kartları`** — hata kaydına bakmaz. Kendi sıran o
+ayete gelene kadar yıllar geçebilir; bu, Kur'an'da az geçen köklerle
+daha önceden, ayrı bir yoldan tanışmanı sağlar — henüz çevirmediğin
+ayetler dahil, tüm kitaptan. Ne kadar nadirse o kadar sık karşına
+çıkar; **Orta/Zor/Çok Zor** ile bu nadirlik vurgusunu ayarlayabilirsin
+(Çok Zor'da en az geçen kelimeler çok daha sık çıkar), seçimin
+hatırlanır. Kartı çevirince kelimenin meali, kök/lemma/bab ve dört
+mealin tamamı görünür (kelime meal cümlelerinde ayrıca işaretlenmez,
+içlerinde kendin ararsın). Burada senin bir notun yok, tekrar/hafıza
+kaydı da tutulmaz — "Sonraki kelime" ile devam edersin.
+
+Her iki sekmeden de üstteki `Çeviri Çalışma` sekmesine tıklayarak
+çıkabilirsin.
 
 ---
 

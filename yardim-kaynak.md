@@ -36,25 +36,35 @@ görünmez, çünkü orada ayet ayet ilerlemiyorsun.
 
 **Çeviri Çalışma** sekmesinin düzeni, yukarıdan aşağıya:
 
-**Sekme çubuğu** — aktif sekmeyi gösterir; `‹ Önceki` / sure-ayet
-kutuları + `Git` / `Sonraki ›` yalnızca bu sekmedeyken görünür.
+**Sekme çubuğu** — üç sekme ve sağında `Yardım` bağlantısı (bu sayfa).
+Hemen altındaki ayet gezinmesi — `‹ Önceki`, sure ile ayet kutuları,
+`Git`, `Sonraki ›` — yalnızca bu sekmede görünür.
 
-**Konum satırı** — hangi ayettesin, surede kaç ayet var
+**Konum satırı** — şu an hangi ayette olduğunu ve bulunduğun surenin
+kaç ayet içerdiğini söyler: "Bakara (البقرة) — 2:255 / 286 ayet" gibi.
 
-**Arapça metin** — büyük punto, sağdan sola. Her kelime ayrı bir
-dokunma hedefi.
+**Arapça metin** — ayetin kendisi, büyük puntoyla ve sağdan sola.
+Kelimeler tek tek dokunulabilir: bir kelimeye dokunduğunda o kelime
+için hata kaydı formu açılır.
 
-**Kendi çevirin** — serbest metin kutusu + `Çeviriyi kaydet`
+**Kendi çevirin** — ayeti kendi cümlelerinle yazdığın boş kutu, altında
+`Çeviriyi kaydet` düğmesi.
 
-**Doğrulama geçişi** — çeviriyi kaydedince açılır
+**Doğrulama geçişi** — çeviriyi kaydettiğin anda bu bölüm açılır ve
+mealleri görmeden önce seni bir kez daha düşündürür: bu ayette daha
+önce yanıldığın bir kelime varsa haber verir. Ne olduğu bölüm 2, Adım
+4'te anlatılıyor.
 
-**Mealleri göster** — çeviri kaydedilip doğrulama geçişi tamamlanana
-kadar pasiftir
+**Mealleri göster** — dört meali yan yana açan düğme. Çevirini
+kaydedip doğrulama geçişini geçene kadar tıklanamaz durumdadır;
+kasıtlı böyle, çünkü mealleri erken görmek çalışmayı anlamsızlaştırır.
 
-**Bu ayetteki hata kayıtların** — bu ayet için not aldıysan burada
+**Bu ayetteki hata kayıtların** — bu ayette daha önce kaydettiğin
+kelime notları burada listelenir. Hiç kaydın yoksa bu bölüm görünmez.
 
-**Alt çubuk** — `Kayıtlarımı dışa aktar`, `Kayıtları içe aktar`,
-`Kelime kartı indir (Anki)`
+**Alt çubuk** — üç düğme: `Kayıtlarımı dışa aktar` (yedek almak ve
+analiz ettirmek için, bölüm 6 ve 10), `Kayıtları içe aktar` (yedeği
+geri yüklemek için) ve `Kelime kartı indir (Anki)` (bölüm 9).
 
 ---
 
@@ -62,49 +72,105 @@ kadar pasiftir
 
 ### Adım 1 — Ayeti oku
 
-Anlamadığın yerleri fark et ama henüz not alma.
+Arapça metni baştan sona oku. Takıldığın, anlamını çıkaramadığın
+yerleri zihninde not et — ama henüz hiçbir şey yazma. Hata kaydı
+tutmak için doğru an bu değil: neyi bilmediğini ancak çevirini
+yazdıktan ve mealle karşılaştırdıktan sonra gerçekten anlarsın. Şimdi
+yazarsan yalnızca "zor geldi" demiş olursun.
 
 ### Adım 2 — Kendi çevirini yaz
 
-Tahmin etmekten çekinme. Yanlış çeviri de veridir, hatta asıl işe
-yarayan odur. Emin olmadığın yeri boş bırakma; tahminini yaz. Neyi
-yanlış tahmin ettiğini görmek, hiç tahmin etmemekten öğreticidir.
+Kutuya ayetin kendi anladığın hâlini yaz. Tahmin etmekten çekinme:
+yanlış çeviri de veridir, hatta asıl işe yarayan odur. Emin olmadığın
+bir kelimeyi boş bırakma, tahminini yaz — çünkü birazdan mealle
+karşılaştırdığında, tahminin ile doğrusu arasındaki fark sana tam
+olarak neyi bilmediğini gösterecek. Boş bıraktığın yer ise hiçbir şey
+göstermez.
+
+Çevirinin edebî olması gerekmiyor; kendi cümlelerinle, anladığın gibi
+yazman yeterli.
 
 ### Adım 3 — Kaydet
 
-`Çeviriyi kaydet`. Mealler **açılmaz**; altta doğrulama geçişi çıkar.
+`Çeviriyi kaydet` düğmesine bas. Mealler hâlâ **açılmaz** — bunun
+yerine altta doğrulama geçişi belirir. Çevirin kaydedildiği için artık
+onu değiştirsen bile "önce kendim denedim" aşamasını geçmiş olursun.
 
 ### Adım 4 — Doğrulama geçişi
 
-Ayet metninde **turuncu alt çizgili** kelimeler varsa, bunların kökünü
-geçmişte başka bir ayette yanlış çevirmişsin — üstlerine gelince
-("2:255:3 — كتب: 6:9 ve 13:16'da yanlış çevirmiştin" gibi) nerede
-yanıldığını hatırlatır, doğru anlamı söylemez. Bir ayette en fazla üç
-kelime işaretlenir. Hiç yoksa bu, o kökle ilk kez karşılaştığın
-anlamına gelir.
+Bu ara adımın tek amacı var: mealleri açmadan önce sana bir kez daha
+düşünme fırsatı vermek.
 
-Şimdi çevirine dön: bu kelimeyi yine aynı şekilde mi çevirdin?
+Ayet metnindeki bazı kelimelerin altı **turuncu çizgiyle**
+işaretlenmiş olabilir. Bunun anlamı şu: o kelimenin kökünü (aynı
+kelimenin kendisini değil, aynı kökten gelen bir başka kelimeyi)
+geçmişte, başka bir ayette yanlış çevirmişsin ve hata kaydı düşmüşsün.
+Yani "bu köke daha önce takılmıştın" demek.
 
-`Kontrol ettim, mealleri aç` ile devam.
+Hemen altında bu kelimeler liste hâlinde de yazar, yanlarında nerede
+yanıldığın: "كتب — 6:9 ve 13:16'da yanlış çevirmiştin" gibi. (Fareyle
+çalışıyorsan kelimenin üstüne gelince de aynı bilgi çıkar.)
+
+Dikkat: sana doğru anlamı **söylemez**, yalnızca daha önce burada
+takıldığını hatırlatır. Bulmak yine sana kalıyor.
+
+Bir ayette en fazla üç kelime işaretlenir; en çok farklı ayette
+takıldığın kökler öne alınır. Hiç işaretli kelime yoksa "Bu ayette
+daha önce zorlandığın bir kök yok" yazar — bu kötü bir şey değil,
+sadece bu ayetteki köklere henüz takılmamışsın demektir.
+
+Şimdi çevirine dön ve sor: bu kelimeyi yine aynı şekilde mi çevirdim?
+İstersen çevirini düzeltip tekrar kaydedebilirsin.
+
+Hazır olduğunda `Kontrol ettim, mealleri aç` ile devam et.
 
 ### Adım 5 — Mealleri karşılaştır
 
-Dört meal yan yana gelir: **Diyanet İşleri**, **Diyanet Vakfı**,
-**Elmalılı Yazır**, **Y. N. Öztürk**.
+Dört meal yan yana açılır: **Diyanet İşleri**, **Diyanet Vakfı**,
+**Elmalılı Yazır**, **Y. N. Öztürk**. Tek meal yerine dördü birden
+duruyor, çünkü tek bir çeviriye bakmak sana o çevirmenin tercihini
+"doğru" diye yutturur.
 
-Hepsini oku. Meallerin *birbirinden* ayrıldığı yer, metnin gerçekten
-tartışmalı olduğu yerdir. Sonra kendi çevirinle karşılaştır.
+Önce dördünü de oku ve şuna bak: **kendi aralarında nerede
+ayrılıyorlar?** Dördü aynı şeyi söylüyorsa o yer açık demektir; biri
+ötekilerden ayrılıyorsa ya da hepsi başka başka söylüyorsa, orası
+metnin gerçekten tartışmalı olduğu yerdir — senin orada farklı
+düşünmen hata olmayabilir.
+
+Sonra kendi çevirinle karşılaştır ve farkın nerede olduğunu bul: bir
+kelimeyi mi yanlış anladın, cümlenin kuruluşunu mu, yoksa kimin kime
+söylediğini mi? Bu sorunun cevabı bir sonraki adımda seçeceğin
+kategori olacak.
 
 ### Adım 6 — Farkı sınıflandır
 
-Ayrıldığın **kelimeye dokun**. Bir kelime meali varsa (her kelimede
-yok) form açılınca hemen üstte görürsün — bu, "Doğru hali"ni yazarken
-ipucu olabilir. Kategori seç. İkisi de isteğe bağlı ama ayrı ayrı işe
-yarıyor: **"Doğru hali"** kelimenin gerçek anlamını kısaca yazar (meale
-bakınca öğrendiğin şey), **"Not"** ise ne sandığını / nasıl yanıldığını.
-İkisini birlikte yazmak, hem Anki kartını hazırlar hem sonradan bakınca
-ne öğrendiğini hatırlatır. `Hatayı kaydet`. Kaydettiğin kelimenin altı
-çizili görünür.
+Çevirinin mealden ayrıldığı yeri buldun; şimdi bunu kaydedeceksin.
+Ayet metninde, ayrıldığın **kelimeye dokun** — altta o kelime için bir
+form açılır.
+
+Formun en üstünde, o kelimenin Türkçe karşılığı yazabilir ("Kelime
+meali: …"). Her kelimede çıkmaz (nedeni bölüm 5'te), ama çıktığında
+"Doğru hali"ni yazarken işine yarar.
+
+Sonra bir **kategori** seç — yani "neden yanıldım" sorusunun cevabını.
+Kategoriler bölüm 3'te tek tek anlatılıyor; doğru kategoriyi seçmek
+önemli, çünkü ileride "en çok hangi sebeple yanılıyorum" sorusunun
+cevabı buradan çıkacak.
+
+Altında iki yazı alanı var, ikisi de isteğe bağlı ama farklı işler
+görüyor:
+
+- **Doğru hali** — kelimenin burada gerçekten ne demek olduğu, yani
+  meale bakınca öğrendiğin şey. Kısa yaz, birkaç kelime yeter.
+- **Not** — senin ne sandığın, nasıl yanıldığın. "Fiil sandım",
+  "geçmiş zaman zannettim" gibi.
+
+İkisini birlikte yazmak en iyisi: kelime kartı çalışmasında (bölüm 7)
+kartın arkasında ikisini de görürsün, yani hem doğrusunu hem o gün
+neden şaşırdığını hatırlarsın.
+
+`Hatayı kaydet` dediğinde kayıt tamamlanır. O kelime bundan sonra ayet
+metninde altı çizili görünür ve kelime kartı havuzuna girer.
 
 ---
 
@@ -144,9 +210,14 @@ sonrası, kime söylendiği bilinmeden anlaşılmıyor.
 > *Sorun metnin dışında.*
 
 ### Hata değil, mealler farklı söylemiş
-Sen yanılmadın — üç meal birbirinden ayrılıyor, ayet gerçekten
-tartışmalı. Bunu ayrıca not almak istersen bu kategoriyi kullan;
-istatistiğe ve kelime kartı çalışmasına girmez, hata sayılmaz.
+Bu kategori bir hata değil, bir gözlem. Dört meal birbirinden
+ayrılıyorsa, sorun senin çevirinde değil; ayet gerçekten tartışmalı,
+çevirmenler bile anlaşamamış. Böyle yerleri not etmek istersen bunu
+kullan.
+
+Bu kayıtlar ayrı tutulur: hata sayılmaz, istatistiklerine karışmaz ve
+kelime kartlarında karşına çıkmaz — çünkü ezberlenecek bir "doğrusu"
+yok ortada.
 
 **Kararsızsan en dar olanı seç.** "Kelimeyi hiç bilmiyordum" en somut,
 "Cümleyi yanlış kurdum" en geniştir. Her şeye en geniş kategoriyi
@@ -181,21 +252,51 @@ Tevbe suresinde besmele yoktur.
 **Durak işaretleri** (ۚ ۖ ۗ ۩) metinde durur ama dokunulmaz — kelime
 değildirler.
 
-**Aynı ayete tekrar çeviri yazman üzerine yazar.** Eski hâli kaybolur
-— düzeltme yapmak istediğinde bunu bil.
+**Kök, lemma, bab ne demek?** Kelime kartlarının arkasında ve Anki
+dosyasında bu üç bilgi geçiyor:
 
-**Aynı kelimeye birden çok hata kaydı** yazabilirsin.
+- **Kök** — kelimenin anlamını taşıyan, çoğunlukla üç harfli iskelet.
+  Aynı kökten türeyen bütün kelimeler akrabadır. `نزل` kökü "inmek"
+  çevresinde döner.
+- **Lemma** — o kelimenin sözlükte aratacağın hâli. `أَنزَلَ` gibi.
+- **Bab** — fiilin hangi kalıptan türediği, 1 ile 11 arası bir
+  numarayla. Kalıp anlamı düzenli biçimde değiştirir: `نزل` "inmek"
+  iken 4. babdan gelen `أَنزَلَ` "indirmek" olur. Bu yüzden kökü
+  bilmek tek başına yetmez, kalıbı da görmen gerekir.
 
-**Bazı mealler birkaç ayeti tek blokta veriyor.** Böyle bir ayette
-mealin altında "Bu meal 58-60'ı birlikte veriyor" gibi bir not
-görürsün — metin gerçekten aynı, hata değil.
+İsim ve harflerde bab yoktur, o satır yalnızca fiillerde çıkar.
 
-**Her kelimenin ayrı bir meali yok.** Kelime meali ayrı bir kaynaktan
-geliyor ve o kaynak bazen birkaç Arapça kelimeyi tek karşılıkla
-veriyor; böyle bir kelimeye dokununca meal satırı hiç çıkmaz, anlamı
-bir öncekinin içindedir. 2:181, 8:6 ve 13:37'de ise kaynağın kelime
-sırası metinle oturmadığı için o üç ayette kelime meali hiç
-gösterilmez.
+**Aynı ayete ikinci kez çeviri yazarsan eskisinin üzerine yazılır.**
+Yani bir ayetin tek bir çevirisi olur, en son kaydettiğin. Eski hâlini
+saklamaz. Çevirini düzeltmek istediğinde bunu bil: düzeltilmiş hâli
+kaydedince ilk denemen kaybolur.
+
+**Aynı kelimeye birden çok hata kaydı yazabilirsin.** Örneğin aynı
+kelimeye bugün "kökünü bilmiyordum" diye, ay sonra tekrar uğradığında
+başka bir sebeple not düşebilirsin. Hepsi ayrı ayrı saklanır; kelime
+kartında ise hepsi tek kartta toplanır.
+
+**Bazı mealler birkaç ayeti tek metinde birleştiriyor.** Çevirmen,
+arka arkaya gelen ayetleri tek cümlede toplamayı tercih etmiş olabilir;
+o zaman o ayetlerin her birinde aynı meal metni görünür. Program bunu
+fark edip mealin altına "Bu meal 58-60'ı birlikte veriyor" gibi bir
+not düşer — yani metnin tekrar etmesi bir hata değil, çevirmenin
+tercihi.
+
+**Her kelimenin ayrı bir Türkçe karşılığı yok.** Bir kelimeye
+dokunduğunda bazen "Kelime meali" satırı hiç çıkmaz. Sebebi şu:
+kelime kelime çeviriler, Kur'an metninin kendisinden değil, ayrı bir
+çalışmadan geliyor ve o çalışmayı yapanlar bazen birkaç Arapça
+kelimeyi tek bir Türkçe karşılıkla vermiş. Örneğin `مِن قَبْلِكَ` iki
+ayrı Arapça kelime ama Türkçesi tek bir ifade: "senden önce". Böyle
+durumlarda karşılık ilk kelimeye yazılmış oluyor, ikincisine
+dokunduğunda ise bir şey çıkmıyor — kelimenin anlamsız olduğundan
+değil, anlamı bir öncekiyle birlikte verildiği için.
+
+Ayrıca üç ayette — **2:181, 8:6 ve 13:37** — bu çalışmanın kelimeleri
+sayma biçimi programın kullandığı metinle örtüşmüyor; karşılıklar bir
+kelime kayarak yanlış kelimeye denk geliyordu. Yanlış bilgi göstermek
+yerine bu üç ayette kelime meali hiç gösterilmiyor.
 
 ---
 
@@ -205,20 +306,34 @@ gösterilmez.
 deposunda** tutulur. Hiçbir yere gönderilmez, sunucuya gitmez, kimseyle
 paylaşılmaz.
 
-Bunun bir bedeli var: **tarayıcının site verilerini silersen ya da
-telefonu değiştirirsen, kayıtların da gider.** Tek koruma, ara sıra
-**`Kayıtlarımı dışa aktar`** yapmak — iki dosya üretir:
-`kuran-calisma.json` (yedek + geri yükleme için) ve `kuran-calisma.md` (bir
-yapay zekâ sohbetine yükleyip analiz ettirmek için, bkz. bölüm 10).
-İkisi de telefonunun
-indirilenler klasörüne kaydedilir.
+Bunun iyi tarafı gizlilik; kötü tarafı ise şu: **tarayıcının site
+verilerini silersen, telefonu değiştirirsen ya da telefonun bozulursa
+kayıtların da gider.** Program bunları hiçbir yerde saklamıyor, çünkü
+hiçbir yere göndermiyor. Tek koruma, ara sıra kendin yedek almak.
 
-`Kayıtları içe aktar` ile geri yüklersin — dosya seçiciden
-`kuran-calisma.json` dosyasını seçersin (`kuran-calisma.md` yalnızca okumak
-için, geri yüklenmez).
+Alt çubuktaki **`Kayıtlarımı dışa aktar`** düğmesine bastığında iki
+dosya birden iner:
 
-**Aynı ayeti iki farklı cihazda çevirme** — kayıtlar otomatik
-birleşmez, biri diğerini görmez.
+- **`kuran-calisma.json`** — yedeğin. Kayıtlarını geri yüklemek için
+  kullanılan dosya budur; insanın okuması için değil, programın
+  okuması için.
+- **`kuran-calisma.md`** — okunabilir hâli. Geri yüklemeye yaramaz;
+  bir yapay zekâ sohbetine yükleyip çalışmanı analiz ettirmek içindir
+  (bölüm 10).
+
+İkisi de telefonunun indirilenler klasörüne kaydedilir. Ara sıra
+bunları başka bir yere (bilgisayarına, bulut deposuna, kendine attığın
+bir e-postaya) kopyalarsan yedeğin gerçekten güvende olur.
+
+Geri yüklemek için `Kayıtları içe aktar` de ve dosya seçiciden
+**`kuran-calisma.json`** dosyasını seç. Program önce kaç kayıt
+yükleneceğini söyler ve onay ister; onayladığında o andaki kayıtların
+dosyadakilerle **değiştirilir**, üzerine eklenmez.
+
+**Aynı ayeti iki farklı cihazda çevirme.** Telefon ve tablette ayrı
+ayrı çalışırsan iki taraf birbirinden habersiz olur; kayıtlar
+kendiliğinden birleşmez ve birinden alıp öbürüne yüklediğinde
+öbürünün kayıtları silinir.
 
 ---
 
@@ -229,17 +344,27 @@ sekme de o ayetlerde yanıldığın kelimeleri unutmana izin vermez. Bir
 kelimeye hata kaydı düştüğün anda kart havuzuna girer. Anki gibi ayrı
 bir program kurmana gerek yok, hepsi uygulamanın içinde.
 
-- Her kartta ayetin tamamı gelir, sorulan kelime vurgulu; üstte hangi
-  ayet olduğu yazar ("Kart 3 / 15 · Bakara 2:255" gibi). "Bu kelime
-  burada ne anlama geliyor?" diye sorar, hiçbir ipucu vermez.
-- **`Kartı çevir`** deyince sırasıyla: kelimenin meali (yoksa yazdığın
-  "doğru hali"), kök/lemma/bab, en son o an ne sandığını gösterir.
-- Kendini değerlendir: **Bilemedim / Zorlandım / Biliyordum.** Bu,
-  kartın bir dahaki sefere ne zaman karşına çıkacağını etkiler — sık
-  yanıldığın ve uzun süredir karşına çıkmamış kelimeler öncelikli.
-- Bir kartı bir daha görmek istemiyorsan **"Bu kartı çıkar"** de.
-- Bir oturum 15 kart; bitince **"15 kart daha"** ile devam edebilir ya
-  da **"Bitir, ayete dön"** ile Çeviri Çalışma sekmesine dönebilirsin.
+- **Kartın önü:** ayetin tamamı, sorulan kelime vurgulu. Üstte kaçıncı
+  kartta olduğun ve ayetin yeri yazar ("Kart 3 / 15 · Bakara 2:255"
+  gibi). Kelimeyi ayetin içinde görürsün, çünkü bir kelimenin anlamı
+  çoğu zaman bulunduğu cümleye bağlıdır. İpucu verilmez; önce kendin
+  hatırlamaya çalış.
+- **`Kartı çevir`** dediğinde arkası açılır ve iki kutu görürsün. Üstteki
+  dolgun kutu **doğrusu**: kelimenin Türkçe karşılığı (yoksa senin
+  yazdığın "doğru hali") ve altında kök / lemma / bab. Alttaki boş
+  çerçeveli kutu ise **o gün ne sandığın**, yani kendi notun. Renk
+  farkı bilerek: hangisinin doğru olduğunu okumadan da ayırt edersin.
+- Sonra kendini değerlendirirsin: **Bilemedim / Zorlandım /
+  Biliyordum.** Bu bir puan değil; kelimenin bir dahaki sefere ne
+  sıklıkla karşına çıkacağını ayarlar. Bilemediklerin daha sık,
+  bildiklerin daha seyrek gelir. Uzun süredir görmediğin kelimeler de
+  öne çıkar, çünkü asıl unutma orada başlar.
+- Artık öğrendiğin, bir daha görmek istemediğin bir kelime varsa
+  **"Bu kartı çıkar"** de; o kelime havuzdan tamamen çıkar (hata kaydın
+  silinmez, sadece kart olarak sorulmaz).
+- Bir oturum 15 karttır. Bitince **"15 kart daha"** ile devam edebilir
+  ya da **"Bitir, ayete dön"** ile Çeviri Çalışma sekmesine
+  dönebilirsin.
 
 **"Hata değil, mealler farklı söylemiş"** diye işaretlediğin kelimeler
 kart havuzuna hiç girmez — onlar senin hatan değildi.
@@ -256,16 +381,23 @@ Kendi sıran bir ayete gelene kadar yıllar geçebilir; burası Kur'an'da
 az geçen kelimelerle daha önceden, ayrı bir yoldan tanışmanı sağlar —
 henüz çevirmediğin ayetler dahil, tüm kitaptan.
 
-- Kelime ne kadar nadirse o kadar sık karşına çıkar. **Orta / Zor /
-  Çok Zor** bu nadirlik vurgusunu ayarlar: Çok Zor'da en az geçen
-  kelimeler çok daha sık gelir. Seçimin hatırlanır.
-- Kart önü, Hatalı Kelime Kartları'ndaki gibi: ayetin tamamı, sorulan
-  kelime vurgulu, üstte ayetin yeri.
-- **`Kartı çevir`** deyince kelimenin meali, kök/lemma/bab ve dört
-  mealin tamamı görünür. Kelime, meal cümlelerinin içinde ayrıca
-  işaretlenmez — orada kendin ararsın.
-- Burada senin bir notun yok, doğru/yanlış değerlendirmesi de
-  tutulmaz; **`Sonraki kelime`** ile ilerlersin.
+- **Zorluk** (Orta / Zor / Çok Zor) hangi kelimelerin geleceğini
+  ayarlar. Kur'an'da bazı kökler binlerce kez, bazıları yalnızca bir
+  kez geçer; bu ayar, az geçenlerin ne kadar öne çıkacağını belirler.
+  Orta'da nispeten tanıdık kelimeler de gelir, Çok Zor'da neredeyse
+  yalnızca bir-iki kez geçen kelimelerle karşılaşırsın. Seçtiğin ayar
+  hatırlanır, her seferinde yeniden seçmen gerekmez.
+- **Kartın önü** Hatalı Kelime Kartları'ndaki gibidir: ayetin tamamı,
+  sorulan kelime vurgulu, üstte ayetin yeri.
+- **`Kartı çevir`** dediğinde kelimenin Türkçe karşılığı ve kök /
+  lemma / bab bilgisi çıkar; altında da ayetin dört meali yan yana
+  gelir, böylece kelimeyi cümlenin bütünü içinde görebilirsin. Kelime,
+  meal cümlelerinin içinde ayrıca işaretlenmez — Türkçe metinde hangi
+  kelimeye denk geldiğini kendin ararsın (nedeni bölüm 5'teki kelime
+  meali notuyla aynı).
+- Burada not tutulmaz, doğru bildin mi diye sorulmaz, kayıt da
+  yapılmaz. Amaç sınamak değil, tanıştırmak. **`Sonraki kelime`** ile
+  istediğin kadar ilerlersin.
 
 Her iki kart sekmesinden de üstteki `Çeviri Çalışma` sekmesine
 dokunarak çıkarsın.
@@ -298,15 +430,21 @@ bir yapay zekâ sohbeti (ChatGPT, Claude, Gemini vb.). `Kayıtlarımı
 dışa aktar` dediğinde inen iki dosya tam da bunun için hazırlanıyor:
 sohbete dosya olarak yükleyip aşağıdaki istemi yapıştırırsın.
 
-- **`kuran-calisma.md`** — okumak için. Bir özetle başlar (kaç çeviri,
-  kaç hata, kategori dağılımı, 100 kelimede kaç hata — ayet başına
-  hata yanıltıcı olurdu, ayetler 3 ila 50 kelime arası değişiyor),
-  sonra her ayette Arapça, kendi çevirin ve dört meal yan yana. Satır
-  satır karşılaştırma istiyorsan bu dosya.
-- **`kuran-calisma.json`** — saymak için. "Kaç edilgen fiilde hata
-  yaptım", "kategori dağılımım nasıl" gibi sayısal sorular için daha
-  uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa
-  kökü/lemma'sı/babı otomatik eklenmiş durumda.
+- **`kuran-calisma.md`** — okunabilir olan. Bir özetle başlar: kaç ayet
+  çevirmişsin, kaç hata kaydın var, hangi kategoriden kaç tane, her
+  100 kelimede kaç hata yapmışsın. (Bu son ölçü bilerek böyle: "ayet
+  başına hata" yanıltıcı olurdu, çünkü ayetler 3 kelimeden 50 kelimeye
+  kadar değişiyor — uzun ayette daha çok hata çıkması normaldir.)
+  Özetten sonra çalıştığın her ayet tek tek gelir: Arapça metin, senin
+  çevirin, dört meal ve o ayete düştüğün notlar. Satır satır
+  karşılaştırma istiyorsan bu dosya.
+- **`kuran-calisma.json`** — saymak için. İnsan gözüyle okunacak bir
+  dosya değil, ama sayısal sorularda işi kolaylaştırır: "hangi
+  kategoriden kaç tane var", "en çok hangi kökte takılıyorum" gibi.
+  Programın sakladığı bilgiye ek olarak, her hata kaydına o ayetin kaç
+  kelime olduğu ve kelimeye bağlı bir kayıtsa kökü, lemması, babı da
+  otomatik eklenir — böylece analizi yapan taraf bunları ayrıca
+  bulmak zorunda kalmaz.
 
 İkisini birden yükleyip şunu sorabilirsin:
 

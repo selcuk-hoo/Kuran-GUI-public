@@ -999,11 +999,7 @@ async function kartGoster() {
   const meal = await kelimeMeali(kart.sure, kart.ayet, kart.kelime_sira);
   el("kart-dogrusu").textContent = meal || kart.dogruHali || "(kaydedilmemiş)";
 
-  const morfParca = [];
-  if (kok) morfParca.push(`Kök: ${kok}`);
-  if (lemma) morfParca.push(`Lemma: ${lemma}`);
-  if (vf) morfParca.push(`Bab: ${vf}`);
-  el("kart-morfoloji").textContent = morfParca.join(" · ");
+  morfolojiGoster("kart-morfoloji", kok, lemma, vf);
 
   const sandigin = el("kart-sandigin");
   sandigin.textContent = "";
@@ -1063,6 +1059,78 @@ function kartKapat() {
 // bakılmaksızın. Ağırlık 1/frekans^üstel: sabit bir eşik yok, ne kadar
 // nadirse o kadar sık çıkar; üstel zorluk seçimiyle değişir. Hafıza/
 // tekrar kaydı tutulmaz.
+
+/* Morfoloji verisindeki "bab" alanı yalnızca bir sayı (1-11). Sayının
+   kendisi hiçbir şey anlatmıyor; asıl işe yarayan, o babın KALIBI.
+   Kalıplar فعل köküyle yazılır — kalıbı gören, kendi kelimesini o
+   kalıba oturtabilir. Roma rakamı da kalıyor: dilbilgisi kitapları
+   babları böyle anıyor. */
+const BAB_KALIPLARI = {
+  "1": ["فَعَلَ", "I"],
+  "2": ["فَعَّلَ", "II"],
+  "3": ["فَاعَلَ", "III"],
+  "4": ["أَفْعَلَ", "IV"],
+  "5": ["تَفَعَّلَ", "V"],
+  "6": ["تَفَاعَلَ", "VI"],
+  "7": ["اِنْفَعَلَ", "VII"],
+  "8": ["اِفْتَعَلَ", "VIII"],
+  "9": ["اِفْعَلَّ", "IX"],
+  "10": ["اِسْتَفْعَلَ", "X"],
+  "11": ["اِفْعَالَّ", "XI"],
+  "12": ["اِفْعَوْعَلَ", "XII"],
+};
+
+/* Arapça parçaları KENDİ span'ında çiziyoruz: gövde yazı tipi
+   (Georgia) Arapça'yı sistem yedeğine düşürüyor, harekeli kalıplar
+   orada okunmuyordu. */
+/* Anki dışa aktarımı için aynı gösterim, HTML metni olarak. */
+function babYazisi(vf) {
+  return vf.split("·").map((n) => {
+    const kalip = BAB_KALIPLARI[n.trim()];
+    if (!kalip) return kacis(n);
+    return `<span dir="rtl">${kacis(kalip[0])}</span> (${kalip[1]})`;
+  }).join(" · ");
+}
+
+function morfolojiGoster(alanId, kok, lemma, vf) {
+  const alan = el(alanId);
+  alan.textContent = "";
+
+  // Her Arapça öbek KENDİ <bdi>'sinde: satır soldan sağa akarken
+  // araya giren Arapça, yanındaki parantezi/noktayı kendi tarafına
+  // çekip sırayı bozabiliyor. bdi o öbeği yalıtıyor.
+  const arapcaOge = (metin) => {
+    const b = document.createElement("bdi");
+    b.className = "arabi";
+    b.lang = "ar";
+    b.textContent = metin;
+    return b;
+  };
+
+  const alanlar = [];
+  if (kok) alanlar.push(["Kök", [arapcaOge(kok)]]);
+  if (lemma) alanlar.push(["Lemma", [arapcaOge(lemma)]]);
+  if (vf) {
+    // Veride bir kelimenin tek babı var; yine de birden çoğuna
+    // hazırlıklı (kelime_morfolojisi "·" ile birleştiriyor).
+    const ogeler = [];
+    vf.split("·").forEach((n, i) => {
+      if (i) ogeler.push(document.createTextNode(" · "));
+      const kalip = BAB_KALIPLARI[n.trim()];
+      if (!kalip) { ogeler.push(document.createTextNode(n)); return; }
+      const kap = document.createElement("bdi");
+      kap.appendChild(arapcaOge(kalip[0]));
+      kap.appendChild(document.createTextNode(" (" + kalip[1] + ")"));
+      ogeler.push(kap);
+    });
+    alanlar.push(["Bab", ogeler]);
+  }
+
+  alanlar.forEach(([etiket, ogeler], i) => {
+    alan.appendChild(document.createTextNode((i ? " · " : "") + etiket + ": "));
+    ogeler.forEach((o) => alan.appendChild(o));
+  });
+}
 
 const NADIR_USTEL = { orta: 0.5, zor: 1, cok_zor: 2 };
 
@@ -1187,11 +1255,7 @@ async function nadirYeniKelime() {
   const { kok, lemma, vf } = await kelimeMorfolojisi(secilen.sure, secilen.ayet, secilen.sira);
   el("nadir-dogrusu").textContent = await kelimeMeali(secilen.sure, secilen.ayet, secilen.sira);
 
-  const morfParca = [];
-  if (kok) morfParca.push(`Kök: ${kok}`);
-  if (lemma) morfParca.push(`Lemma: ${lemma}`);
-  if (vf) morfParca.push(`Bab: ${vf}`);
-  el("nadir-morfoloji").textContent = morfParca.join(" · ");
+  morfolojiGoster("nadir-morfoloji", kok, lemma, vf);
 
   // Mealler kelime kelime hizalı değil, o yüzden içlerinde ilgili
   // kelimeyi vurgulamıyoruz — yanlış yeri işaretleme riski var.
@@ -1248,7 +1312,8 @@ async function ankiAktar() {
     const arka = [];
     if (m[0]) arka.push(`Kök: <span dir="rtl">${kacis(m[0])}</span>`);
     if (m[1]) arka.push(`Lemma: <span dir="rtl">${kacis(m[1])}</span>`);
-    if (m[2]) arka.push(`Bab: ${kacis(m[2])}`);
+    // Anki kartında da sayı değil kalıbın kendisi (bkz. BAB_KALIPLARI)
+    if (m[2]) arka.push(`Bab: ${babYazisi(m[2])}`);
     arka.push(`Kategori: ${kacis(KATEGORI_ADI[h.kategori] || h.kategori)}`);
     if (h.dogru_hali) arka.push(`<br>Doğrusu: ${kacis(h.dogru_hali)}`);
     if (h.aciklama) arka.push(`<br>Kendi notum: ${kacis(h.aciklama)}`);

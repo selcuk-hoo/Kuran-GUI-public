@@ -89,17 +89,20 @@ h2 {
 
 /* --- sekmeler: hangi ekrandayız --- */
 
-/* Sekmeler dar ekranda alt satıra sarıyor; Yardım ortada asılı kalmasın
-   diye ilk satırın hizasında durur (align-items: center olsaydı iki
-   sekme satırının ortasına denk geliyordu). */
+/* Kılavuz üstte kendi satırında, sekmeler altında — telefonda da
+   masaüstünde de aynı düzen. Yan yana dururken Kılavuz sekmelerden
+   yer çalıyor ve başlığın altındaki satır kalabalık görünüyordu.
+   column-reverse: DOM'da sekmeler önce (asıl gezinme o), ekranda
+   Kılavuz üstte. */
 .sekmeler-satir {
   display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+  flex-direction: column-reverse;
+  align-items: stretch;
+  gap: 0.2rem;
   border-bottom: 1px solid var(--cizgi);
 }
 
-.sekmeler-satir .yardim-link { padding: 0.5rem 0; }
+.sekmeler-satir .yardim-link { padding: 0.3rem 0; align-self: flex-end; }
 
 /* Yatay kaydırma DEĞİL sarma: telefonda üç etiket (toplam ~433px) tek
    satıra sığmıyordu ve üçüncü sekme kaydırma kabının içinde tamamen
@@ -324,6 +327,20 @@ textarea { width: 100%; resize: vertical; line-height: 1.5; }
   padding: 0.6rem 0.8rem;
 }
 
+/* Kök / lemma / bab satırı: .ipucu ölçüsünde (0.85rem) okunmuyordu,
+   üstelik Arapça kısımları gövde yazı tipinin sistem yedeğine
+   düşüyordu. Kendi ölçüsü ve Arapçası için kendi yazı tipi var. */
+#kart-morfoloji, #nadir-morfoloji {
+  font-size: 1rem;
+  line-height: 1.9;
+  margin-top: 0.5rem;
+}
+
+.arabi {
+  font-family: "Scheherazade New", Georgia, "Times New Roman", serif;
+  font-size: 1.35em;
+}
+
 .ipucu, .kilit {
   color: var(--soluk);
   font-size: 0.85rem;
@@ -396,14 +413,12 @@ section { margin-top: 2rem; }
      ~328px. Yan yana tek satıra sığmadığı için dar ekranda üç EŞİT
      sütuna dönüşür ve etiketler kendi içinde alt satıra sarar — yoksa
      üçüncü sekme kaydırma kabının içinde tamamen görünmez kalıyordu.
-     column-reverse: Yardım sekmelerin ÜSTÜNE geçer, aksi hâlde yanda
-     sekmelerden yer çalıyordu. */
+     Kılavuz'un kendi satırında durması artık her genişlikte geçerli
+     (bkz. .sekmeler-satir). */
   .site-basligi { gap: 0.5rem; margin-bottom: 0.7rem; }
   .site-basligi img { width: 40px; height: 40px; }
   .site-basligi h1 { font-size: 1.12rem; letter-spacing: 0.03em; }
 
-  .sekmeler-satir { flex-direction: column-reverse; align-items: stretch; gap: 0.2rem; }
-  .sekmeler-satir .yardim-link { align-self: flex-end; }
   .sekmeler { flex-wrap: nowrap; }
 
   .sekmeler button {
@@ -465,6 +480,23 @@ fieldset {
 
 legend { color: var(--soluk); font-size: 0.85rem; padding: 0 0.3rem; }
 fieldset label { display: block; margin: 0.2rem 0; font-size: 0.95rem; }
+
+/* Zorluk seçimi: üç kısa etiket. Alt alta dizilince telefonda üç satır
+   yer kaplıyordu, yan yana tek satıra sığıyor (sığmazsa sarar).
+   legend flex öğesi olmaz, üst çizginin üstünde kalmaya devam eder. */
+#nadir-zorluk-secim {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.2rem 1.4rem;
+}
+
+#nadir-zorluk-secim label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+}
 
 #hata-liste { margin: 0; padding-left: 1.2rem; }
 #hata-liste li { margin: 0.35rem 0; font-size: 0.9rem; }

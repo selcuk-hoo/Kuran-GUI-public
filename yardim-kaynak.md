@@ -259,10 +259,12 @@ dosyasında bu üç bilgi geçiyor:
   Aynı kökten türeyen bütün kelimeler akrabadır. `نزل` kökü "inmek"
   çevresinde döner.
 - **Lemma** — o kelimenin sözlükte aratacağın hâli. `أَنزَلَ` gibi.
-- **Bab** — fiilin hangi kalıptan türediği, 1 ile 11 arası bir
-  numarayla. Kalıp anlamı düzenli biçimde değiştirir: `نزل` "inmek"
-  iken 4. babdan gelen `أَنزَلَ` "indirmek" olur. Bu yüzden kökü
-  bilmek tek başına yetmez, kalıbı da görmen gerekir.
+- **Bab** — fiilin hangi kalıptan türediği. Kartta kalıbın kendisi
+  `فعل` köküyle yazılı durur, yanında da dilbilgisi kitaplarının
+  kullandığı Roma rakamı: `أَفْعَلَ (IV)` gibi. Kalıp anlamı düzenli
+  biçimde değiştirir: `نزل` "inmek" iken `أَفْعَلَ` kalıbından gelen
+  `أَنزَلَ` "indirmek" olur. Bu yüzden kökü bilmek tek başına yetmez,
+  kalıbı da görmen gerekir.
 
 İsim ve harflerde bab yoktur, o satır yalnızca fiillerde çıkar.
 

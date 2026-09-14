@@ -36,7 +36,7 @@ görünmez, çünkü orada ayet ayet ilerlemiyorsun.
 
 **Çeviri Çalışma** sekmesinin düzeni, yukarıdan aşağıya:
 
-**Sekme çubuğu** — üç sekme ve sağında `Yardım` bağlantısı (bu sayfa).
+**Sekme çubuğu** — üç sekme ve sağında `Kılavuz` bağlantısı (bu sayfa).
 Hemen altındaki ayet gezinmesi — `‹ Önceki`, sure ile ayet kutuları,
 `Git`, `Sonraki ›` — yalnızca bu sekmede görünür.
 

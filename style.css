@@ -61,17 +61,25 @@ h2 {
 .site-basligi {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.7rem;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
 }
 
-.site-basligi img { width: 30px; height: 30px; flex: none; }
+/* İkon sola yaslıyken sayfa kenarında kaybolup gidiyordu; ortada ve
+   büyük duruyor. Çerçevesi ince (14/512) olduğu için küçük boyda
+   seçilmiyor — 48px altına inme. */
+.site-basligi img { width: 48px; height: 48px; flex: none; }
 
+/* Kalın ve belirgin: ilk denemede gövde metniyle aynı ağırlıkta ve
+   neredeyse aynı puntodaydı, masaüstünde sıradan bir satır gibi
+   görünüyordu. */
 .site-basligi h1 {
   margin: 0;
-  font-size: 1.15rem;
-  font-weight: normal;
-  letter-spacing: 0.01em;
+  font-size: 1.55rem;
+  font-weight: bold;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
 }
 
 /* --- sekmeler: hangi ekrandayız --- */
@@ -385,9 +393,9 @@ section { margin-top: 2rem; }
      üçüncü sekme kaydırma kabının içinde tamamen görünmez kalıyordu.
      column-reverse: Yardım sekmelerin ÜSTÜNE geçer, aksi hâlde yanda
      sekmelerden yer çalıyordu. */
-  .site-basligi { gap: 0.45rem; margin-bottom: 0.5rem; }
-  .site-basligi img { width: 26px; height: 26px; }
-  .site-basligi h1 { font-size: 1.02rem; }
+  .site-basligi { gap: 0.5rem; margin-bottom: 0.7rem; }
+  .site-basligi img { width: 40px; height: 40px; }
+  .site-basligi h1 { font-size: 1.25rem; }
 
   .sekmeler-satir { flex-direction: column-reverse; align-items: stretch; gap: 0.2rem; }
   .sekmeler-satir .yardim-link { align-self: flex-end; }

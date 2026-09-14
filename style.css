@@ -203,7 +203,7 @@ textarea { width: 100%; resize: vertical; line-height: 1.5; }
   border-left: 3px solid var(--dogru-vurgu);
 }
 
-.kart-tahmin {
+.kart-tahmin, .kart-notr {
   border: 1px solid var(--cizgi);
 }
 

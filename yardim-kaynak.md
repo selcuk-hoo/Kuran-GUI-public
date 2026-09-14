@@ -218,9 +218,13 @@ kelimeye hata kaydı düşmen gerekiyor.
 
 **`Nadir Kelimeler`** ayrı bir düğme, hata kaydına bakmaz. Kur'an'da az
 geçen kökleri gösterir — henüz çevirmediğin ayetler dahil, tüm kitaptan.
-Ne kadar nadirse o kadar sık karşına çıkar. Kartı çevirince sadece
-kelimenin meali ve kök/lemma/bab görünür; burada senin bir notun yok,
-tekrar/hafıza kaydı da tutulmaz — "Sonraki kelime" ile devam edersin.
+Ne kadar nadirse o kadar sık karşına çıkar; **Orta/Zor/Çok Zor** ile bu
+nadirlik vurgusunu ayarlayabilirsin (Çok Zor'da en az geçen kelimeler
+çok daha sık çıkar), seçimin hatırlanır. Kartı çevirince kelimenin meali,
+kök/lemma/bab ve ayetin tam Diyanet Vakfı meali görünür (kelime orada
+ayrıca işaretlenmez, cümle içinde kendin ararsın). Burada senin bir
+notun yok, tekrar/hafıza kaydı da tutulmaz — "Sonraki kelime" ile
+devam edersin.
 
 ---
 

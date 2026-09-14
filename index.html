@@ -195,6 +195,13 @@
   <p class="ipucu">Kur'an'da az geçen kökler, ayetin çevrilip
     çevrilmediğine bakılmaksızın — ne kadar nadirse o kadar sık çıkar.</p>
 
+  <fieldset id="nadir-zorluk-secim">
+    <legend>Zorluk</legend>
+    <label><input type="radio" name="nadir-zorluk" value="orta"> Orta</label>
+    <label><input type="radio" name="nadir-zorluk" value="zor"> Zor</label>
+    <label><input type="radio" name="nadir-zorluk" value="cok_zor"> Çok Zor</label>
+  </fieldset>
+
   <p id="nadir-yukleniyor" class="ipucu" hidden>Yükleniyor…</p>
 
   <div id="nadir-govde">
@@ -207,6 +214,10 @@
         <p class="kart-etiket">Doğrusu</p>
         <p id="nadir-dogrusu"></p>
         <p class="ipucu" id="nadir-morfoloji"></p>
+      </div>
+      <div class="kart-blok kart-notr">
+        <p class="kart-etiket">Diyanet Vakfı meali (tüm ayet)</p>
+        <p id="nadir-vakfi"></p>
       </div>
       <div class="satir">
         <button id="nadir-sonraki" type="button">Sonraki kelime</button>

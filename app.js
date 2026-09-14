@@ -1023,12 +1023,29 @@ function kartKapat() {
 // Kart çalışmasından TAMAMEN bağımsız: hata kaydına değil, kökün
 // Kur'an'daki toplam geçme sayısına dayanır. Havuz TÜM Kur'an'daki
 // kelime meali olan oluşumlar — ayetin çevrilip çevrilmediğine
-// bakılmaksızın. Ağırlık 1/frekans: sabit bir eşik yok, ne kadar
-// nadirse o kadar sık çıkar. Hafıza/tekrar kaydı tutulmaz.
+// bakılmaksızın. Ağırlık 1/frekans^üstel: sabit bir eşik yok, ne kadar
+// nadirse o kadar sık çıkar; üstel zorluk seçimiyle değişir. Hafıza/
+// tekrar kaydı tutulmaz.
+
+const NADIR_USTEL = { orta: 0.5, zor: 1, cok_zor: 2 };
 
 let nadirFrekanslar = null;
 let nadirHavuzu = null;
 const nadirGosterilenler = new Set();
+
+function nadirZorlukYukle() {
+  try {
+    const deger = localStorage.getItem("nadir-zorluk");
+    if (deger && NADIR_USTEL[deger] != null) return deger;
+  } catch (e) { /* localStorage kapalıysa (özel gezinti vb.) yok say */ }
+  return "zor";
+}
+
+function nadirZorlukKaydet(deger) {
+  try { localStorage.setItem("nadir-zorluk", deger); } catch (e) { /* yok say */ }
+}
+
+let nadirZorluk = nadirZorlukYukle();
 
 async function nadirFrekansYukle() {
   if (nadirFrekanslar) return nadirFrekanslar;
@@ -1055,7 +1072,7 @@ async function nadirHavuzuOlustur() {
         const morf = (a.k || [])[sira - 1];
         const kok = morf && morf[0];
         if (!meal || !kok || !frekans[kok]) return;
-        havuz.push({ sure: sureNo, ayet: a.a, sira, agirlik: 1 / frekans[kok] });
+        havuz.push({ sure: sureNo, ayet: a.a, sira, frekans: frekans[kok] });
       });
     });
   });
@@ -1064,17 +1081,19 @@ async function nadirHavuzuOlustur() {
 }
 
 function nadirAgirlikliSecim(havuz) {
+  const ustel = NADIR_USTEL[nadirZorluk] ?? 1;
   const aday = havuz.filter(
     (x) => !nadirGosterilenler.has(`${x.sure}:${x.ayet}:${x.sira}`));
   // Havuzdaki her şey bu oturumda gösterildiyse baştan başla.
   const kaynak = aday.length ? aday : havuz;
   if (!aday.length) nadirGosterilenler.clear();
 
-  const toplam = kaynak.reduce((s, x) => s + x.agirlik, 0);
+  const agirliklar = kaynak.map((x) => 1 / Math.pow(x.frekans, ustel));
+  const toplam = agirliklar.reduce((s, a) => s + a, 0);
   let esik = Math.random() * toplam;
   let idx = 0;
-  while (idx < kaynak.length - 1 && esik > kaynak[idx].agirlik) {
-    esik -= kaynak[idx].agirlik;
+  while (idx < kaynak.length - 1 && esik > agirliklar[idx]) {
+    esik -= agirliklar[idx];
     idx++;
   }
   return kaynak[idx];
@@ -1086,6 +1105,10 @@ async function nadirCalismayaBasla() {
   el("nadir-govde").hidden = true;
   el("nadir-bos").hidden = true;
   nadirGosterilenler.clear();
+
+  document.querySelectorAll('input[name="nadir-zorluk"]').forEach((r) => {
+    r.checked = r.value === nadirZorluk;
+  });
 
   const ilkKurulum = !nadirHavuzu;
   el("nadir-yukleniyor").hidden = !ilkKurulum;
@@ -1132,6 +1155,10 @@ async function nadirYeniKelime() {
   if (lemma) morfParca.push(`Lemma: ${lemma}`);
   if (vf) morfParca.push(`Bab: ${vf}`);
   el("nadir-morfoloji").textContent = morfParca.join(" · ");
+
+  // Vakfı cümlesi kelime kelime hizalı değil, o yüzden içinde ilgili
+  // kelimeyi vurgulamıyoruz — yanlış yeri işaretleme riski var.
+  el("nadir-vakfi").textContent = a.m[1] || "(meal yok)";
 }
 
 function nadirKapat() {
@@ -1254,6 +1281,11 @@ el("nadir-cevir").addEventListener("click", () => {
   el("nadir-cevir").hidden = true;
 });
 el("nadir-sonraki").addEventListener("click", nadirYeniKelime);
+document.querySelectorAll('input[name="nadir-zorluk"]').forEach((r) => {
+  r.addEventListener("change", () => {
+    if (r.checked) { nadirZorluk = r.value; nadirZorlukKaydet(r.value); }
+  });
+});
 el("ice-aktar").addEventListener("click", () => el("dosya-sec").click());
 el("dosya-sec").addEventListener("change", (o) => {
   const d = o.target.files[0];

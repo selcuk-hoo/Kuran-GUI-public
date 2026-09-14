@@ -2,4 +2,4 @@
    güvenmeden, doğrudan CacheStorage'a bakarak cevaplayabiliyor.
    sw.js'teki SURUM ile aynı değeri taşır — pwa_hazirla.py her
    çalıştığında üzerine yazar, elle değiştirme. */
-const KURAN_SURUM = "eb25c4c00a09";
+const KURAN_SURUM = "d9b02eed6584";

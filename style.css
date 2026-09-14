@@ -300,6 +300,19 @@ textarea { width: 100%; resize: vertical; line-height: 1.5; }
 
 section { margin-top: 2rem; }
 
+/* İlk giriş tanıtımı: dikkat çeksin ama bağırmasın. */
+#tanitim {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  background: var(--secili);
+  border-left: 3px solid var(--vurgu);
+  border-radius: 3px;
+}
+
+#tanitim h2 { margin-top: 0; }
+#tanitim p { margin: 0 0 0.7rem; }
+#tanitim a { color: var(--vurgu); }
+
 .satir {
   display: flex;
   align-items: center;

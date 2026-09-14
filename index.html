@@ -4,7 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#faf7f0">
-<title>Kur'an Çalışma Aracı</title>
+<title>Kur'an Çalışma Aracı — ayeti kendin çevir, meallerle karşılaştır</title>
+<meta name="description" content="Kur'an Arapçası çalışanlar için alıştırma aracı: ayeti önce kendin çevir, sonra dört Türkçe mealle karşılaştır, takıldığın kelimeleri sebebiyle kaydet ve kelime kartlarıyla tekrar et. Ücretsiz, çevrimdışı çalışır, kayıtlar yalnızca kendi cihazında durur.">
+
+<!-- Bağlantı WhatsApp/X gibi yerlerde paylaşılınca çıplak link yerine
+     başlık-açıklama-görsel kartı görünsün diye. -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Kur'an Çalışma Aracı">
+<meta property="og:title" content="Kur'an Çalışma Aracı — ayeti kendin çevir, meallerle karşılaştır">
+<meta property="og:description" content="Meal okumak için değil: ayeti önce kendin çevirirsin, sonra dört Türkçe mealle farkı görürsün. Takıldığın kelimeler kelime kartı olur.">
+<meta property="og:image" content="https://kuran-gui-public.selcukh.workers.dev/paylasim.png">
+<meta property="og:url" content="https://kuran-gui-public.selcukh.workers.dev/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://kuran-gui-public.selcukh.workers.dev/">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="ikon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="ikon-192.png">
@@ -74,6 +88,31 @@
 
 <main>
 <div id="calisma-ekrani">
+  <!-- İlk girişte görünür, "Anladım" deyince bir daha çıkmaz. Metin
+       HTML'de sabit duruyor (JS ile üretilmiyor): hem arama motoru
+       botu sayfada aracın ne olduğunu anlatan gerçek bir metin bulsun
+       hem de JavaScript çalışmadığında sayfa bomboş görünmesin. -->
+  <section id="tanitim" dir="ltr" hidden>
+    <h2>Bu araç ne işe yarar?</h2>
+    <p>
+      Kur'an Arapçası çalışanlar için bir alıştırma aracı. Meal okumak
+      için değil: ayeti <strong>önce kendin çevirirsin</strong>, sonra
+      dört Türkçe meali yan yana açıp kendi çevirinle aralarındaki
+      farkı görürsün. Fark nerede çıkıyorsa eksiğin oradadır.
+    </p>
+    <p>
+      Bu yüzden tek bir kural var: <strong>çevirini kaydetmeden
+      mealler görünmez.</strong> Takıldığın kelimeyi sebebiyle birlikte
+      not alırsın; o kelimeler sonra kelime kartı olarak karşına çıkar.
+      Kayıtların yalnızca kendi cihazında tutulur, hiçbir yere
+      gönderilmez.
+    </p>
+    <div class="satir">
+      <button id="tanitim-kapat" type="button">Anladım, başlayalım</button>
+      <a href="yardim.html">Önce kılavuzu oku</a>
+    </div>
+  </section>
+
   <section id="ayet-bolum">
     <p id="besmele" class="besmele" dir="rtl" lang="ar" hidden></p>
     <p id="arapca" class="arapca" dir="rtl" lang="ar"></p>

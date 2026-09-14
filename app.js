@@ -1323,6 +1323,18 @@ el("nadir-cevir").addEventListener("click", () => {
   el("nadir-cevir").hidden = true;
 });
 el("nadir-sonraki").addEventListener("click", nadirYeniKelime);
+
+// Tanıtım yalnızca ilk girişte. Kapatıldığı bilgisi localStorage'da —
+// çeviri/hata kayıtlarıyla ilgisi yok, yedeklenmesine de gerek yok.
+(function tanitim() {
+  let gorulmus = false;
+  try { gorulmus = localStorage.getItem("tanitim-gorundu") === "1"; } catch (e) { /* yok say */ }
+  el("tanitim").hidden = gorulmus;
+  el("tanitim-kapat").addEventListener("click", () => {
+    el("tanitim").hidden = true;
+    try { localStorage.setItem("tanitim-gorundu", "1"); } catch (e) { /* yok say */ }
+  });
+})();
 document.querySelectorAll('input[name="nadir-zorluk"]').forEach((r) => {
   r.addEventListener("change", () => {
     if (r.checked) { nadirZorluk = r.value; nadirZorlukKaydet(r.value); }

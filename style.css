@@ -74,12 +74,17 @@ h2 {
 /* Kalın ve belirgin: ilk denemede gövde metniyle aynı ağırlıkta ve
    neredeyse aynı puntodaydı, masaüstünde sıradan bir satır gibi
    görünüyordu. */
+/* Büyük harf + ikon çerçevesinin kahvesi: ikonla yazı tek bir künye
+   gibi okunsun diye. Palete yeni renk girmiyor — bu kahve zaten
+   ikonun çerçevesinde ve etkin sekmenin altındaki çizgide var. */
 .site-basligi h1 {
   margin: 0;
-  font-size: 1.55rem;
+  font-size: 1.4rem;
   font-weight: bold;
   line-height: 1.2;
-  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--vurgu);
 }
 
 /* --- sekmeler: hangi ekrandayız --- */
@@ -395,7 +400,7 @@ section { margin-top: 2rem; }
      sekmelerden yer çalıyordu. */
   .site-basligi { gap: 0.5rem; margin-bottom: 0.7rem; }
   .site-basligi img { width: 40px; height: 40px; }
-  .site-basligi h1 { font-size: 1.25rem; }
+  .site-basligi h1 { font-size: 1.12rem; letter-spacing: 0.03em; }
 
   .sekmeler-satir { flex-direction: column-reverse; align-items: stretch; gap: 0.2rem; }
   .sekmeler-satir .yardim-link { align-self: flex-end; }

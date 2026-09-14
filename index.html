@@ -45,7 +45,10 @@
 
 <header>
   <nav class="gezinme">
-    <button id="kart-calis" type="button">Kelime Kartlarını Aç</button>
+    <div class="gezinme-kartlar">
+      <button id="kart-calis" type="button">Kelime Kartlarını Aç</button>
+      <button id="nadir-calis" type="button">Nadir Kelimeler</button>
+    </div>
     <button id="onceki" type="button">‹ Önceki</button>
     <form id="atla-form" autocomplete="off">
       <label for="atla-sure">Sure</label>
@@ -186,6 +189,36 @@
   </div>
 
   <p class="satir"><button id="kart-kapat" type="button">← Ayete dön</button></p>
+</section>
+
+<section id="nadir-ekrani" dir="ltr" hidden>
+  <p class="ipucu">Kur'an'da az geçen kökler, ayetin çevrilip
+    çevrilmediğine bakılmaksızın — ne kadar nadirse o kadar sık çıkar.</p>
+
+  <p id="nadir-yukleniyor" class="ipucu" hidden>Yükleniyor…</p>
+
+  <div id="nadir-govde">
+    <p id="nadir-arapca" class="arapca" dir="rtl" lang="ar"></p>
+    <p class="ipucu">Bu kelime burada ne anlama geliyor?</p>
+    <button id="nadir-cevir" type="button">Kartı çevir</button>
+
+    <div id="nadir-arka" hidden>
+      <div class="kart-blok kart-dogru">
+        <p class="kart-etiket">Doğrusu</p>
+        <p id="nadir-dogrusu"></p>
+        <p class="ipucu" id="nadir-morfoloji"></p>
+      </div>
+      <div class="satir">
+        <button id="nadir-sonraki" type="button">Sonraki kelime</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="nadir-bos" hidden>
+    <p>Gösterilecek nadir kelime bulunamadı.</p>
+  </div>
+
+  <p class="satir"><button id="nadir-kapat" type="button">← Ayete dön</button></p>
 </section>
 </main>
 

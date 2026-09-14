@@ -1018,6 +1018,127 @@ function kartKapat() {
   kartDurumu = null;
 }
 
+// --- nadir kelimeler --------------------------------------------------------
+//
+// Kart çalışmasından TAMAMEN bağımsız: hata kaydına değil, kökün
+// Kur'an'daki toplam geçme sayısına dayanır. Havuz TÜM Kur'an'daki
+// kelime meali olan oluşumlar — ayetin çevrilip çevrilmediğine
+// bakılmaksızın. Ağırlık 1/frekans: sabit bir eşik yok, ne kadar
+// nadirse o kadar sık çıkar. Hafıza/tekrar kaydı tutulmaz.
+
+let nadirFrekanslar = null;
+let nadirHavuzu = null;
+const nadirGosterilenler = new Set();
+
+async function nadirFrekansYukle() {
+  if (nadirFrekanslar) return nadirFrekanslar;
+  const cevap = await fetch("veri/kok-frekans.json");
+  if (!cevap.ok) throw new Error("Kök frekans verisi bulunamadı.");
+  nadirFrekanslar = await cevap.json();
+  return nadirFrekanslar;
+}
+
+async function nadirHavuzuOlustur() {
+  if (nadirHavuzu) return nadirHavuzu;
+  const frekans = await nadirFrekansYukle();
+  const dizin = await dizinYukle();
+  const sureler = await Promise.all(dizin.map((s) => sureYukle(s.no)));
+
+  const havuz = [];
+  sureler.forEach((veri, i) => {
+    const sureNo = dizin[i].no;
+    veri.ayetler.forEach((a) => {
+      a.p.forEach((p) => {
+        if (p[0] !== 1) return;
+        const sira = p[2];
+        const meal = (a.km || [])[sira - 1];
+        const morf = (a.k || [])[sira - 1];
+        const kok = morf && morf[0];
+        if (!meal || !kok || !frekans[kok]) return;
+        havuz.push({ sure: sureNo, ayet: a.a, sira, agirlik: 1 / frekans[kok] });
+      });
+    });
+  });
+  nadirHavuzu = havuz;
+  return havuz;
+}
+
+function nadirAgirlikliSecim(havuz) {
+  const aday = havuz.filter(
+    (x) => !nadirGosterilenler.has(`${x.sure}:${x.ayet}:${x.sira}`));
+  // Havuzdaki her şey bu oturumda gösterildiyse baştan başla.
+  const kaynak = aday.length ? aday : havuz;
+  if (!aday.length) nadirGosterilenler.clear();
+
+  const toplam = kaynak.reduce((s, x) => s + x.agirlik, 0);
+  let esik = Math.random() * toplam;
+  let idx = 0;
+  while (idx < kaynak.length - 1 && esik > kaynak[idx].agirlik) {
+    esik -= kaynak[idx].agirlik;
+    idx++;
+  }
+  return kaynak[idx];
+}
+
+async function nadirCalismayaBasla() {
+  el("calisma-ekrani").hidden = true;
+  el("nadir-ekrani").hidden = false;
+  el("nadir-govde").hidden = true;
+  el("nadir-bos").hidden = true;
+  nadirGosterilenler.clear();
+
+  const ilkKurulum = !nadirHavuzu;
+  el("nadir-yukleniyor").hidden = !ilkKurulum;
+  await nadirHavuzuOlustur();
+  el("nadir-yukleniyor").hidden = true;
+  await nadirYeniKelime();
+}
+
+async function nadirYeniKelime() {
+  const havuz = await nadirHavuzuOlustur();
+  if (!havuz.length) {
+    el("nadir-govde").hidden = true;
+    el("nadir-bos").hidden = false;
+    return;
+  }
+  el("nadir-bos").hidden = true;
+  el("nadir-govde").hidden = false;
+
+  const secilen = nadirAgirlikliSecim(havuz);
+  nadirGosterilenler.add(`${secilen.sure}:${secilen.ayet}:${secilen.sira}`);
+
+  const veri = await sureYukle(secilen.sure);
+  const a = veri.ayetler.find((x) => x.a === secilen.ayet);
+  const arapca = el("nadir-arapca");
+  arapca.textContent = "";
+  const parca = document.createDocumentFragment();
+  a.p.forEach((p) => {
+    const span = document.createElement("span");
+    span.className = p[0] === 0 ? "isaret" : "kelime" + (p[2] === secilen.sira ? " kart-hedef" : "");
+    span.textContent = p[1];
+    parca.appendChild(span);
+    parca.appendChild(document.createTextNode(" "));
+  });
+  arapca.appendChild(parca);
+
+  el("nadir-arka").hidden = true;
+  el("nadir-cevir").hidden = false;
+
+  const { kok, lemma, vf } = await kelimeMorfolojisi(secilen.sure, secilen.ayet, secilen.sira);
+  el("nadir-dogrusu").textContent = await kelimeMeali(secilen.sure, secilen.ayet, secilen.sira);
+
+  const morfParca = [];
+  if (kok) morfParca.push(`Kök: ${kok}`);
+  if (lemma) morfParca.push(`Lemma: ${lemma}`);
+  if (vf) morfParca.push(`Bab: ${vf}`);
+  el("nadir-morfoloji").textContent = morfParca.join(" · ");
+}
+
+function nadirKapat() {
+  el("nadir-ekrani").hidden = true;
+  el("calisma-ekrani").hidden = false;
+}
+
 async function ankiAktar() {
   const hatalar = (await kayit.hepsi("hata"))
     .filter((h) => h.kelime_sira != null)
@@ -1126,6 +1247,13 @@ el("kart-biliyordum").addEventListener("click", () => kartDegerlendir("biliyordu
 el("kart-cikar").addEventListener("click", (olay) => { olay.preventDefault(); kartCikar(); });
 el("kart-daha").addEventListener("click", kartYeniParti);
 el("kart-bitir").addEventListener("click", kartKapat);
+el("nadir-calis").addEventListener("click", nadirCalismayaBasla);
+el("nadir-kapat").addEventListener("click", nadirKapat);
+el("nadir-cevir").addEventListener("click", () => {
+  el("nadir-arka").hidden = false;
+  el("nadir-cevir").hidden = true;
+});
+el("nadir-sonraki").addEventListener("click", nadirYeniKelime);
 el("ice-aktar").addEventListener("click", () => el("dosya-sec").click());
 el("dosya-sec").addEventListener("change", (o) => {
   const d = o.target.files[0];

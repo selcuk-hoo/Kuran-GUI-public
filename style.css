@@ -65,9 +65,10 @@ h2 {
   border-bottom: 1px solid var(--cizgi);
 }
 
-/* Kart düğmesi kendi satırında dursun, gezinme (önceki/git/sonraki)
+/* Kart düğmeleri kendi satırında dursun, gezinme (önceki/git/sonraki)
    altta ayrı bir satıra insin. */
-#kart-calis { flex-basis: 100%; }
+.gezinme-kartlar { display: flex; gap: 0.75rem; flex-basis: 100%; }
+.gezinme-kartlar button { flex: 1; }
 
 #atla-form { display: flex; align-items: center; gap: 0.4rem; }
 #atla-form label { color: var(--soluk); font-size: 0.85rem; }

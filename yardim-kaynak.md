@@ -18,8 +18,8 @@ kişinin kayıtları kendi tarayıcısında ayrı ayrı durur.
 
 Yukarıdan aşağıya:
 
-**Gezinme çubuğu** — `Kelime Kartlarını Aç` (bkz. bölüm 7), `‹ Önceki`,
-sure/ayet kutuları + `Git`, `Sonraki ›`
+**Gezinme çubuğu** — `Kelime Kartlarını Aç` ve `Nadir Kelimeler` (bkz.
+bölüm 7), `‹ Önceki`, sure/ayet kutuları + `Git`, `Sonraki ›`
 
 **Konum satırı** — hangi ayettesin, surede kaç ayet var
 
@@ -215,6 +215,12 @@ kart havuzuna hiç girmez — onlar senin hatan değildi.
 
 Hiç hata kaydın yoksa "Kelime Kartlarını Aç" boş olduğunu söyler; önce birkaç
 kelimeye hata kaydı düşmen gerekiyor.
+
+**`Nadir Kelimeler`** ayrı bir düğme, hata kaydına bakmaz. Kur'an'da az
+geçen kökleri gösterir — henüz çevirmediğin ayetler dahil, tüm kitaptan.
+Ne kadar nadirse o kadar sık karşına çıkar. Kartı çevirince sadece
+kelimenin meali ve kök/lemma/bab görünür; burada senin bir notun yok,
+tekrar/hafıza kaydı da tutulmaz — "Sonraki kelime" ile devam edersin.
 
 ---
 

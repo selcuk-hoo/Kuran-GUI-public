@@ -209,7 +209,8 @@ Bunun bir bedeli var: **tarayıcının site verilerini silersen ya da
 telefonu değiştirirsen, kayıtların da gider.** Tek koruma, ara sıra
 **`Kayıtlarımı dışa aktar`** yapmak — iki dosya üretir:
 `kuran-calisma.json` (yedek + geri yükleme için) ve `kuran-calisma.md` (bir
-sohbete yükleyip okutmak için, bkz. bölüm 10). İkisi de telefonunun
+yapay zekâ sohbetine yükleyip analiz ettirmek için, bkz. bölüm 10).
+İkisi de telefonunun
 indirilenler klasörüne kaydedilir.
 
 `Kayıtları içe aktar` ile geri yüklersin — dosya seçiciden
@@ -290,39 +291,47 @@ Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.
 
 ---
 
-## 10. Kayıtlarını analiz ettirmek
+## 10. Kayıtlarını yapay zekâya analiz ettirmek
 
-`Kayıtlarımı dışa aktar` iki farklı iş için iki farklı dosya üretir:
+Programın kendisi çevirilerini değerlendirmez — bunu yapabilecek olan
+bir yapay zekâ sohbeti (ChatGPT, Claude, Gemini vb.). `Kayıtlarımı
+dışa aktar` dediğinde inen iki dosya tam da bunun için hazırlanıyor:
+sohbete dosya olarak yükleyip aşağıdaki istemi yapıştırırsın.
 
 - **`kuran-calisma.md`** — okumak için. Bir özetle başlar (kaç çeviri,
   kaç hata, kategori dağılımı, 100 kelimede kaç hata — ayet başına
   hata yanıltıcı olurdu, ayetler 3 ila 50 kelime arası değişiyor),
-  sonra her ayette Arapça, kendi çevirin ve dört meal yan yana; bir
-  sohbete yükleyip "çevirilerimle mealleri satır satır karşılaştır"
-  diyebilirsin.
+  sonra her ayette Arapça, kendi çevirin ve dört meal yan yana. Satır
+  satır karşılaştırma istiyorsan bu dosya.
 - **`kuran-calisma.json`** — saymak için. "Kaç edilgen fiilde hata
   yaptım", "kategori dağılımım nasıl" gibi sayısal sorular için daha
   uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa
   kökü/lemma'sı/babı otomatik eklenmiş durumda.
 
-Sorulabilecek şeyler:
+İkisini birden yükleyip şunu sorabilirsin:
 
-- "Çevirilerimle mealleri karşılaştır, tekrar eden örüntü var mı?"
-- "Hata kayıtlarımın dağılımına bak, neye çalışmalıyım?"
-- "Hata kaydı düşmediğim ama çevirimin mealden ayrıldığı yerler var mı?"
+```
+Ekteki iki dosya Kur'an çalışma kayıtlarım. Yöntemim şu: bir ayeti önce kendim çeviriyorum, sonra dört Türkçe mealle karşılaştırıyorum ve ayrıldığım yerleri kategorileyerek not alıyorum. kuran-calisma.md her ayette Arapça metni, benim çevirimi, dört meali ve o ayete düştüğüm notları içeriyor; kuran-calisma.json aynı kayıtların sayılabilir hâli (her hata kaydında kelimenin kökü, lemması, babı ve ayetin kaç kelime olduğu da var).
 
-Sonuncusu en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele
-**fark etmediklerin** — bunu program bulamaz, meal ile senin çevirin
-arasındaki farkın gerçek bir hata mı yoksa üslup tercihi mi olduğuna
-ancak elle karşılaştırınca karar verilebiliyor.
+Sırayla şunları yap:
+
+1. Çevirilerimi meallerle satır satır karşılaştır ve hata kaydı DÜŞMEDİĞİM hâlde çevirimin mealden anlamca ayrıldığı yerleri bul. Her biri için farkın gerçek bir yanlış mı yoksa üslup tercihi mi olduğunu söyle. Benim için en kıymetli kısım bu.
+
+2. Kayıtlı hatalarımda tekrar eden örüntüleri çıkar: hangi kategoriler, hangi kökler, hangi dilbilgisi yapıları. Tek tek kelime listesi değil, örüntü istiyorum.
+
+3. Bu örüntülere bakarak sıradaki çalışmamın ne olması gerektiğini söyle. Az sayıda ve somut öneri ver.
+
+"Hata değil, mealler farklı söylemiş" diye işaretlediklerim benim yanlışım değil; onları ayrı tut, istatistiğe katma.
+```
+
+Birinci madde en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele
+**fark etmediklerin** — onları program bulamaz, çünkü meal ile senin
+çevirin arasındaki farkın gerçek bir hata mı yoksa üslup tercihi mi
+olduğuna ancak okuyarak karar verilebiliyor.
 
 ---
 
 ## 11. Bir şeyler ters giderse
-
-**Uygulama eski görünüyor / yeni bir özellik yok**
-Sayfayı yenile. Değişmezse tarayıcıyı tamamen kapatıp yeniden aç
-(yalnızca sekmeyi değil, uygulamayı).
 
 **Ana ekrandaki ikon açılmıyor / boş geliyor**
 Tarayıcının site verileri silinmiş olabilir. Bağlantıyı tekrar aç,

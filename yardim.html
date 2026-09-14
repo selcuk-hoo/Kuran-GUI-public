@@ -87,7 +87,7 @@
 <hr>
 <h2>6. Verin ve yedekleme</h2>
 <p>Çevirilerin ve hata kayıtların <strong>yalnızca bu cihazdaki tarayıcının deposunda</strong> tutulur. Hiçbir yere gönderilmez, sunucuya gitmez, kimseyle paylaşılmaz.</p>
-<p>Bunun bir bedeli var: <strong>tarayıcının site verilerini silersen ya da telefonu değiştirirsen, kayıtların da gider.</strong> Tek koruma, ara sıra <strong><code>Kayıtlarımı dışa aktar</code></strong> yapmak — iki dosya üretir: <code>kuran-calisma.json</code> (yedek + geri yükleme için) ve <code>kuran-calisma.md</code> (bir sohbete yükleyip okutmak için, bkz. bölüm 10). İkisi de telefonunun indirilenler klasörüne kaydedilir.</p>
+<p>Bunun bir bedeli var: <strong>tarayıcının site verilerini silersen ya da telefonu değiştirirsen, kayıtların da gider.</strong> Tek koruma, ara sıra <strong><code>Kayıtlarımı dışa aktar</code></strong> yapmak — iki dosya üretir: <code>kuran-calisma.json</code> (yedek + geri yükleme için) ve <code>kuran-calisma.md</code> (bir yapay zekâ sohbetine yükleyip analiz ettirmek için, bkz. bölüm 10). İkisi de telefonunun indirilenler klasörüne kaydedilir.</p>
 <p><code>Kayıtları içe aktar</code> ile geri yüklersin — dosya seçiciden <code>kuran-calisma.json</code> dosyasını seçersin (<code>kuran-calisma.md</code> yalnızca okumak için, geri yüklenmez).</p>
 <p><strong>Aynı ayeti iki farklı cihazda çevirme</strong> — kayıtlar otomatik birleşmez, biri diğerini görmez.</p>
 <hr>
@@ -107,15 +107,24 @@
 <ul><li>Ön yüz: kelime, ayet konumu ve kelimenin <strong>ayet içindeki hâli</strong> — kalıbıyla birlikte görürsün</li><li>Arka yüz: kök, lemma, bab, &quot;Doğru hali&quot; (doldurduysan) ve senin yazdığın not</li></ul>
 <p>Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.</p>
 <hr>
-<h2>10. Kayıtlarını analiz ettirmek</h2>
-<p><code>Kayıtlarımı dışa aktar</code> iki farklı iş için iki farklı dosya üretir:</p>
-<ul><li><strong><code>kuran-calisma.md</code></strong> — okumak için. Bir özetle başlar (kaç çeviri, kaç hata, kategori dağılımı, 100 kelimede kaç hata — ayet başına hata yanıltıcı olurdu, ayetler 3 ila 50 kelime arası değişiyor), sonra her ayette Arapça, kendi çevirin ve dört meal yan yana; bir sohbete yükleyip &quot;çevirilerimle mealleri satır satır karşılaştır&quot; diyebilirsin.</li><li><strong><code>kuran-calisma.json</code></strong> — saymak için. &quot;Kaç edilgen fiilde hata yaptım&quot;, &quot;kategori dağılımım nasıl&quot; gibi sayısal sorular için daha uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa kökü/lemma&#x27;sı/babı otomatik eklenmiş durumda.</li></ul>
-<p>Sorulabilecek şeyler:</p>
-<ul><li>&quot;Çevirilerimle mealleri karşılaştır, tekrar eden örüntü var mı?&quot;</li><li>&quot;Hata kayıtlarımın dağılımına bak, neye çalışmalıyım?&quot;</li><li>&quot;Hata kaydı düşmediğim ama çevirimin mealden ayrıldığı yerler var mı?&quot;</li></ul>
-<p>Sonuncusu en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele <strong>fark etmediklerin</strong> — bunu program bulamaz, meal ile senin çevirin arasındaki farkın gerçek bir hata mı yoksa üslup tercihi mi olduğuna ancak elle karşılaştırınca karar verilebiliyor.</p>
+<h2>10. Kayıtlarını yapay zekâya analiz ettirmek</h2>
+<p>Programın kendisi çevirilerini değerlendirmez — bunu yapabilecek olan bir yapay zekâ sohbeti (ChatGPT, Claude, Gemini vb.). <code>Kayıtlarımı dışa aktar</code> dediğinde inen iki dosya tam da bunun için hazırlanıyor: sohbete dosya olarak yükleyip aşağıdaki istemi yapıştırırsın.</p>
+<ul><li><strong><code>kuran-calisma.md</code></strong> — okumak için. Bir özetle başlar (kaç çeviri, kaç hata, kategori dağılımı, 100 kelimede kaç hata — ayet başına hata yanıltıcı olurdu, ayetler 3 ila 50 kelime arası değişiyor), sonra her ayette Arapça, kendi çevirin ve dört meal yan yana. Satır satır karşılaştırma istiyorsan bu dosya.</li><li><strong><code>kuran-calisma.json</code></strong> — saymak için. &quot;Kaç edilgen fiilde hata yaptım&quot;, &quot;kategori dağılımım nasıl&quot; gibi sayısal sorular için daha uygun. Her hata kaydına ayetin kaç kelime olduğu, kelimeye bağlıysa kökü/lemma&#x27;sı/babı otomatik eklenmiş durumda.</li></ul>
+<p>İkisini birden yükleyip şunu sorabilirsin:</p>
+<pre><code>Ekteki iki dosya Kur&#x27;an çalışma kayıtlarım. Yöntemim şu: bir ayeti önce kendim çeviriyorum, sonra dört Türkçe mealle karşılaştırıyorum ve ayrıldığım yerleri kategorileyerek not alıyorum. kuran-calisma.md her ayette Arapça metni, benim çevirimi, dört meali ve o ayete düştüğüm notları içeriyor; kuran-calisma.json aynı kayıtların sayılabilir hâli (her hata kaydında kelimenin kökü, lemması, babı ve ayetin kaç kelime olduğu da var).
+
+Sırayla şunları yap:
+
+1. Çevirilerimi meallerle satır satır karşılaştır ve hata kaydı DÜŞMEDİĞİM hâlde çevirimin mealden anlamca ayrıldığı yerleri bul. Her biri için farkın gerçek bir yanlış mı yoksa üslup tercihi mi olduğunu söyle. Benim için en kıymetli kısım bu.
+
+2. Kayıtlı hatalarımda tekrar eden örüntüleri çıkar: hangi kategoriler, hangi kökler, hangi dilbilgisi yapıları. Tek tek kelime listesi değil, örüntü istiyorum.
+
+3. Bu örüntülere bakarak sıradaki çalışmamın ne olması gerektiğini söyle. Az sayıda ve somut öneri ver.
+
+&quot;Hata değil, mealler farklı söylemiş&quot; diye işaretlediklerim benim yanlışım değil; onları ayrı tut, istatistiğe katma.</code></pre>
+<p>Birinci madde en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele <strong>fark etmediklerin</strong> — onları program bulamaz, çünkü meal ile senin çevirin arasındaki farkın gerçek bir hata mı yoksa üslup tercihi mi olduğuna ancak okuyarak karar verilebiliyor.</p>
 <hr>
 <h2>11. Bir şeyler ters giderse</h2>
-<p><strong>Uygulama eski görünüyor / yeni bir özellik yok</strong> Sayfayı yenile. Değişmezse tarayıcıyı tamamen kapatıp yeniden aç (yalnızca sekmeyi değil, uygulamayı).</p>
 <p><strong>Ana ekrandaki ikon açılmıyor / boş geliyor</strong> Tarayıcının site verileri silinmiş olabilir. Bağlantıyı tekrar aç, <strong>&quot;Ana ekrana ekle&quot;</strong>yi tekrarla. Önceki çevirilerin kaybolmuş olabilir — bu yüzden ara sıra dışa aktarmak önemli.</p>
 <p><strong><code>Kayıtları içe aktar</code> dosyayı seçtirmiyor</strong> Dosyayı, telefonun indirilenler klasöründen ara — bazı dosya yöneticileri farklı bir klasörü varsayılan gösteriyor.</p>
 </main>

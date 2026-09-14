@@ -1,6 +1,6 @@
 # Kullanım Kılavuzu
 
-Bu araç meal okumak için değil. Amaç şu: ayeti kendin çevir, sonra
+Bu araç meal okumak için değil. Asıl iş şu: ayeti kendin çevir, sonra
 mealleri aç ve **kendi çevirinle meal arasındaki farkı gör**. Fark
 nerede çıkıyorsa eksiğin oradadır. Araç o eksiği not almanı sağlar.
 
@@ -8,22 +8,33 @@ Bu yüzden bir kural var ve esnetilmiyor: **çevirini kaydetmeden
 mealler görünmez.** Önce meale bakarsan artık kendi okumanı test
 etmiyorsun, meali ezberliyorsun.
 
+Program üstteki üç sekmeden oluşuyor. Asıl döngü birincisinde geçer;
+diğer ikisi kelime tekrarı içindir, istediğin zaman girip çıkarsın:
+
+- **Çeviri Çalışma** — ayeti çevir, mealle karşılaştır, farkı not al
+  (bölüm 2).
+- **Hatalı Kelime Kartları** — not aldığın kelimeler tekrar karşına
+  çıkar, unutmadan önce (bölüm 7).
+- **Rastgele Kelime Kartları** — Kur'an'da az geçen kelimelerle,
+  sırası gelmeden tanışırsın (bölüm 8).
+
+Kelime çalışması asıl döngünün yerini tutmaz; onu besler. Kartların
+dolması için önce çeviri yapıp hata kaydı düşmen gerekiyor.
+
 Kayıtların yalnızca **senin cihazında** tutulur. Bu bağlantıyı
 kullanan başka biri olsa bile, kimse kimsenin çevirisini görmez — her
 kişinin kayıtları kendi tarayıcısında ayrı ayrı durur.
-
-Bu döngünün dışında, tekrar için iki kart çalışması da var (bölüm 7)
-— biri kendi hatalarına döner, biri Kur'an'ın geri kalanından nadir
-kelimelerle tanıştırır. Ama önce asıl döngüyü öğren.
 
 ---
 
 ## 1. Ekranlar
 
-Üç sekme var, üstte: `Çeviri Çalışma`, `Hatalı Kelime Kartları`,
-`Rastgele Kelime Kartları` (ikinci ve üçüncüsü bölüm 7'de). Hangisindeysen
-sekme altı çizgiyle işaretlenir. Asıl çalışma **Çeviri Çalışma**'da
-geçer, aşağıdakiler onun düzeni — yukarıdan aşağıya:
+Hangi sekmedeysen o sekme koyu yazıyla ve altındaki çizgiyle
+işaretlenir; geçmek için üstteki adına dokunman yeterli. Kart
+sekmelerinde ayet gezinmesi (`‹ Önceki` / `Git` / `Sonraki ›`)
+görünmez, çünkü orada ayet ayet ilerlemiyorsun.
+
+**Çeviri Çalışma** sekmesinin düzeni, yukarıdan aşağıya:
 
 **Sekme çubuğu** — aktif sekmeyi gösterir; `‹ Önceki` / sure-ayet
 kutuları + `Git` / `Sonraki ›` yalnızca bu sekmedeyken görünür.
@@ -47,7 +58,7 @@ kadar pasiftir
 
 ---
 
-## 2. Çalışma döngüsü
+## 2. Çalışma döngüsü — Çeviri Çalışma sekmesi
 
 ### Adım 1 — Ayeti oku
 
@@ -145,6 +156,8 @@ dersen kayıtların sana bir şey söylemez.
 
 ## 4. Gezinme
 
+Ayet gezinmesi yalnızca `Çeviri Çalışma` sekmesindedir.
+
 - **`Sonraki ›` / `‹ Önceki`** — sure sınırını aşar; 2:286'dan sonra 3:1
 - **Sure/ayet kutuları + `Git`** — doğrudan atlama
 - Tek kutuya `2:255` ya da `2/255` yazmak da olur
@@ -177,6 +190,13 @@ değildirler.
 mealin altında "Bu meal 58-60'ı birlikte veriyor" gibi bir not
 görürsün — metin gerçekten aynı, hata değil.
 
+**Her kelimenin ayrı bir meali yok.** Kelime meali ayrı bir kaynaktan
+geliyor ve o kaynak bazen birkaç Arapça kelimeyi tek karşılıkla
+veriyor; böyle bir kelimeye dokununca meal satırı hiç çıkmaz, anlamı
+bir öncekinin içindedir. 2:181, 8:6 ve 13:37'de ise kaynağın kelime
+sırası metinle oturmadığı için o üç ayette kelime meali hiç
+gösterilmez.
+
 ---
 
 ## 6. Verin ve yedekleme
@@ -189,7 +209,7 @@ Bunun bir bedeli var: **tarayıcının site verilerini silersen ya da
 telefonu değiştirirsen, kayıtların da gider.** Tek koruma, ara sıra
 **`Kayıtlarımı dışa aktar`** yapmak — iki dosya üretir:
 `kuran-calisma.json` (yedek + geri yükleme için) ve `kuran-calisma.md` (bir
-sohbete yükleyip okutmak için, bkz. bölüm 9). İkisi de telefonunun
+sohbete yükleyip okutmak için, bkz. bölüm 10). İkisi de telefonunun
 indirilenler klasörüne kaydedilir.
 
 `Kayıtları içe aktar` ile geri yüklersin — dosya seçiciden
@@ -201,18 +221,15 @@ birleşmez, biri diğerini görmez.
 
 ---
 
-## 7. Kart çalışması
+## 7. Hatalı Kelime Kartları
 
-Asıl döngü (bölüm 2) seni ancak çevirdiğin ayetlerle yüzleştirir. İki
-kart sekmesi bunu tamamlar — biri geride bıraktığın hataları unutmana
-izin vermez, öbürü henüz sıra gelmemiş kelimelerle önceden tanıştırır.
+Asıl döngü (bölüm 2) seni ancak çevirdiğin ayetlerle yüzleştirir; bu
+sekme de o ayetlerde yanıldığın kelimeleri unutmana izin vermez. Bir
+kelimeye hata kaydı düştüğün anda kart havuzuna girer. Anki gibi ayrı
+bir program kurmana gerek yok, hepsi uygulamanın içinde.
 
-**`Hatalı Kelime Kartları`** — bir kelimede yanıldığını not aldıysan,
-o kayıp gitmesin diye buraya düşer. Kartlar hazırlayıp seni sınar;
-Anki gibi ayrı bir program kurmana gerek yok, hepsi uygulamanın
-içinde.
-
-- Her kartta ayetin tamamı gelir, sorulan kelime vurgulu; "Bu kelime
+- Her kartta ayetin tamamı gelir, sorulan kelime vurgulu; üstte hangi
+  ayet olduğu yazar ("Kart 3 / 15 · Bakara 2:255" gibi). "Bu kelime
   burada ne anlama geliyor?" diye sorar, hiçbir ipucu vermez.
 - **`Kartı çevir`** deyince sırasıyla: kelimenin meali (yoksa yazdığın
   "doğru hali"), kök/lemma/bab, en son o an ne sandığını gösterir.
@@ -229,28 +246,39 @@ kart havuzuna hiç girmez — onlar senin hatan değildi.
 Hiç hata kaydın yoksa bu sekme boş olduğunu söyler; önce birkaç
 kelimeye hata kaydı düşmen gerekiyor.
 
-**`Rastgele Kelime Kartları`** — hata kaydına bakmaz. Kendi sıran o
-ayete gelene kadar yıllar geçebilir; bu, Kur'an'da az geçen köklerle
-daha önceden, ayrı bir yoldan tanışmanı sağlar — henüz çevirmediğin
-ayetler dahil, tüm kitaptan. Ne kadar nadirse o kadar sık karşına
-çıkar; **Orta/Zor/Çok Zor** ile bu nadirlik vurgusunu ayarlayabilirsin
-(Çok Zor'da en az geçen kelimeler çok daha sık çıkar), seçimin
-hatırlanır. Kartı çevirince kelimenin meali, kök/lemma/bab ve dört
-mealin tamamı görünür (kelime meal cümlelerinde ayrıca işaretlenmez,
-içlerinde kendin ararsın). Burada senin bir notun yok, tekrar/hafıza
-kaydı da tutulmaz — "Sonraki kelime" ile devam edersin.
+---
 
-Her iki sekmeden de üstteki `Çeviri Çalışma` sekmesine tıklayarak
-çıkabilirsin.
+## 8. Rastgele Kelime Kartları
+
+Bu sekme hata kaydına hiç bakmaz, senin nerede olduğuna da bakmaz.
+Kendi sıran bir ayete gelene kadar yıllar geçebilir; burası Kur'an'da
+az geçen kelimelerle daha önceden, ayrı bir yoldan tanışmanı sağlar —
+henüz çevirmediğin ayetler dahil, tüm kitaptan.
+
+- Kelime ne kadar nadirse o kadar sık karşına çıkar. **Orta / Zor /
+  Çok Zor** bu nadirlik vurgusunu ayarlar: Çok Zor'da en az geçen
+  kelimeler çok daha sık gelir. Seçimin hatırlanır.
+- Kart önü, Hatalı Kelime Kartları'ndaki gibi: ayetin tamamı, sorulan
+  kelime vurgulu, üstte ayetin yeri.
+- **`Kartı çevir`** deyince kelimenin meali, kök/lemma/bab ve dört
+  mealin tamamı görünür. Kelime, meal cümlelerinin içinde ayrıca
+  işaretlenmez — orada kendin ararsın.
+- Burada senin bir notun yok, doğru/yanlış değerlendirmesi de
+  tutulmaz; **`Sonraki kelime`** ile ilerlersin.
+
+Her iki kart sekmesinden de üstteki `Çeviri Çalışma` sekmesine
+dokunarak çıkarsın.
 
 ---
 
-## 8. Anki'ye aktarma
+## 9. Anki'ye aktarma
 
 [Anki](https://apps.ankiweb.net), aralıklı tekrarla kelime ezberleten
-ayrı bir program. Alt çubuktaki **`Kelime kartı indir (Anki)`**
-düğmesi, hata kaydı düştüğün kelimelerden (rastgele bir liste değil,
-yalnızca takıldıkların) bir kart dosyası üretir. Anki'de
+ayrı bir program. Uygulamanın kendi kart çalışması (bölüm 7) yeterli
+geliyorsa buna hiç ihtiyacın yok; kelimeleri Anki'de toplamak
+istiyorsan `Çeviri Çalışma` sekmesinin altındaki **`Kelime kartı indir
+(Anki)`** düğmesi, hata kaydı düştüğün kelimelerden (rastgele bir
+liste değil, yalnızca takıldıkların) bir kart dosyası üretir. Anki'de
 **Dosya > İçe Aktar** ile açılır.
 
 - Ön yüz: kelime, ayet konumu ve kelimenin **ayet içindeki hâli** —
@@ -262,7 +290,7 @@ Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.
 
 ---
 
-## 9. Kayıtlarını analiz ettirmek
+## 10. Kayıtlarını analiz ettirmek
 
 `Kayıtlarımı dışa aktar` iki farklı iş için iki farklı dosya üretir:
 
@@ -290,7 +318,7 @@ ancak elle karşılaştırınca karar verilebiliyor.
 
 ---
 
-## 10. Bir şeyler ters giderse
+## 11. Bir şeyler ters giderse
 
 **Uygulama eski görünüyor / yeni bir özellik yok**
 Sayfayı yenile. Değişmezse tarayıcıyı tamamen kapatıp yeniden aç

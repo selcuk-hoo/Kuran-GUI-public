@@ -1364,6 +1364,8 @@ async function baslat() {
     }
   } catch (e) { /* yok say */ }
   await ayetYukle(sure, ayet);
+  const surumSatiri = el("surum-satiri");
+  if (surumSatiri) surumSatiri.title = "yapı " + KURAN_SURUM;
   window.__arayuzHazir = true;
 }
 
@@ -1383,7 +1385,7 @@ async function kurulumDurumuGuncelle() {
   const TOPLAM = 127;
   if (anahtarlar.length >= TOPLAM) {
     alan.className = "hazir";
-    alan.textContent = "çevrimdışı hazır (sürüm " + KURAN_SURUM + ")";
+    alan.textContent = "çevrimdışı hazır";
   } else if (anahtarlar.length > 0) {
     alan.className = "calisiyor";
     alan.textContent = `çevrimdışı için indiriliyor: ${anahtarlar.length}/${TOPLAM}`;

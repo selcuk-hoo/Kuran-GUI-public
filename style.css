@@ -341,6 +341,10 @@ textarea { width: 100%; resize: vertical; line-height: 1.5; }
   font-size: 1.35em;
 }
 
+/* Kart arkasındaki meal ızgarası ile hemen altındaki düğme sırası
+   birbirine yapışmasın. */
+#kart-mealler, #nadir-mealler { margin-bottom: 1.4rem; }
+
 .ipucu, .kilit {
   color: var(--soluk);
   font-size: 0.85rem;

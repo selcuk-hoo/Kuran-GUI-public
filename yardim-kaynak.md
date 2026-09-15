@@ -356,6 +356,8 @@ bir program kurmana gerek yok, hepsi uygulamanın içinde.
   yazdığın "doğru hali") ve altında kök / lemma / bab. Alttaki boş
   çerçeveli kutu ise **o gün ne sandığın**, yani kendi notun. Renk
   farkı bilerek: hangisinin doğru olduğunu okumadan da ayırt edersin.
+  İkisinin altında ayetin dört meali yan yana durur — kelimeyi yalnız
+  başına değil, cümlenin içinde nasıl karşılandığını da görürsün.
 - Sonra kendini değerlendirirsin: **Bilemedim / Zorlandım /
   Biliyordum.** Bu bir puan değil; kelimenin bir dahaki sefere ne
   sıklıkla karşına çıkacağını ayarlar. Bilemediklerin daha sık,

@@ -1011,6 +1011,8 @@ async function kartGoster() {
   } else {
     sandigin.textContent = "(not yok)";
   }
+
+  mealleriDoldur("kart-mealler", a.m);
 }
 
 function kartOturumOzetiGoster() {
@@ -1083,6 +1085,24 @@ const BAB_KALIPLARI = {
 /* Arapça parçaları KENDİ span'ında çiziyoruz: gövde yazı tipi
    (Georgia) Arapça'yı sistem yedeğine düşürüyor, harekeli kalıplar
    orada okunmuyordu. */
+/* Dört meali yan yana çizer. İki kart ekranı da aynı .mealler
+   ızgarasını kullanıyor, çalışma ekranındakiyle aynı görünüyor. */
+function mealleriDoldur(kapId, mealler) {
+  const kap = el(kapId);
+  kap.textContent = "";
+  mealler.forEach((metin, i) => {
+    const d = document.createElement("div");
+    d.className = "meal";
+    const h = document.createElement("h3");
+    h.textContent = MEAL_ADLARI[i];
+    const p = document.createElement("p");
+    p.textContent = metin;
+    d.appendChild(h);
+    d.appendChild(p);
+    kap.appendChild(d);
+  });
+}
+
 /* Anki dışa aktarımı için aynı gösterim, HTML metni olarak. */
 function babYazisi(vf) {
   return vf.split("·").map((n) => {
@@ -1259,18 +1279,7 @@ async function nadirYeniKelime() {
 
   // Mealler kelime kelime hizalı değil, o yüzden içlerinde ilgili
   // kelimeyi vurgulamıyoruz — yanlış yeri işaretleme riski var.
-  const mealKap = el("nadir-mealler");
-  mealKap.textContent = "";
-  a.m.forEach((metin, i) => {
-    const d = document.createElement("div");
-    d.className = "meal";
-    const h = document.createElement("h3");
-    h.textContent = MEAL_ADLARI[i];
-    const p = document.createElement("p");
-    p.textContent = metin;
-    d.appendChild(h); d.appendChild(p);
-    mealKap.appendChild(d);
-  });
+  mealleriDoldur("nadir-mealler", a.m);
 }
 
 async function ankiAktar() {

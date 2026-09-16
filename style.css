@@ -548,7 +548,7 @@ fieldset label { display: block; margin: 0.2rem 0; font-size: 0.95rem; }
 }
 
 .alt-bilgi p { margin: 0; }
-.alt-bilgi .surum-satiri { margin-bottom: 0.25rem; }
+.alt-bilgi .surum-satiri { margin-bottom: 0.25rem; cursor: pointer; }
 .alt-bilgi a { color: var(--soluk); }
 .alt-bilgi a:hover { color: var(--vurgu); }
 

@@ -1438,8 +1438,18 @@ async function baslat() {
     }
   } catch (e) { /* yok say */ }
   await ayetYukle(sure, ayet);
+  // Sürüm satırı: v1.0 görünür, yapı numarası dokununca açılır.
+  // Telefonda fareyle üstüne gelmek yok; bir sorun bildirileceği zaman
+  // hangi yapının çalıştığını söyleyebilmek gerekiyor.
   const surumSatiri = el("surum-satiri");
-  if (surumSatiri) surumSatiri.title = "yapı " + KURAN_SURUM;
+  if (surumSatiri) {
+    const ad = surumSatiri.textContent;
+    surumSatiri.title = "yapı " + KURAN_SURUM;
+    surumSatiri.addEventListener("click", () => {
+      surumSatiri.textContent = surumSatiri.textContent === ad
+        ? ad + " · yapı " + KURAN_SURUM : ad;
+    });
+  }
   window.__arayuzHazir = true;
 }
 

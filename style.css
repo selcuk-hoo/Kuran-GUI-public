@@ -178,6 +178,13 @@ h2 {
   word-break: break-word;
 }
 
+/* "Hâlâ yükleniyor" notu hata DEĞİL: kırmızı zemin yerine nötr. */
+#js-hata.bekliyor {
+  background: #f2efe9;
+  color: var(--soluk);
+  border: 1px solid var(--cizgi);
+}
+
 .gezinme-hata {
   margin: 0.5rem 0 0;
   padding: 0.5rem 0.7rem;

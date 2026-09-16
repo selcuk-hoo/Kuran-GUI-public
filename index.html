@@ -34,16 +34,42 @@
 <body>
 
 <!-- app.js'ten ÖNCE ve eski söz dizimiyle: app.js hiç ayrıştırılamasa
-     bile hatayı ekrana yazsın. Tablette konsol yok. -->
-<div id="js-hata" hidden></div>
+     bile hatayı ekrana yazsın. Tablette konsol yok. Mesaj kutusunun
+     KENDİSİ başlığın altında (bkz. header) — tepede kırmızı bir şerit
+     belirip site başlığını aşağı itmesin, kullanıcı her hâlükârda
+     nerede olduğunu görsün. Kutu bu betikten SONRA ayrıştırıldığı için
+     burada değil, yazarken aranıyor; o ana kadar gelen bir mesaj da
+     saklanıp DOM hazır olunca yazılıyor. -->
 <script>
 (function () {
-  function goster(m) {
+  var sonMesaj = null;      // {metin, bekleme}
+  // Yalnızca "hâlâ yükleniyor" notu gösteriliyorsa true. Gerçek bir
+  // hata yazdıysak bayrak düşer ve arayüz sonradan açılsa bile mesaj
+  // ekranda kalır — kullanıcı neyin ters gittiğini görebilsin diye.
+  var beklemeNotu = false;
+
+  function ciz() {
     var k = document.getElementById("js-hata");
     if (!k) return;
+    if (!sonMesaj) { k.hidden = true; k.textContent = ""; return; }
     k.hidden = false;
-    k.textContent = "Arayüz hatası — " + m;
+    k.className = sonMesaj.bekleme ? "bekliyor" : "";
+    k.textContent = sonMesaj.bekleme
+      ? sonMesaj.metin : "Arayüz hatası — " + sonMesaj.metin;
   }
+
+  function goster(m, bekleme) {
+    // Bekleme notu, ekranda duran gerçek bir hatayı ezmesin
+    if (bekleme && sonMesaj && !beklemeNotu) return;
+    beklemeNotu = !!bekleme;
+    sonMesaj = { metin: m, bekleme: !!bekleme };
+    ciz();
+  }
+
+  function gizle() { sonMesaj = null; beklemeNotu = false; ciz(); }
+
+  document.addEventListener("DOMContentLoaded", ciz);
+
   window.onerror = function (m, kaynak, satir, sutun) {
     goster(m + "  (" + (kaynak || "?").split("/").pop() + ":" + satir + ":" + sutun + ")");
     return false;
@@ -51,9 +77,29 @@
   window.addEventListener("unhandledrejection", function (o) {
     goster("işlem başarısız: " + (o.reason && o.reason.message ? o.reason.message : o.reason));
   });
-  window.setTimeout(function () {
-    if (!window.__arayuzHazir) goster("app.js yüklenmedi veya çalışmadı.");
-  }, 5000);
+
+  // Açılış gözcüsü. ESKİ HÂLİ YANLIŞTI: 5. saniyede bir kez bakıp
+  // "app.js çalışmadı" diye KIRMIZI hata yazıyor, arayüz 6. saniyede
+  // açılsa bile mesajı ekranda bırakıyordu. İlk açılışta 8.6 MB veri
+  // inerken 5 saniye kolayca aşılıyor; yani çoğu zaman yanlış alarmdı.
+  // Şimdi: 8 saniyeden sonra NÖTR bir "yükleniyor" notu, arayüz hazır
+  // olunca not kendiliğinden kalkıyor, ancak 30 saniyede hâlâ
+  // açılmadıysa gerçek hata sayılıyor.
+  var baslangic = Date.now();
+  var gozcu = window.setInterval(function () {
+    if (window.__arayuzHazir) {
+      if (beklemeNotu) gizle();
+      window.clearInterval(gozcu);
+      return;
+    }
+    var gecen = Date.now() - baslangic;
+    if (gecen > 30000) {
+      goster("uygulama açılmadı. Sayfayı yenilemeyi dene.");
+      window.clearInterval(gozcu);
+    } else if (gecen > 8000) {
+      goster("Yükleniyor… ilk açılışta biraz sürebilir.", true);
+    }
+  }, 1000);
 })();
 </script>
 <script src="surum.js"></script>
@@ -62,9 +108,11 @@
   <!-- Görünür site başlığı: Google'dan gelen biri ilk bakışta neye
        baktığını anlasın diye. Sayfadaki tek h1. -->
   <div class="site-basligi">
-    <img src="ikon.svg" alt="" width="30" height="30">
+    <img src="ikon.svg" alt="" width="48" height="48">
     <h1>Kur'an Çalışma Aracı</h1>
   </div>
+
+  <div id="js-hata" hidden></div>
 
   <div class="sekmeler-satir">
     <nav class="sekmeler">

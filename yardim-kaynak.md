@@ -416,8 +416,29 @@ Sağ üstteki `Skor` bağlantısı tek bir soruya cevap verir:
 > Çevirisini yazdığın ayetlerde gördüğün kökleri bir havuz sayarsak,
 > Kur'an'ın kaç ayeti **tamamen** o havuzdan oluşuyor?
 
-Cevap yüzde olarak çıkar. Altında da kaç ayet çevirdiğin ve kaç farklı
-kök gördüğün yazar.
+Cevap yüzde olarak çıkar. Hemen altında ikinci ve daha küçük bir sayı
+daha var: **bir bilinmeyen kelimeye kadar** okunabilen ayet oranı.
+
+İkisi neden ayrı duruyor? Çünkü "tam okunabilen" ölçüsü tek bir
+bilinmeyen kelimeyi çok sert cezalandırıyor — ayetlerin ortancası
+yalnızca 6 farklı kök içeriyor, yani bir kelime bilmemek ayetin
+tamamını düşürmeye yetiyor. 250 ayet çalışmış birinde Kur'an'ın
+**%31'i tam olarak tek bir kök yüzünden** sayılmıyor. Bu, saklanmaması
+gereken bir bilgi: "az kaldı" demek.
+
+| Çalışılan ayet | Tam | Bir kelimeye kadar |
+|---|---|---|
+| 100 | %23 | %53 |
+| 250 | %44 | %75 |
+| 500 | %61 | %87 |
+| 1000 | %77 | %95 |
+
+Büyük sayı yine de üstte ve iri duruyor, çünkü dürüst olan o: hiç
+takılmadan okuyabildiğin ayet. İkincisi ise bir sonraki adımın ne
+kadar yakın olduğunu gösterir.
+
+Kutunun altında ayrıca kaç ayet çevirdiğin ve kaç farklı kök gördüğün
+yazar.
 
 **Neden "bildiğin kelime oranı" değil de bu?** Çünkü kelime oranı
 insanı kandırıyor. Kur'an'da 1.651 kök var ve dağılımları çok çarpık:
@@ -427,18 +448,9 @@ okuyabileceğin ayet oranı yalnızca %59. Sebebi basit: bilmediğin
 kelimeler metne dağılmış durumda ve **tek bir bilinmeyen kelime ayetin
 tamamını düşürüyor.** Skor, seni kandırmayan sayıyı gösterir.
 
-Ölçek şöyle ilerliyor — mushaf sırasıyla çalışıldığında:
-
-| Çalışılan ayet | Görülen kök | Skor |
-|---|---|---|
-| 25 | 77 | %3,5 |
-| 100 | 321 | %23 |
-| 250 | 515 | %44 |
-| 500 | 702 | %61 |
-| 1000 | 916 | %77 |
-
-Yani başta hızlı yükselir, sonra yavaşlar. Bu yavaşlama bir başarısızlık
-değil: geriye kalan kökler gerçekten nadir olanlar.
+Sayı başta hızlı yükselir, sonra yavaşlar: 100 ayet çalışmak 321 kök
+gösterirken, 1000 ayet 916 kök gösteriyor. Bu yavaşlama bir
+başarısızlık değil — geriye kalan kökler gerçekten nadir olanlar.
 
 **Hata kaydı düşmek skoru DÜŞÜRMEZ.** Bu bilerek böyle. Program senin
 çevirinin doğru olup olmadığını denetlemiyor; elinde yalnızca senin

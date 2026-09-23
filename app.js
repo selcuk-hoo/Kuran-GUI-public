@@ -1131,12 +1131,19 @@ async function skorHesapla() {
     (tablo[anahtar] || []).forEach((k) => havuz.add(k));
   }
 
-  let tam = 0, toplam = 0;
+  // İki sayı: hiç takılmadan okunan ayet, ve tek bir bilinmeyen kökle
+  // okunan ayet. Ayetlerin ortancası yalnızca 6 farklı kök içeriyor,
+  // yani tek bilinmeyen kelime ayetlerin çoğunu düşürmeye yetiyor;
+  // "bir kelime uzaktasın" durumunu sıfır saymak gerçeği saklıyordu.
+  let tam = 0, birEksik = 0, toplam = 0;
   for (const anahtar in tablo) {
     toplam++;
-    if ((tablo[anahtar] || []).every((k) => havuz.has(k))) tam++;
+    let eksik = 0;
+    for (const k of tablo[anahtar] || []) if (!havuz.has(k)) eksik++;
+    if (eksik === 0) tam++;
+    if (eksik <= 1) birEksik++;
   }
-  return { tam, toplam, kok: havuz.size, ayet: calisilan.size };
+  return { tam, birEksik, toplam, kok: havuz.size, ayet: calisilan.size };
 }
 
 /* Kendi beyanına dayanan İKİNCİ sayı — ana sayıyla ASLA harmanlanmaz.
@@ -1173,9 +1180,11 @@ async function skorGoster() {
     const yuzde = (100 * skor.tam) / skor.toplam;
     el("skor-oran").textContent =
       "%" + (yuzde < 10 ? yuzde.toFixed(1) : Math.round(yuzde));
+    el("skor-ikinci-oran").textContent = "%" + Math.round(
+      (100 * skor.birEksik) / skor.toplam);
     el("skor-aciklama").textContent =
-      `Kur'an'ın ${skor.toplam} ayetinden ${skor.tam} tanesi, yalnızca`
-      + " çalıştığın ayetlerde gördüğün köklerden oluşuyor.";
+      `Kur'an'ın ${skor.toplam} ayetinden ${skor.tam} tanesinde hiç`
+      + ` yabancı kök yok; ${skor.birEksik} tanesinde en çok bir tane var.`;
     el("skor-ayet").textContent = skor.ayet;
     el("skor-kok").textContent = skor.kok;
 

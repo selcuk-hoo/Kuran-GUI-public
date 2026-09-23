@@ -606,6 +606,19 @@ dialog h2 { margin-top: 0; }
 
 .skor-buyuk span { color: var(--soluk); font-size: 0.95rem; }
 
+/* İkinci sayı ana sayının yarısı kadar iri: ikisi de doğru ama
+   hiyerarşi belli olsun, "tam okunabilen" başta gelsin. */
+.skor-ikinci {
+  margin: 0 0 0.2rem;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+}
+
+.skor-ikinci strong { font-size: 1.3rem; color: var(--soluk); }
+.skor-ikinci span { color: var(--soluk); font-size: 0.9rem; }
+
 .skor-liste {
   margin: 0.9rem 0;
   padding-left: 1.2rem;

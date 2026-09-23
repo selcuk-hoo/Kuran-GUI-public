@@ -1564,7 +1564,7 @@ async function baslat() {
     }
   } catch (e) { /* yok say */ }
   await ayetYukle(sure, ayet);
-  // Sürüm satırı: v1.0 görünür, yapı numarası dokununca açılır.
+  // Sürüm satırı: sürüm adı görünür, yapı numarası dokununca açılır.
   // Telefonda fareyle üstüne gelmek yok; bir sorun bildirileceği zaman
   // hangi yapının çalıştığını söyleyebilmek gerekiyor.
   const surumSatiri = el("surum-satiri");

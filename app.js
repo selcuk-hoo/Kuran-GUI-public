@@ -1188,7 +1188,7 @@ async function skorGoster() {
       (100 * skor.ikiEksik) / skor.toplam);
     el("skor-aciklama").textContent =
       `Kur'an'ın ${skor.toplam} ayetinden ${skor.tam} tanesinde hiç`
-      + ` yabancı kök yok; ${skor.birEksik} tanesinde en çok bir,`
+      + ` bilinmeyen kök yok; ${skor.birEksik} tanesinde en çok bir,`
       + ` ${skor.ikiEksik} tanesinde en çok iki tane var.`;
     el("skor-ayet").textContent = skor.ayet;
     el("skor-kok").textContent = skor.kok;

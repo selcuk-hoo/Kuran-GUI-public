@@ -21,6 +21,15 @@ diğer ikisi kelime tekrarı içindir, istediğin zaman girip çıkarsın:
 Kelime çalışması asıl döngünün yerini tutmaz; onu besler. Kartların
 dolması için önce çeviri yapıp hata kaydı düşmen gerekiyor.
 
+Sekmelerin sağ üstünde iki bağlantı daha var: **Skor**, çalıştıklarının
+seni nereye getirdiğini gösterir (bölüm 9); **Kılavuz** ise bu sayfa.
+
+**Nereden başlamalı?** Program ilk açıldığında Fâtiha 1:1'de olursun.
+Oradan devam edebilirsin, ya da `Sure` ve `Ayet` kutularına istediğin
+yeri yazıp `Git` diyebilirsin. İlk günlerde kısa sureler (78'den
+sonrası) daha rahat gelir: ayetleri kısadır, bir oturumda birkaçını
+bitirirsin.
+
 Kayıtların yalnızca **senin cihazında** tutulur. Bu bağlantıyı
 kullanan başka biri olsa bile, kimse kimsenin çevirisini görmez — her
 kişinin kayıtları kendi tarayıcısında ayrı ayrı durur.
@@ -51,13 +60,14 @@ için hata kaydı formu açılır.
 **Kendi çevirin** — ayeti kendi cümlelerinle yazdığın boş kutu, altında
 `Çeviriyi kaydet` düğmesi.
 
-**Doğrulama geçişi** — çeviriyi kaydettiğin anda bu bölüm açılır ve
-mealleri görmeden önce seni bir kez daha düşündürür: bu ayette daha
-önce yanıldığın bir kelime varsa haber verir. Ne olduğu bölüm 2, Adım
-4'te anlatılıyor.
+**Mealleri açmadan önce** — çeviriyi kaydettiğin anda beliren ara
+bölüm. Tek yaptığı şu: bu ayette daha önce yanıldığın bir kelime varsa
+onu sana hatırlatır, doğrusunu söylemeden. Yani mealleri açmadan önce
+"acaba yine aynı hatayı mı yaptım?" diye bakma fırsatı. Ayrıntısı
+bölüm 2, Adım 4'te.
 
 **Mealleri göster** — dört meali yan yana açan düğme. Çevirini
-kaydedip doğrulama geçişini geçene kadar tıklanamaz durumdadır;
+kaydedip `Kontrol ettim, mealleri aç` diyene kadar tıklanamaz;
 kasıtlı böyle, çünkü mealleri erken görmek çalışmayı anlamsızlaştırır.
 
 **Bu ayetteki hata kayıtların** — bu ayette daha önce kaydettiğin
@@ -94,18 +104,20 @@ yazman yeterli.
 ### Adım 3 — Kaydet
 
 `Çeviriyi kaydet` düğmesine bas. Mealler hâlâ **açılmaz** — bunun
-yerine altta doğrulama geçişi belirir. Çevirin kaydedildiği için artık
+yerine altta `Mealleri açmadan önce` bölümü belirir. Çevirin
+kaydedildiği için artık
 onu değiştirsen bile "önce kendim denedim" aşamasını geçmiş olursun.
 
-### Adım 4 — Doğrulama geçişi
+### Adım 4 — Mealleri açmadan önce
 
 Bu ara adımın tek amacı var: mealleri açmadan önce sana bir kez daha
 düşünme fırsatı vermek.
 
 Ayet metnindeki bazı kelimelerin altı **turuncu çizgiyle**
-işaretlenmiş olabilir. Bunun anlamı şu: o kelimenin kökünü (aynı
-kelimenin kendisini değil, aynı kökten gelen bir başka kelimeyi)
-geçmişte, başka bir ayette yanlış çevirmişsin ve hata kaydı düşmüşsün.
+işaretlenmiş olabilir. Bunun anlamı şu: o kelimenin **kökünü** —
+kısaca kelime ailesini, ayrıntısı bölüm 5'te — geçmişte başka bir
+ayette yanlış çevirmişsin ve hata kaydı düşmüşsün. Aynı kelimenin
+kendisi olmak zorunda değil; aynı aileden bir başka kelime de olabilir.
 Yani "bu köke daha önce takılmıştın" demek.
 
 Hemen altında bu kelimeler liste hâlinde de yazar, yanlarında nerede
@@ -181,7 +193,8 @@ Doğru kategoriyi seçmek önemli: bu kayıtların dağılımı, sıradaki
 çalışmanın ne olması gerektiğini söylüyor.
 
 ### Kelimeyi hiç bilmiyordum
-Kelimenin kök harflerini çıkaramadın.
+Kelimeyi ilk kez görüyorsun; hangi kökten (kelime ailesinden) geldiğini
+bile çıkaramadın.
 > *Sorun kelime dağarcığında.*
 
 ### Türkçedeki karşılığıyla karıştırdım
@@ -201,8 +214,11 @@ edattan geliyor: `عدل` "adil olmak" ama `عدل بـ` "denk tutmak";
 > kelimeyi tek başına değil, edatıyla yaz.*
 
 ### Kim yapıyor / kime söyleniyor karıştı
-Kelimeleri biliyorsun ama cümledeki görevini çıkaramadın: fâil mi
-mef'ûl mü, sıfat mı haber mi.
+Kelimelerin hepsini biliyorsun ama cümlede hangi görevi üstlendiklerini
+çıkaramadın: işi yapan hangisi, işin üzerinde yapıldığı hangisi
+(fâil–mef'ûl); hangisi niteliyor, hangisi hüküm veriyor (sıfat–haber).
+Bir de şahıs karışması buraya girer: "siz" mi deniyor "onlar" mı,
+edilgen mi etken mi.
 > *Sorun gramerde.*
 
 ### Cümleyi yanlış kurdum
@@ -237,8 +253,8 @@ Ayet gezinmesi yalnızca `Çeviri Çalışma` sekmesindedir.
   bulunduğun yer değişmez
 
 Bir ayete döndüğünde çevirin kutuda hazır gelir, hata kayıtların
-listede durur. Ama **mealler yine kapalı başlar** — doğrulama
-geçişinden tekrar geçersin.
+listede durur. Ama **mealler yine kapalı başlar** — `Kontrol ettim,
+mealleri aç` düğmesine tekrar basman gerekir.
 
 Uygulama en son baktığın ayeti hatırlar.
 

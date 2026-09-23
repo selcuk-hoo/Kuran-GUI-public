@@ -497,7 +497,7 @@ function mealleriGoster() {
     return durumYaz(el("ceviri-durum"), "Önce kendi çevirini kaydet.");
   }
   if (!durum.kontrolEdildi) {
-    return durumYaz(el("ceviri-durum"), "Önce doğrulama geçişini tamamla.");
+    return durumYaz(el("ceviri-durum"), "Önce \u201CKontrol ettim, mealleri aç\u201D düğmesine bas.");
   }
   mealleriCiz();
   durum.mealAcik = true;

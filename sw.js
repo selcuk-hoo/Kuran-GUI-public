@@ -8,7 +8,7 @@
 // verir; sürüm başka bir dosyada dursaydı (önceki tasarım) bu satır
 // hiç değişmediği için güncelleme hiç tetiklenmezdi. Bu satırı elle
 // değiştirme; pwa_hazirla.py her çalıştığında üzerine yazar.
-const SURUM = "kuran-da5ec5ad5430";
+const SURUM = "kuran-2b03d59471c0";
 
 const KABUK = [
   "./",
@@ -25,6 +25,7 @@ const KABUK = [
   "./yardim.css",
   "./veri/dizin.json",
   "./veri/kok-frekans.json",
+  "./veri/ayet-kokleri.json",
 ];
 
 const VERI = Array.from({ length: 114 }, (_, i) => `./veri/sure-${i + 1}.json`);

@@ -36,7 +36,8 @@ görünmez, çünkü orada ayet ayet ilerlemiyorsun.
 
 **Çeviri Çalışma** sekmesinin düzeni, yukarıdan aşağıya:
 
-**Sekme çubuğu** — üç sekme ve sağında `Kılavuz` bağlantısı (bu sayfa).
+**Sekme çubuğu** — üç sekme, sağ üstte de `Skor` ve
+`Kılavuz` (bu sayfa) bağlantıları.
 Hemen altındaki ayet gezinmesi — `‹ Önceki`, sure ile ayet kutuları,
 `Git`, `Sonraki ›` — yalnızca bu sekmede görünür.
 
@@ -63,8 +64,8 @@ kasıtlı böyle, çünkü mealleri erken görmek çalışmayı anlamsızlaştı
 kelime notları burada listelenir. Hiç kaydın yoksa bu bölüm görünmez.
 
 **Alt çubuk** — üç düğme: `Kayıtlarımı dışa aktar` (yedek almak ve
-analiz ettirmek için, bölüm 6 ve 10), `Kayıtları içe aktar` (yedeği
-geri yüklemek için) ve `Kelime kartı indir (Anki)` (bölüm 9).
+analiz ettirmek için, bölüm 6 ve 11), `Kayıtları içe aktar` (yedeği
+geri yüklemek için) ve `Kelime kartı indir (Anki)` (bölüm 10).
 
 ---
 
@@ -321,7 +322,7 @@ dosya birden iner:
   okuması için.
 - **`kuran-calisma.md`** — okunabilir hâli. Geri yüklemeye yaramaz;
   bir yapay zekâ sohbetine yükleyip çalışmanı analiz ettirmek içindir
-  (bölüm 10).
+  (bölüm 11).
 
 İkisi de telefonunun indirilenler klasörüne kaydedilir. Ara sıra
 bunları başka bir yere (bilgisayarına, bulut deposuna, kendine attığın
@@ -408,7 +409,61 @@ dokunarak çıkarsın.
 
 ---
 
-## 9. Anki'ye aktarma
+## 9. Skor
+
+Sağ üstteki `Skor` bağlantısı tek bir soruya cevap verir:
+
+> Çevirisini yazdığın ayetlerde gördüğün kökleri bir havuz sayarsak,
+> Kur'an'ın kaç ayeti **tamamen** o havuzdan oluşuyor?
+
+Cevap yüzde olarak çıkar. Altında da kaç ayet çevirdiğin ve kaç farklı
+kök gördüğün yazar.
+
+**Neden "bildiğin kelime oranı" değil de bu?** Çünkü kelime oranı
+insanı kandırıyor. Kur'an'da 1.651 kök var ve dağılımları çok çarpık:
+en sık 500 kök, kökü olan kelimelerin %92'sini kaplıyor. Kulağa
+"neredeyse bitirdim" gibi geliyor — ama o 500 kökle baştan sona
+okuyabileceğin ayet oranı yalnızca %59. Sebebi basit: bilmediğin
+kelimeler metne dağılmış durumda ve **tek bir bilinmeyen kelime ayetin
+tamamını düşürüyor.** Skor, seni kandırmayan sayıyı gösterir.
+
+Ölçek şöyle ilerliyor — mushaf sırasıyla çalışıldığında:
+
+| Çalışılan ayet | Görülen kök | Skor |
+|---|---|---|
+| 25 | 77 | %3,5 |
+| 100 | 321 | %23 |
+| 250 | 515 | %44 |
+| 500 | 702 | %61 |
+| 1000 | 916 | %77 |
+
+Yani başta hızlı yükselir, sonra yavaşlar. Bu yavaşlama bir başarısızlık
+değil: geriye kalan kökler gerçekten nadir olanlar.
+
+**Hata kaydı düşmek skoru DÜŞÜRMEZ.** Bu bilerek böyle. Program senin
+çevirinin doğru olup olmadığını denetlemiyor; elinde yalnızca senin
+işaretlediğin hatalar var. Skor onlara baksaydı, hiç kayıt düşmeyen
+kişi en yüksek puanı alırdı — yani gösterge, programın kurmaya
+çalıştığı dürüstlüğü cezalandırırdı. Bu yüzden skora kendi beyanın
+karışmıyor.
+
+Kutuda bir de ikinci satır çıkar (hata kaydın varsa): kayıt düştüğün
+kökler içinde son kart sonucun "biliyordum" olanların sayısı. Bu
+**senin kendi değerlendirmen**, ölçüm değil; o yüzden ana sayıyla
+karıştırılmadan, ayrı yazılır.
+
+**Skorun ölçmediği şeyler.** Bu sayı kelime tanıdıklığını ölçer,
+anlamayı değil. Ölçmediği en az üç şey var: dilbilgisi (aynı kök,
+farklı bab, bambaşka anlam — programın kendisi bunu öğretiyor), cümle
+kurulumu, ve bağlam. Ayrıca "gördüğün kök"ü "bildiğin kök" sayıyor;
+bir ayeti çevirirken bir kelimeyi yanlış anlamış olabilirsin. Yani
+skor bir üst sınır: "en iyi ihtimalle bu kadarını okuyabilirsin" der.
+"Kur'an'ı yüzde şu kadar anlıyorum" cümlesi bu sayıdan çıkmaz.
+
+Kökü olmayan kelimeler (edat, zamir, bağlaç — metnin %35'i) bilinmiş
+sayılır. Kapalı ve küçük bir kümedir, ilk haftalarda oturur.
+
+## 10. Anki'ye aktarma
 
 [Anki](https://apps.ankiweb.net), aralıklı tekrarla kelime ezberleten
 ayrı bir program. Uygulamanın kendi kart çalışması (bölüm 7) yeterli
@@ -427,7 +482,7 @@ Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.
 
 ---
 
-## 10. Kayıtlarını yapay zekâya analiz ettirmek
+## 11. Kayıtlarını yapay zekâya analiz ettirmek
 
 Programın kendisi çevirilerini değerlendirmez — bunu yapabilecek olan
 bir yapay zekâ sohbeti (ChatGPT, Claude, Gemini vb.). `Kayıtlarımı
@@ -473,7 +528,7 @@ olduğuna ancak okuyarak karar verilebiliyor.
 
 ---
 
-## 11. Bir şeyler ters giderse
+## 12. Bir şeyler ters giderse
 
 **Telefonun ana ekranındaki ikon açılmıyor / boş geliyor**
 Tarayıcının site verileri silinmiş olabilir. Bağlantıyı tekrar aç,

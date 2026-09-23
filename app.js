@@ -1085,6 +1085,111 @@ const BAB_KALIPLARI = {
 /* Arapça parçaları KENDİ span'ında çiziyoruz: gövde yazı tipi
    (Georgia) Arapça'yı sistem yedeğine düşürüyor, harekeli kalıplar
    orada okunmuyordu. */
+/* --- skor -----------------------------------------------------------------
+ *
+ * Tek bir soruya cevap veriyor: çevirisini yazdığın ayetlerde GÖRDÜĞÜN
+ * kökleri bir havuz sayarsak, Kur'an'ın kaç ayeti tamamen o havuzdan
+ * oluşuyor?
+ *
+ * Neden böyle: program senin çevirinin doğru olup olmadığını
+ * denetlemiyor, elinde yalnızca SENİN işaretlediğin hatalar var. Hata
+ * kayıtlarından bir başarı yüzdesi üretilseydi, hiç kayıt düşmeyen
+ * kişi %100 alırdı — yani gösterge, programın kurmaya çalıştığı
+ * dürüstlük alışkanlığını cezalandırırdı. Bu yüzden ana sayıya kendi
+ * beyanın KARIŞMIYOR; hata kaydı düşmek skoru düşürmez.
+ *
+ * Neden "tam okunabilen ayet", "bilinen kelime oranı" değil: kelime
+ * oranı insanı kandırıyor. İlk 500 kök köklü kelimelerin %92'sini
+ * kaplıyor ama ayetlerin ancak %59'unu; çünkü bilinmeyen kelimeler
+ * ayetlere dağılmış ve tek bir bilinmeyen kelime ayetin tamamını
+ * düşürüyor. Kandırmayan sayı sağdaki.
+ *
+ * Kökü olmayan kelimeler (edat, zamir, bağlaç — metnin %35'i) bilinmiş
+ * sayılıyor: kapalı ve küçük bir küme, ilk haftalarda oturuyor.
+ */
+let ayetKokleri = null;
+
+async function ayetKokleriYukle() {
+  if (!ayetKokleri) {
+    const c = await fetch("veri/ayet-kokleri.json");
+    ayetKokleri = await c.json();
+  }
+  return ayetKokleri;
+}
+
+async function skorHesapla() {
+  const ceviriler = await kayit.hepsi("ceviri");
+  if (!ceviriler.length) return null;
+  const tablo = await ayetKokleriYukle();
+
+  const havuz = new Set();
+  const calisilan = new Set();
+  for (const c of ceviriler) {
+    const anahtar = `${c.sure}:${c.ayet}`;
+    if (calisilan.has(anahtar)) continue;
+    calisilan.add(anahtar);
+    (tablo[anahtar] || []).forEach((k) => havuz.add(k));
+  }
+
+  let tam = 0, toplam = 0;
+  for (const anahtar in tablo) {
+    toplam++;
+    if ((tablo[anahtar] || []).every((k) => havuz.has(k))) tam++;
+  }
+  return { tam, toplam, kok: havuz.size, ayet: calisilan.size };
+}
+
+/* Kendi beyanına dayanan İKİNCİ sayı — ana sayıyla ASLA harmanlanmaz.
+   Hata kaydı düştüğün kökler içinde, son kart sonucu "biliyordum"
+   olanların oranı. */
+async function kartSkoru() {
+  const hatalar = (await kayit.hepsi("hata"))
+    .filter((h) => h.kelime_sira != null && h.kategori !== "meal_farki");
+  if (!hatalar.length) return null;
+  const gecmis = await kayit.hepsi("kart_gecmisi");
+  const sonSonuc = new Map();
+  for (const g of gecmis.sort((a, b) => (a.tarih < b.tarih ? -1 : 1))) {
+    sonSonuc.set(g.hata_id, g.sonuc);
+  }
+  const kokDurum = new Map();          // kök -> biliyor mu
+  for (const h of hatalar) {
+    const { kok } = await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira);
+    if (!kok) continue;
+    const biliyor = sonSonuc.get(h.id) === "biliyordum";
+    kokDurum.set(kok, (kokDurum.get(kok) || false) || biliyor);
+  }
+  if (!kokDurum.size) return null;
+  let biliniyor = 0;
+  kokDurum.forEach((v) => { if (v) biliniyor++; });
+  return { biliniyor, toplam: kokDurum.size };
+}
+
+async function skorGoster() {
+  const kutu = el("skor-kutusu");
+  const skor = await skorHesapla();
+  el("skor-yok").hidden = !!skor;
+  el("skor-govde").hidden = !skor;
+  if (skor) {
+    const yuzde = (100 * skor.tam) / skor.toplam;
+    el("skor-oran").textContent =
+      "%" + (yuzde < 10 ? yuzde.toFixed(1) : Math.round(yuzde));
+    el("skor-aciklama").textContent =
+      `Kur'an'ın ${skor.toplam} ayetinden ${skor.tam} tanesi, yalnızca`
+      + " çalıştığın ayetlerde gördüğün köklerden oluşuyor.";
+    el("skor-ayet").textContent = skor.ayet;
+    el("skor-kok").textContent = skor.kok;
+
+    const kart = await kartSkoru();
+    el("skor-kart-satir").hidden = !kart;
+    if (kart) {
+      el("skor-kart").textContent =
+        `hata kaydı düştüğün ${kart.toplam} kökten ${kart.biliniyor} tanesinde`
+        + " son kart sonucun \u201Cbiliyordum\u201D (kendi değerlendirmen)";
+    }
+  }
+  kutu.showModal();
+}
+
 /* Dört meali yan yana çizer. İki kart ekranı da aynı .mealler
    ızgarasını kullanıyor, çalışma ekranındakiyle aynı görünüyor. */
 function mealleriDoldur(kapId, mealler) {
@@ -1379,6 +1484,8 @@ el("atla-form").addEventListener("submit", (o) => {
 });
 el("disa-aktar").addEventListener("click", disaAktar);
 el("anki-aktar").addEventListener("click", ankiAktar);
+el("skor-ac").addEventListener("click", skorGoster);
+el("skor-kapat").addEventListener("click", () => el("skor-kutusu").close());
 document.querySelectorAll(".sekmeler button").forEach((b) => {
   b.addEventListener("click", () => sekmeGoster(b.dataset.sekme));
 });
@@ -1461,12 +1568,14 @@ async function kurulumDurumuGuncelle() {
   if (!onbellek) { alan.className = ""; alan.textContent = ""; return; }
 
   const anahtarlar = await onbellek.keys();
-  // KABUK'taki 13 dosya (index.html, app.js, surum.js, style.css, font,
-  // manifest, ikonlar, yardim.html/css, dizin.json) + 114 sure dosyası
-  // = 127. sw.js'in KABUK listesi değişirse burası da güncellenmeli.
+  // KABUK'ta 15 giriş ("./" ve "./index.html" ayrı sayılır) + 114 sure
+  // dosyası = 129. Eşik bir dosya AŞAĞIDA tutuluyor: veri dosyaları
+  // tek tek ve hatayı yutarak ekleniyor, biri düşerse gösterge sonsuza
+  // kadar "kuruluyor"da kalmasın. sw.js'in KABUK listesi değişirse
+  // burası da güncellenmeli.
   // Kalıcı gösterge: mesaj kaçırılsa bile sayfa her açıldığında buradan
   // kontrol edilebilir, geçici bir bildirime güvenilmiyor.
-  const TOPLAM = 127;
+  const TOPLAM = 128;
   if (anahtarlar.length >= TOPLAM) {
     alan.className = "hazir";
     alan.textContent = "çevrimdışı hazır";

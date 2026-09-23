@@ -102,7 +102,25 @@ h2 {
   border-bottom: 1px solid var(--cizgi);
 }
 
-.sekmeler-satir .yardim-link { padding: 0.3rem 0; align-self: flex-end; }
+.sekmeler-satir .yan-baglantilar {
+  align-self: flex-end;
+  display: flex;
+  gap: 1rem;
+}
+
+.sekmeler-satir .yardim-link { padding: 0.3rem 0; }
+
+/* Skor bir düğme ama Kılavuz bağlantısıyla aynı görünmeli: düğmenin
+   çerçevesi, zemini ve iç boşluğu sıfırlanıyor. */
+#skor-ac {
+  border: none;
+  background: none;
+  border-radius: 0;
+  font-size: 0.9rem;
+  min-height: 0;
+}
+
+#skor-ac:hover:not(:disabled) { color: var(--vurgu); border-color: transparent; }
 
 /* Yatay kaydırma DEĞİL sarma: telefonda üç etiket (toplam ~433px) tek
    satıra sığmıyordu ve üçüncü sekme kaydırma kabının içinde tamamen
@@ -564,7 +582,36 @@ dialog {
 
 dialog::backdrop { background: rgba(20, 17, 13, 0.45); }
 
+/* Kutu içindeki bağlantılar da sayfanın geri kalanıyla aynı renkte
+   olsun; varsayılan mavi bu paletin içinde yabancı duruyor. */
+dialog a { color: var(--vurgu); }
+
 dialog h2 { margin-top: 0; }
+
+/* --- skor kutusu --- */
+
+.skor-buyuk {
+  margin: 0.3rem 0 0.2rem;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+}
+
+.skor-buyuk strong {
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: var(--vurgu);
+}
+
+.skor-buyuk span { color: var(--soluk); font-size: 0.95rem; }
+
+.skor-liste {
+  margin: 0.9rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
 dialog textarea { width: 100%; font-family: ui-monospace, Menlo, monospace;
                   font-size: 0.8rem; }
 dialog p { font-size: 0.95rem; }

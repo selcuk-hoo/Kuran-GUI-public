@@ -23,14 +23,14 @@
 <h2>1. Ekranlar</h2>
 <p>Hangi sekmedeysen o sekme koyu yazıyla ve altındaki çizgiyle işaretlenir; geçmek için üstteki adına dokunman yeterli. Kart sekmelerinde ayet gezinmesi (<code>‹ Önceki</code> / <code>Git</code> / <code>Sonraki ›</code>) görünmez, çünkü orada ayet ayet ilerlemiyorsun.</p>
 <p><strong>Çeviri Çalışma</strong> sekmesinin düzeni, yukarıdan aşağıya:</p>
-<p><strong>Sekme çubuğu</strong> — üç sekme ve sağında <code>Kılavuz</code> bağlantısı (bu sayfa). Hemen altındaki ayet gezinmesi — <code>‹ Önceki</code>, sure ile ayet kutuları, <code>Git</code>, <code>Sonraki ›</code> — yalnızca bu sekmede görünür.</p>
+<p><strong>Sekme çubuğu</strong> — üç sekme, sağ üstte de <code>Skor</code> ve <code>Kılavuz</code> (bu sayfa) bağlantıları. Hemen altındaki ayet gezinmesi — <code>‹ Önceki</code>, sure ile ayet kutuları, <code>Git</code>, <code>Sonraki ›</code> — yalnızca bu sekmede görünür.</p>
 <p><strong>Konum satırı</strong> — şu an hangi ayette olduğunu ve bulunduğun surenin kaç ayet içerdiğini söyler: &quot;Bakara (البقرة) — 2:255 / 286 ayet&quot; gibi.</p>
 <p><strong>Arapça metin</strong> — ayetin kendisi, büyük puntoyla ve sağdan sola. Kelimeler tek tek dokunulabilir: bir kelimeye dokunduğunda o kelime için hata kaydı formu açılır.</p>
 <p><strong>Kendi çevirin</strong> — ayeti kendi cümlelerinle yazdığın boş kutu, altında <code>Çeviriyi kaydet</code> düğmesi.</p>
 <p><strong>Doğrulama geçişi</strong> — çeviriyi kaydettiğin anda bu bölüm açılır ve mealleri görmeden önce seni bir kez daha düşündürür: bu ayette daha önce yanıldığın bir kelime varsa haber verir. Ne olduğu bölüm 2, Adım 4&#x27;te anlatılıyor.</p>
 <p><strong>Mealleri göster</strong> — dört meali yan yana açan düğme. Çevirini kaydedip doğrulama geçişini geçene kadar tıklanamaz durumdadır; kasıtlı böyle, çünkü mealleri erken görmek çalışmayı anlamsızlaştırır.</p>
 <p><strong>Bu ayetteki hata kayıtların</strong> — bu ayette daha önce kaydettiğin kelime notları burada listelenir. Hiç kaydın yoksa bu bölüm görünmez.</p>
-<p><strong>Alt çubuk</strong> — üç düğme: <code>Kayıtlarımı dışa aktar</code> (yedek almak ve analiz ettirmek için, bölüm 6 ve 10), <code>Kayıtları içe aktar</code> (yedeği geri yüklemek için) ve <code>Kelime kartı indir (Anki)</code> (bölüm 9).</p>
+<p><strong>Alt çubuk</strong> — üç düğme: <code>Kayıtlarımı dışa aktar</code> (yedek almak ve analiz ettirmek için, bölüm 6 ve 11), <code>Kayıtları içe aktar</code> (yedeği geri yüklemek için) ve <code>Kelime kartı indir (Anki)</code> (bölüm 10).</p>
 <hr>
 <h2>2. Çalışma döngüsü — Çeviri Çalışma sekmesi</h2>
 <h3>Adım 1 — Ayeti oku</h3>
@@ -108,7 +108,7 @@
 <p>Çevirilerin ve hata kayıtların <strong>yalnızca bu cihazdaki tarayıcının deposunda</strong> tutulur. Hiçbir yere gönderilmez, sunucuya gitmez, kimseyle paylaşılmaz.</p>
 <p>Bunun iyi tarafı gizlilik; kötü tarafı ise şu: <strong>tarayıcının site verilerini silersen, telefonu değiştirirsen ya da telefonun bozulursa kayıtların da gider.</strong> Program bunları hiçbir yerde saklamıyor, çünkü hiçbir yere göndermiyor. Tek koruma, ara sıra kendin yedek almak.</p>
 <p>Alt çubuktaki <strong><code>Kayıtlarımı dışa aktar</code></strong> düğmesine bastığında iki dosya birden iner:</p>
-<ul><li><strong><code>kuran-calisma.json</code></strong> — yedeğin. Kayıtlarını geri yüklemek için kullanılan dosya budur; insanın okuması için değil, programın okuması için.</li><li><strong><code>kuran-calisma.md</code></strong> — okunabilir hâli. Geri yüklemeye yaramaz; bir yapay zekâ sohbetine yükleyip çalışmanı analiz ettirmek içindir (bölüm 10).</li></ul>
+<ul><li><strong><code>kuran-calisma.json</code></strong> — yedeğin. Kayıtlarını geri yüklemek için kullanılan dosya budur; insanın okuması için değil, programın okuması için.</li><li><strong><code>kuran-calisma.md</code></strong> — okunabilir hâli. Geri yüklemeye yaramaz; bir yapay zekâ sohbetine yükleyip çalışmanı analiz ettirmek içindir (bölüm 11).</li></ul>
 <p>İkisi de telefonunun indirilenler klasörüne kaydedilir. Ara sıra bunları başka bir yere (bilgisayarına, bulut deposuna, kendine attığın bir e-postaya) kopyalarsan yedeğin gerçekten güvende olur.</p>
 <p>Geri yüklemek için <code>Kayıtları içe aktar</code> de ve dosya seçiciden <strong><code>kuran-calisma.json</code></strong> dosyasını seç. Program önce kaç kayıt yükleneceğini söyler ve onay ister; onayladığında o andaki kayıtların dosyadakilerle <strong>değiştirilir</strong>, üzerine eklenmez.</p>
 <p><strong>Aynı ayeti iki farklı cihazda çevirme.</strong> Telefon ve tablette ayrı ayrı çalışırsan iki taraf birbirinden habersiz olur; kayıtlar kendiliğinden birleşmez ve birinden alıp öbürüne yüklediğinde öbürünün kayıtları silinir.</p>
@@ -124,12 +124,24 @@
 <ul><li><strong>Zorluk</strong> (Orta / Zor / Çok Zor) hangi kelimelerin geleceğini ayarlar. Kur&#x27;an&#x27;da bazı kökler binlerce kez, bazıları yalnızca bir kez geçer; bu ayar, az geçenlerin ne kadar öne çıkacağını belirler. Orta&#x27;da nispeten tanıdık kelimeler de gelir, Çok Zor&#x27;da neredeyse yalnızca bir-iki kez geçen kelimelerle karşılaşırsın. Seçtiğin ayar hatırlanır, her seferinde yeniden seçmen gerekmez.</li><li><strong>Kartın önü</strong> Hatalı Kelime Kartları&#x27;ndaki gibidir: ayetin tamamı, sorulan kelime vurgulu, üstte ayetin yeri.</li><li><strong><code>Kartı çevir</code></strong> dediğinde kelimenin Türkçe karşılığı ve kök / lemma / bab bilgisi çıkar; altında da ayetin dört meali yan yana gelir, böylece kelimeyi cümlenin bütünü içinde görebilirsin. Kelime, meal cümlelerinin içinde ayrıca işaretlenmez — Türkçe metinde hangi kelimeye denk geldiğini kendin ararsın (nedeni bölüm 5&#x27;teki kelime meali notuyla aynı).</li><li>Burada not tutulmaz, doğru bildin mi diye sorulmaz, kayıt da yapılmaz. Amaç sınamak değil, tanıştırmak. <strong><code>Sonraki kelime</code></strong> ile istediğin kadar ilerlersin.</li></ul>
 <p>Her iki kart sekmesinden de üstteki <code>Çeviri Çalışma</code> sekmesine dokunarak çıkarsın.</p>
 <hr>
-<h2>9. Anki&#x27;ye aktarma</h2>
+<h2>9. Skor</h2>
+<p>Sağ üstteki <code>Skor</code> bağlantısı tek bir soruya cevap verir:</p>
+<blockquote><p>Çevirisini yazdığın ayetlerde gördüğün kökleri bir havuz sayarsak, Kur&#x27;an&#x27;ın kaç ayeti <strong>tamamen</strong> o havuzdan oluşuyor?</p></blockquote>
+<p>Cevap yüzde olarak çıkar. Altında da kaç ayet çevirdiğin ve kaç farklı kök gördüğün yazar.</p>
+<p><strong>Neden &quot;bildiğin kelime oranı&quot; değil de bu?</strong> Çünkü kelime oranı insanı kandırıyor. Kur&#x27;an&#x27;da 1.651 kök var ve dağılımları çok çarpık: en sık 500 kök, kökü olan kelimelerin %92&#x27;sini kaplıyor. Kulağa &quot;neredeyse bitirdim&quot; gibi geliyor — ama o 500 kökle baştan sona okuyabileceğin ayet oranı yalnızca %59. Sebebi basit: bilmediğin kelimeler metne dağılmış durumda ve <strong>tek bir bilinmeyen kelime ayetin tamamını düşürüyor.</strong> Skor, seni kandırmayan sayıyı gösterir.</p>
+<p>Ölçek şöyle ilerliyor — mushaf sırasıyla çalışıldığında:</p>
+<table><thead><tr><th>Çalışılan ayet</th><th>Görülen kök</th><th>Skor</th></tr></thead><tbody><tr><td>25</td><td>77</td><td>%3,5</td></tr><tr><td>100</td><td>321</td><td>%23</td></tr><tr><td>250</td><td>515</td><td>%44</td></tr><tr><td>500</td><td>702</td><td>%61</td></tr><tr><td>1000</td><td>916</td><td>%77</td></tr></tbody></table>
+<p>Yani başta hızlı yükselir, sonra yavaşlar. Bu yavaşlama bir başarısızlık değil: geriye kalan kökler gerçekten nadir olanlar.</p>
+<p><strong>Hata kaydı düşmek skoru DÜŞÜRMEZ.</strong> Bu bilerek böyle. Program senin çevirinin doğru olup olmadığını denetlemiyor; elinde yalnızca senin işaretlediğin hatalar var. Skor onlara baksaydı, hiç kayıt düşmeyen kişi en yüksek puanı alırdı — yani gösterge, programın kurmaya çalıştığı dürüstlüğü cezalandırırdı. Bu yüzden skora kendi beyanın karışmıyor.</p>
+<p>Kutuda bir de ikinci satır çıkar (hata kaydın varsa): kayıt düştüğün kökler içinde son kart sonucun &quot;biliyordum&quot; olanların sayısı. Bu <strong>senin kendi değerlendirmen</strong>, ölçüm değil; o yüzden ana sayıyla karıştırılmadan, ayrı yazılır.</p>
+<p><strong>Skorun ölçmediği şeyler.</strong> Bu sayı kelime tanıdıklığını ölçer, anlamayı değil. Ölçmediği en az üç şey var: dilbilgisi (aynı kök, farklı bab, bambaşka anlam — programın kendisi bunu öğretiyor), cümle kurulumu, ve bağlam. Ayrıca &quot;gördüğün kök&quot;ü &quot;bildiğin kök&quot; sayıyor; bir ayeti çevirirken bir kelimeyi yanlış anlamış olabilirsin. Yani skor bir üst sınır: &quot;en iyi ihtimalle bu kadarını okuyabilirsin&quot; der. &quot;Kur&#x27;an&#x27;ı yüzde şu kadar anlıyorum&quot; cümlesi bu sayıdan çıkmaz.</p>
+<p>Kökü olmayan kelimeler (edat, zamir, bağlaç — metnin %35&#x27;i) bilinmiş sayılır. Kapalı ve küçük bir kümedir, ilk haftalarda oturur.</p>
+<h2>10. Anki&#x27;ye aktarma</h2>
 <p><a href="https://apps.ankiweb.net">Anki</a>, aralıklı tekrarla kelime ezberleten ayrı bir program. Uygulamanın kendi kart çalışması (bölüm 7) yeterli geliyorsa buna hiç ihtiyacın yok; kelimeleri Anki&#x27;de toplamak istiyorsan <code>Çeviri Çalışma</code> sekmesinin altındaki <strong><code>Kelime kartı indir (Anki)</code></strong> düğmesi, hata kaydı düştüğün kelimelerden (rastgele bir liste değil, yalnızca takıldıkların) bir kart dosyası üretir. Anki&#x27;de <strong>Dosya &gt; İçe Aktar</strong> ile açılır.</p>
 <ul><li>Ön yüz: kelime, ayet konumu ve kelimenin <strong>ayet içindeki hâli</strong> — kalıbıyla birlikte görürsün</li><li>Arka yüz: kök, lemma, bab, &quot;Doğru hali&quot; (doldurduysan) ve senin yazdığın not</li></ul>
 <p>Anki kullanmıyorsan bu düğmeye hiç dokunmana gerek yok.</p>
 <hr>
-<h2>10. Kayıtlarını yapay zekâya analiz ettirmek</h2>
+<h2>11. Kayıtlarını yapay zekâya analiz ettirmek</h2>
 <p>Programın kendisi çevirilerini değerlendirmez — bunu yapabilecek olan bir yapay zekâ sohbeti (ChatGPT, Claude, Gemini vb.). <code>Kayıtlarımı dışa aktar</code> dediğinde inen iki dosya tam da bunun için hazırlanıyor: sohbete dosya olarak yükleyip aşağıdaki istemi yapıştırırsın.</p>
 <ul><li><strong><code>kuran-calisma.md</code></strong> — okunabilir olan. Bir özetle başlar: kaç ayet çevirmişsin, kaç hata kaydın var, hangi kategoriden kaç tane, her 100 kelimede kaç hata yapmışsın. (Bu son ölçü bilerek böyle: &quot;ayet başına hata&quot; yanıltıcı olurdu, çünkü ayetler 3 kelimeden 50 kelimeye kadar değişiyor — uzun ayette daha çok hata çıkması normaldir.) Özetten sonra çalıştığın her ayet tek tek gelir: Arapça metin, senin çevirin, dört meal ve o ayete düştüğün notlar. Satır satır karşılaştırma istiyorsan bu dosya.</li><li><strong><code>kuran-calisma.json</code></strong> — saymak için. İnsan gözüyle okunacak bir dosya değil, ama sayısal sorularda işi kolaylaştırır: &quot;hangi kategoriden kaç tane var&quot;, &quot;en çok hangi kökte takılıyorum&quot; gibi. Programın sakladığı bilgiye ek olarak, her hata kaydına o ayetin kaç kelime olduğu ve kelimeye bağlı bir kayıtsa kökü, lemması, babı da otomatik eklenir — böylece analizi yapan taraf bunları ayrıca bulmak zorunda kalmaz.</li></ul>
 <p>İkisini birden yükleyip şunu sorabilirsin:</p>
@@ -146,7 +158,7 @@ Sırayla şunları yap:
 &quot;Hata değil, mealler farklı söylemiş&quot; diye işaretlediklerim benim yanlışım değil; onları ayrı tut, istatistiğe katma.</code></pre>
 <p>Birinci madde en değerlisi: fark ettiklerin zaten kayıtta, asıl mesele <strong>fark etmediklerin</strong> — onları program bulamaz, çünkü meal ile senin çevirin arasındaki farkın gerçek bir hata mı yoksa üslup tercihi mi olduğuna ancak okuyarak karar verilebiliyor.</p>
 <hr>
-<h2>11. Bir şeyler ters giderse</h2>
+<h2>12. Bir şeyler ters giderse</h2>
 <p><strong>Telefonun ana ekranındaki ikon açılmıyor / boş geliyor</strong> Tarayıcının site verileri silinmiş olabilir. Bağlantıyı tekrar aç, <strong>&quot;Ana ekrana ekle&quot;</strong>yi tekrarla. Önceki çevirilerin kaybolmuş olabilir — bu yüzden ara sıra dışa aktarmak önemli.</p>
 <p><strong><code>Kayıtları içe aktar</code> dosyayı seçtirmiyor</strong> Dosyayı, telefonun indirilenler klasöründen ara — bazı dosya yöneticileri farklı bir klasörü varsayılan gösteriyor.</p>
 <p><strong>Burada yazmayan bir sorun / bir öneri</strong> Şu adrese yazabilirsin: selchuk_hoo@yahoo.com</p>

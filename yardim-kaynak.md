@@ -416,26 +416,40 @@ Sağ üstteki `Skor` bağlantısı tek bir soruya cevap verir:
 > Çevirisini yazdığın ayetlerde gördüğün kökleri bir havuz sayarsak,
 > Kur'an'ın kaç ayeti **tamamen** o havuzdan oluşuyor?
 
-Cevap yüzde olarak çıkar. Hemen altında ikinci ve daha küçük bir sayı
-daha var: **bir bilinmeyen kelimeye kadar** okunabilen ayet oranı.
+Cevap yüzde olarak çıkar. Altında daha küçük iki sayı daha var: **bir**
+ve **iki** bilinmeyen kelimeye kadar okunabilen ayet oranı.
 
-İkisi neden ayrı duruyor? Çünkü "tam okunabilen" ölçüsü tek bir
+Üçü neden ayrı duruyor? Çünkü "tam okunabilen" ölçüsü tek bir
 bilinmeyen kelimeyi çok sert cezalandırıyor — ayetlerin ortancası
 yalnızca 6 farklı kök içeriyor, yani bir kelime bilmemek ayetin
 tamamını düşürmeye yetiyor. 250 ayet çalışmış birinde Kur'an'ın
 **%31'i tam olarak tek bir kök yüzünden** sayılmıyor. Bu, saklanmaması
 gereken bir bilgi: "az kaldı" demek.
 
-| Çalışılan ayet | Tam | Bir kelimeye kadar |
-|---|---|---|
-| 100 | %23 | %53 |
-| 250 | %44 | %75 |
-| 500 | %61 | %87 |
-| 1000 | %77 | %95 |
+| Çalışılan ayet | Tam | 1 kelimeye kadar | 2 kelimeye kadar |
+|---|---|---|---|
+| 100 | %23 | %53 | %75 |
+| 250 | %44 | %75 | %90 |
+| 500 | %61 | %87 | %96 |
+| 1000 | %77 | %95 | %99 |
 
-Büyük sayı yine de üstte ve iri duruyor, çünkü dürüst olan o: hiç
-takılmadan okuyabildiğin ayet. İkincisi ise bir sonraki adımın ne
-kadar yakın olduğunu gösterir.
+Büyük sayı üstte ve iri duruyor, çünkü **ölçüt olan o**: hiç
+takılmadan okuyabildiğin ayet. Alttaki ikisi ilerlemenin ne kadar
+yakın olduğunu gösterir.
+
+**Alt iki sayıyı nasıl okumalı — burada dikkatli olmak gerekiyor.**
+Onlar "okuyabiliyorum" demek değil, "yaklaştım" demektir. Özellikle
+üçüncüsü aldatıcı olabilir: 250 ayet çalışınca %90 çıkıyor ve kulağa
+"Kur'an'ın onda dokuzu" gibi geliyor. Oysa iki bilinmeyen kelime
+çoğu ayeti gerçekten anlaşılmaz yapar — hele ortanca ayet 6 kökken,
+iki bilinmeyen kelime ayetin üçte biri demektir. O sayıya bakarken
+şunu düşün: "bu ayetleri sözlükle okuyabilirim", "bu ayetleri
+okuyabiliyorum" değil.
+
+Üç sayı arasındaki mesafe de kendi başına bilgi. Başta açık (100
+ayette %23 ↔ %53 ↔ %75), ilerledikçe kapanıyor (1000 ayette
+%77 ↔ %95 ↔ %99). Aradaki fark büyükse birkaç kök öğrenmek büyük
+sıçrama getirir; kapandıysa artık asıl iş tam okumaya geçmiştir.
 
 Kutunun altında ayrıca kaç ayet çevirdiğin ve kaç farklı kök gördüğün
 yazar.
@@ -464,7 +478,7 @@ kökler içinde son kart sonucun "biliyordum" olanların sayısı. Bu
 **senin kendi değerlendirmen**, ölçüm değil; o yüzden ana sayıyla
 karıştırılmadan, ayrı yazılır.
 
-**Skorun ölçmediği şeyler.** Bu sayı kelime tanıdıklığını ölçer,
+**Skorun ölçmediği şeyler.** Bu sayılar kelime tanıdıklığını ölçer,
 anlamayı değil. Ölçmediği en az üç şey var: dilbilgisi (aynı kök,
 farklı bab, bambaşka anlam — programın kendisi bunu öğretiyor), cümle
 kurulumu, ve bağlam. Ayrıca "gördüğün kök"ü "bildiğin kök" sayıyor;

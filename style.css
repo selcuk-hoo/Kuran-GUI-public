@@ -590,41 +590,42 @@ dialog h2 { margin-top: 0; }
 
 /* --- skor kutusu --- */
 
-.skor-buyuk {
-  margin: 0.3rem 0 0.2rem;
+/* Sayıların üstündeki soru: sayı ancak neyin cevabı olduğu bilinince
+   bir şey ifade ediyor, o yüzden ilk satır o. */
+.skor-soru {
+  margin: 0.2rem 0 0.9rem;
+  line-height: 1.5;
+}
+
+/* Üç satır da aynı kalıpta: yüzde · ne demek olduğu · kaç ayet. */
+.skor-satir {
+  margin: 0 0 0.35rem;
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0 0.5rem;
 }
 
-.skor-buyuk strong {
-  font-size: 2.4rem;
-  line-height: 1.1;
-  color: var(--vurgu);
+.skor-satir strong {
+  font-size: 1.3rem;
+  color: var(--soluk);
+  min-width: 3.4rem;
 }
 
-.skor-buyuk span { color: var(--soluk); font-size: 0.95rem; }
+.skor-satir span { color: var(--soluk); font-size: 0.9rem; }
 
-/* İkinci sayı ana sayının yarısı kadar iri: ikisi de doğru ama
-   hiyerarşi belli olsun, "tam okunabilen" başta gelsin. */
-.skor-ikinci {
-  margin: 0 0 0.2rem;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 0 0.5rem;
-}
+/* Ayet sayısı sağa yaslanmıyor, etiketin ardından satır içinde akıyor.
+   Sağa yaslıyken dar ekranda etiket sarınca sayı tek başına alt satırın
+   sağında öksüz kalıyordu. */
+.skor-adet { white-space: nowrap; }
+.skor-adet::before { content: "·"; margin-right: 0.45rem; }
 
-.skor-ikinci strong { font-size: 1.3rem; color: var(--soluk); }
-.skor-ikinci span { color: var(--soluk); font-size: 0.9rem; }
+/* İlk satır asıl ölçüt: iri ve vurgu renginde. */
+.skor-buyuk { margin-bottom: 0.6rem; }
+.skor-buyuk strong { font-size: 2.4rem; line-height: 1.1; color: var(--vurgu); }
+.skor-buyuk span { color: var(--metin); font-size: 0.95rem; }
+.skor-buyuk .skor-adet { color: var(--soluk); font-size: 0.9rem; }
 
-.skor-liste {
-  margin: 0.9rem 0;
-  padding-left: 1.2rem;
-  font-size: 0.9rem;
-  line-height: 1.7;
-}
 dialog textarea { width: 100%; font-family: ui-monospace, Menlo, monospace;
                   font-size: 0.8rem; }
 dialog p { font-size: 0.95rem; }

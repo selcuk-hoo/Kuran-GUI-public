@@ -411,83 +411,98 @@ dokunarak çıkarsın.
 
 ## 9. Skor
 
-Sağ üstteki `Skor` bağlantısı tek bir soruya cevap verir:
+Sağ üstteki `Skor` bağlantısı şunu söyler: **çalıştığın ayetlerde
+karşılaştığın kelimelerle, Kur'an'ın geri kalanının ne kadarını
+okuyabilirsin?**
 
-> Çevirisini yazdığın ayetlerde gördüğün kökleri bir havuz sayarsak,
-> Kur'an'ın kaç ayeti **tamamen** o havuzdan oluşuyor?
+Nasıl hesaplandığını bir örnekle anlatmak en kolayı. Diyelim 100 ayet
+çevirdin. O ayetlerde toplam 321 farklı kök geçmiş oldu — kökün ne
+olduğu bölüm 5'te, kısaca kelime ailesi. Program şimdi Kur'an'ın
+**tamamını** tarar ve her ayet için sorar: bu ayetin bütün kelimeleri
+o 321 kökten mi geliyor? Cevabı "evet" olan 1.436 ayet çıkar. 6.236
+ayetin 1.436'sı, yani **%23**.
 
-Cevap yüzde olarak çıkar. Altında daha küçük iki sayı daha var: **bir**
-ve **iki** bilinmeyen kelimeye kadar okunabilen ayet oranı.
+Dikkat: çevirdiğin 100 ayeti değil, **hiç açmadığın ayetleri** de
+sayar. Ölçtüğü şey "ne kadar çalıştın" değil, "çalıştıkların sana
+neyin kapısını açtı".
 
-Üçü neden ayrı duruyor? Çünkü "tam okunabilen" ölçüsü tek bir
-bilinmeyen kelimeyi çok sert cezalandırıyor — ayetlerin ortancası
-yalnızca 6 farklı kök içeriyor, yani bir kelime bilmemek ayetin
-tamamını düşürmeye yetiyor. 250 ayet çalışmış birinde Kur'an'ın
-**%31'i tam olarak tek bir kök yüzünden** sayılmıyor. Bu, saklanmaması
-gereken bir bilgi: "az kaldı" demek.
+### Üç sayı
 
-| Çalışılan ayet | Tam | 1 kelimeye kadar | 2 kelimeye kadar |
+Kutuda üç satır var, üçü de aynı soruyu farklı sıkılıkta soruyor:
+
+- **hiç takılmadan** — ayette tek bir bilinmeyen kelime bile yok.
+- **en fazla 1 kelimeye takılarak** — bir tanesi bilinmiyor.
+- **en fazla 2 kelimeye takılarak** — en çok iki tanesi bilinmiyor.
+
+Her satırın sonunda o oranın kaç ayet ettiği de yazar.
+
+**Asıl ölçüt birincisidir**, o yüzden iri ve renkli. Onlar, sözlüğe
+bakmadan baştan sona okuyabileceğin ayetlerdir.
+
+Peki diğer ikisi neden var? Çünkü birincisi tek bir kelimeyi çok sert
+cezalandırıyor. Ayetlerin ortancası yalnızca 6 farklı kök içeriyor;
+yani bir kelime bilmemek ayetin tamamını düşürmeye yetiyor. 100 ayet
+çalışmış birinde **Kur'an'ın %30'u tam olarak tek bir kök yüzünden**
+sayılmıyor. Bu saklanacak değil, bilinecek bir şey: "az kaldı" demek.
+
+| Çalışılan ayet | Hiç takılmadan | 1 kelime | 2 kelime |
 |---|---|---|---|
 | 100 | %23 | %53 | %75 |
 | 250 | %44 | %75 | %90 |
 | 500 | %61 | %87 | %96 |
 | 1000 | %77 | %95 | %99 |
 
-Büyük sayı üstte ve iri duruyor, çünkü **ölçüt olan o**: hiç
-takılmadan okuyabildiğin ayet. Alttaki ikisi ilerlemenin ne kadar
-yakın olduğunu gösterir.
+Üç sayı arasındaki mesafe de bilgidir. Başta açıktır (100 ayette
+%23 ↔ %53 ↔ %75): birkaç kök öğrenmek büyük sıçrama getirir.
+İlerledikçe kapanır (1000 ayette %77 ↔ %95 ↔ %99): artık iş tam
+okumaya kalmıştır.
 
-**Alt iki sayıyı nasıl okumalı — burada dikkatli olmak gerekiyor.**
-Onlar "okuyabiliyorum" demek değil, "yaklaştım" demektir. Özellikle
-üçüncüsü aldatıcı olabilir: 250 ayet çalışınca %90 çıkıyor ve kulağa
-"Kur'an'ın onda dokuzu" gibi geliyor. Oysa iki bilinmeyen kelime
-çoğu ayeti gerçekten anlaşılmaz yapar — hele ortanca ayet 6 kökken,
-iki bilinmeyen kelime ayetin üçte biri demektir. O sayıya bakarken
-şunu düşün: "bu ayetleri sözlükle okuyabilirim", "bu ayetleri
-okuyabiliyorum" değil.
+### Alt iki sayıyı nasıl okumalı
 
-Üç sayı arasındaki mesafe de kendi başına bilgi. Başta açık (100
-ayette %23 ↔ %53 ↔ %75), ilerledikçe kapanıyor (1000 ayette
-%77 ↔ %95 ↔ %99). Aradaki fark büyükse birkaç kök öğrenmek büyük
-sıçrama getirir; kapandıysa artık asıl iş tam okumaya geçmiştir.
+Onlar "okuyabiliyorum" demek **değil**, "az kaldı" demek. Özellikle
+üçüncüsü aldatıcıdır: 250 ayet çalışınca %90 çıkar ve kulağa
+"Kur'an'ın onda dokuzu" gibi gelir. Oysa ortanca ayet 6 kök
+içerdiğine göre iki bilinmeyen kelime, ayetin üçte biri demektir.
+Doğru okuması şu: *"bu ayetleri sözlükle okuyabilirim"* — *"bu
+ayetleri okuyabiliyorum"* değil.
 
-Kutunun altında ayrıca kaç ayet çevirdiğin ve kaç farklı kök gördüğün
-yazar.
+### Neden "bildiğin kelimelerin oranı" değil?
 
-**Neden "bildiğin kelime oranı" değil de bu?** Çünkü kelime oranı
-insanı kandırıyor. Kur'an'da 1.651 kök var ve dağılımları çok çarpık:
-en sık 500 kök, kökü olan kelimelerin %92'sini kaplıyor. Kulağa
-"neredeyse bitirdim" gibi geliyor — ama o 500 kökle baştan sona
-okuyabileceğin ayet oranı yalnızca %59. Sebebi basit: bilmediğin
-kelimeler metne dağılmış durumda ve **tek bir bilinmeyen kelime ayetin
-tamamını düşürüyor.** Skor, seni kandırmayan sayıyı gösterir.
+Çünkü o sayı insanı kandırıyor. Kur'an'da 1.651 kök var ve dağılımları
+çok çarpık: en sık 500 kök, kökü olan kelimelerin %92'sini kaplıyor.
+"Neredeyse bitirdim" gibi duyuluyor. Ama o 500 kökle baştan sona
+okuyabileceğin ayet oranı yalnızca %59 — çünkü bilmediğin kelimeler
+metne dağılmış durumda ve tek bir tanesi ayetin tamamını düşürüyor.
+Skor, kandırmayan sayıyı gösterir.
 
-Sayı başta hızlı yükselir, sonra yavaşlar: 100 ayet çalışmak 321 kök
-gösterirken, 1000 ayet 916 kök gösteriyor. Bu yavaşlama bir
-başarısızlık değil — geriye kalan kökler gerçekten nadir olanlar.
+### Hata kaydı düşmek skoru düşürmez
 
-**Hata kaydı düşmek skoru DÜŞÜRMEZ.** Bu bilerek böyle. Program senin
-çevirinin doğru olup olmadığını denetlemiyor; elinde yalnızca senin
-işaretlediğin hatalar var. Skor onlara baksaydı, hiç kayıt düşmeyen
-kişi en yüksek puanı alırdı — yani gösterge, programın kurmaya
-çalıştığı dürüstlüğü cezalandırırdı. Bu yüzden skora kendi beyanın
-karışmıyor.
+Bu bilerek böyle. Program senin çevirinin doğru olup olmadığını
+denetlemiyor; elinde yalnızca senin işaretlediğin hatalar var. Skor
+onlara baksaydı, hiç kayıt düşmeyen kişi en yüksek puanı alırdı —
+yani gösterge, programın kurmaya çalıştığı dürüstlüğü cezalandırırdı.
+Bu yüzden skora kendi beyanın karışmıyor.
 
-Kutuda bir de ikinci satır çıkar (hata kaydın varsa): kayıt düştüğün
-kökler içinde son kart sonucun "biliyordum" olanların sayısı. Bu
+Kutuda buna ayrı bir satır var (hata kaydın varsa): kayıt düştüğün
+kökler içinde son kart sonucun "biliyordum" olanların sayısı. O
 **senin kendi değerlendirmen**, ölçüm değil; o yüzden ana sayıyla
-karıştırılmadan, ayrı yazılır.
+karıştırılmadan, ayrı yazılıyor.
 
-**Skorun ölçmediği şeyler.** Bu sayılar kelime tanıdıklığını ölçer,
-anlamayı değil. Ölçmediği en az üç şey var: dilbilgisi (aynı kök,
-farklı bab, bambaşka anlam — programın kendisi bunu öğretiyor), cümle
-kurulumu, ve bağlam. Ayrıca "gördüğün kök"ü "bildiğin kök" sayıyor;
-bir ayeti çevirirken bir kelimeyi yanlış anlamış olabilirsin. Yani
-skor bir üst sınır: "en iyi ihtimalle bu kadarını okuyabilirsin" der.
-"Kur'an'ı yüzde şu kadar anlıyorum" cümlesi bu sayıdan çıkmaz.
+### Skorun ölçmedikleri
 
-Kökü olmayan kelimeler (edat, zamir, bağlaç — metnin %35'i) bilinmiş
-sayılır. Kapalı ve küçük bir kümedir, ilk haftalarda oturur.
+Bu sayılar kelimeleri tanıyıp tanımadığını ölçer, anlayıp anlamadığını
+değil. Ölçmediği en az üç şey var: dilbilgisi (aynı kök, farklı bab,
+bambaşka anlam — programın kendisi bunu öğretiyor), cümlenin nasıl
+kurulduğu, ve bağlam. Ayrıca "gördüğün kök"ü "bildiğin kök" sayıyor;
+bir ayeti çevirirken o kelimeyi yanlış anlamış olabilirsin.
+
+Yani skor bir **üst sınır**: "en iyi ihtimalle bu kadarını
+okuyabilirsin" der. "Kur'an'ı yüzde şu kadar anlıyorum" cümlesi bu
+sayıdan çıkmaz.
+
+Son bir ayrıntı: kökü olmayan kelimeler (edat, zamir, bağlaç — metnin
+%35'i) bilinmiş sayılır. Kapalı ve küçük bir kümedir, ilk haftalarda
+oturur.
 
 ## 10. Anki'ye aktarma
 

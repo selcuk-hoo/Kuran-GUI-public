@@ -1107,6 +1107,7 @@ const BAB_KALIPLARI = {
  * Kökü olmayan kelimeler (edat, zamir, bağlaç — metnin %35'i) bilinmiş
  * sayılıyor: kapalı ve küçük bir küme, ilk haftalarda oturuyor.
  */
+const KOK_SAYISI = 1651;   // Kur'an'daki farklı kök sayısı
 let ayetKokleri = null;
 
 async function ayetKokleriYukle() {
@@ -1179,26 +1180,30 @@ async function skorGoster() {
   el("skor-yok").hidden = !!skor;
   el("skor-govde").hidden = !skor;
   if (skor) {
-    const yuzde = (100 * skor.tam) / skor.toplam;
-    el("skor-oran").textContent =
-      "%" + (yuzde < 10 ? yuzde.toFixed(1) : Math.round(yuzde));
-    el("skor-ikinci-oran").textContent = "%" + Math.round(
-      (100 * skor.birEksik) / skor.toplam);
-    el("skor-ucuncu-oran").textContent = "%" + Math.round(
-      (100 * skor.ikiEksik) / skor.toplam);
-    el("skor-aciklama").textContent =
-      `Kur'an'ın ${skor.toplam} ayetinden ${skor.tam} tanesinde hiç`
-      + ` bilinmeyen kök yok; ${skor.birEksik} tanesinde en çok bir,`
-      + ` ${skor.ikiEksik} tanesinde en çok iki tane var.`;
-    el("skor-ayet").textContent = skor.ayet;
-    el("skor-kok").textContent = skor.kok;
+    const yuzde = (n) => {
+      const o = (100 * n) / skor.toplam;
+      return "%" + (o < 10 ? o.toFixed(1) : Math.round(o));
+    };
+    const adet = (n) => n.toLocaleString("tr-TR") + " ayet";
+
+    el("skor-oran").textContent = yuzde(skor.tam);
+    el("skor-tam-adet").textContent = adet(skor.tam);
+    el("skor-ikinci-oran").textContent = yuzde(skor.birEksik);
+    el("skor-bir-adet").textContent = adet(skor.birEksik);
+    el("skor-ucuncu-oran").textContent = yuzde(skor.ikiEksik);
+    el("skor-iki-adet").textContent = adet(skor.ikiEksik);
+
+    el("skor-gecmis").textContent =
+      `Şimdiye kadar ${skor.ayet} ayet çevirdin. Kur'an'daki`
+      + ` ${KOK_SAYISI} kelime kökünün ${skor.kok} tanesini görmüş oldun.`;
 
     const kart = await kartSkoru();
-    el("skor-kart-satir").hidden = !kart;
+    el("skor-kart").hidden = !kart;
     if (kart) {
       el("skor-kart").textContent =
-        `hata kaydı düştüğün ${kart.toplam} kökten ${kart.biliniyor} tanesinde`
-        + " son kart sonucun \u201Cbiliyordum\u201D (kendi değerlendirmen)";
+        `Hata kaydı düştüğün ${kart.toplam} kökten ${kart.biliniyor}`
+        + " tanesinde son kart sonucun \u201Cbiliyordum\u201D oldu."
+        + " Bu senin kendi değerlendirmen, ölçüm değil.";
     }
   }
   kutu.showModal();

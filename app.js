@@ -1227,6 +1227,15 @@ function mealleriDoldur(kapId, mealler) {
   });
 }
 
+/* HTML'e gömülecek metni kaçışlar. Anki dışa aktarımının hem kendisi
+   hem de babYazisi() bunu kullanıyor — üst düzeyde tek bir yerde
+   tanımlı olması gerekiyor, ikisi de aynı işlevi paylaşıyor. */
+function kacis(t) {
+  return String(t)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/\t/g, " ").replace(/\n/g, "<br>");
+}
+
 /* Anki dışa aktarımı için aynı gösterim, HTML metni olarak. */
 function babYazisi(vf) {
   return vf.split("·").map((n) => {
@@ -1414,10 +1423,6 @@ async function ankiAktar() {
     return bilgiGoster("Kart yok",
       "Kelimeye bağlı hata kaydın yok — aktarılacak bir şey bulunamadı.");
   }
-  const kacis = (t) => String(t)
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-    .replace(/\t/g, " ").replace(/\n/g, "<br>");
-
   const satirlar = ["#separator:tab", "#html:true"];
   for (const h of hatalar) {
     const veri = await sureYukle(h.sure);

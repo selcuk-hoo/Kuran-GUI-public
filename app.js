@@ -288,17 +288,24 @@ async function uyariKelimeleriBul() {
 
   const adaylar = [];
   for (const sira of siralar) {
-    const { kok } = await kelimeMorfolojisi(durum.sure, durum.ayet, sira);
-    if (!kok) continue;
-    const ayetSeti = kokAyetler.get(kok);
-    if (!ayetSeti) continue;
-    const digerleri = Array.from(ayetSeti).filter((a) => a !== buradaki);
-    if (!digerleri.length) continue;
-    adaylar.push({
-      sira, kelime: kelimeMetni(sira),
-      kokTekrar: digerleri.length,
-      digerleriYazi: ayetListesiYaz(digerleri),
-    });
+    const anahtarlar = await kelimeTekrarAnahtarlari(durum.sure, durum.ayet, sira);
+    // Kelime birden çok gruba birden girebilir (REM·ACC gibi); en güçlü
+    // sinyali (en çok tekrar edeni) veren anahtarı kullan.
+    let enIyi = null;
+    for (const anahtar of anahtarlar) {
+      const ayetSeti = kokAyetler.get(anahtar);
+      if (!ayetSeti) continue;
+      const digerleri = Array.from(ayetSeti).filter((a) => a !== buradaki);
+      if (!digerleri.length) continue;
+      if (!enIyi || digerleri.length > enIyi.kokTekrar) {
+        enIyi = {
+          sira, kelime: kelimeMetni(sira),
+          kokTekrar: digerleri.length,
+          digerleriYazi: ayetListesiYaz(digerleri),
+        };
+      }
+    }
+    if (enIyi) adaylar.push(enIyi);
   }
   adaylar.sort((a, b) => b.kokTekrar - a.kokTekrar);
   return adaylar.slice(0, 3);
@@ -577,8 +584,24 @@ async function kelimeMorfolojisi(sure, ayet, sira) {
   const a = veri.ayetler.find((x) => x.a === ayet);
   const m = a && (a.k || [])[sira - 1];
   if (!m) return {};
-  const [kok, lemma, vf] = m;
-  return { kok: kok || null, lemma: lemma || null, vf: vf || null };
+  const [kok, lemma, vf, yapi] = m;
+  return { kok: kok || null, lemma: lemma || null, vf: vf || null, yapi: yapi || null };
+}
+
+// Bir kelimenin TEKRAR TAKİBİ için kullanılacak anahtar(lar)ı. Kökü
+// varsa tek anahtar odur (eskisi gibi). Kökü yoksa (edat/zamir/bağlaç)
+// ve morfolojide dar/belirgin bir yapısal grup etiketlenmişse (bkz.
+// pwa_hazirla.py YAPISAL_GRUP_HARIC) o grup(lar) anahtar olur — bir
+// kelime birden çok gruba BİRDEN ait olabilir (ör. فَإِنَّكَ hem "REM"
+// hem "ACC"), o yüzden tek bir birleşik anahtar değil, bir DİZİ döner.
+// Hiçbiri yoksa (PRON/P/CONJ/DET/REL gibi çok yaygın yapılar) boş dizi
+// döner: bu kelime hiçbir tekrar sinyaline katılmaz — kasıtlı, bkz.
+// pwa_hazirla.py'deki gerekçe.
+async function kelimeTekrarAnahtarlari(sure, ayet, sira) {
+  const { kok, yapi } = await kelimeMorfolojisi(sure, ayet, sira);
+  if (kok) return [kok];
+  if (yapi) return yapi.split("·");
+  return [];
 }
 
 // Türkçe kelime kelime meali. Kaynak bazen birden çok Arapça kelimeyi
@@ -647,24 +670,27 @@ async function calismaMDUret(ceviriler, hatalar) {
     yaz("_Hata kaydı yok._");
   }
 
-  // Kelimenin YÜZEY biçimine değil KÖKÜNE bakılır (جَعَلَ / جَعَلْنَـٰهُ /
-  // جَعَلُوا۟ aynı köktür); aynı ayetteki birden çok kayıt tek olay
-  // sayılır; TÜM geçmişe bakılır (yalnızca bu dışa aktarıma değil) —
-  // kokAyetSayaci() zaten bunların hepsini doğru yapıyor (Adım 1/3).
+  // Kelimenin YÜZEY biçimine değil KÖKÜNE (köksüzse yapısal grubuna —
+  // bkz. kelimeTekrarAnahtarlari) bakılır (جَعَلَ / جَعَلْنَـٰهُ / جَعَلُوا۟
+  // aynı köktür, فَإِنَّكَ / وَإِنَّ aynı ailedendir); aynı ayetteki birden
+  // çok kayıt tek olay sayılır; TÜM geçmişe bakılır (yalnızca bu dışa
+  // aktarıma değil) — kokAyetSayaci() zaten bunların hepsini doğru
+  // yapıyor (Adım 1/3).
   const kokAyetler = await kokAyetSayaci();
   const kokOrnekleri = new Map();
   for (const h of gercekHatalar) {
     if (h.kelime_sira == null || !h.kelime) continue;
-    const { kok } = await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira);
-    if (!kok) continue;
-    if (!kokOrnekleri.has(kok)) kokOrnekleri.set(kok, new Set());
-    kokOrnekleri.get(kok).add(h.kelime);
+    const anahtarlar = await kelimeTekrarAnahtarlari(h.sure, h.ayet, h.kelime_sira);
+    for (const anahtar of anahtarlar) {
+      if (!kokOrnekleri.has(anahtar)) kokOrnekleri.set(anahtar, new Set());
+      kokOrnekleri.get(anahtar).add(h.kelime);
+    }
   }
   const cokTekrarlanan = Array.from(kokAyetler.entries())
     .filter(([, ayetSeti]) => ayetSeti.size > 1)
     .sort((a, b) => b[1].size - a[1].size);
   if (cokTekrarlanan.length) {
-    yaz("\n## Birden çok ayette tekrar eden kökler\n");
+    yaz("\n## Birden çok ayette tekrar eden kökler / kalıplar\n");
     cokTekrarlanan.forEach(([kok, ayetSeti]) => {
       const ornekler = kokOrnekleri.has(kok) ? Array.from(kokOrnekleri.get(kok)).join(" / ") : kok;
       yaz(`- ${ornekler} — ${ayetSeti.size} farklı ayette`);
@@ -866,7 +892,7 @@ async function kartHavuzuOlustur() {
 
   const kartlar = [];
   for (const [anahtar, g] of gruplar) {
-    const { kok } = await kelimeMorfolojisi(g.sure, g.ayet, g.kelime_sira);
+    const tekrarAnahtarlari = await kelimeTekrarAnahtarlari(g.sure, g.ayet, g.kelime_sira);
     const sonKayit = g.kayitlar[g.kayitlar.length - 1];
     kartlar.push({
       anahtar,
@@ -876,25 +902,27 @@ async function kartHavuzuOlustur() {
       hataIdler: g.kayitlar.map((h) => h.id),
       aciklamalar: g.kayitlar.map((h) => h.aciklama).filter(Boolean),
       dogruHali: sonKayit.dogru_hali || sonKayit.aciklama || "",
-      kok: kok || null,
+      tekrarAnahtarlari,
     });
   }
   return kartlar;
 }
 
-// kök başına kaç FARKLI ayette hata kaydı var — TÜM geçmişe bakar,
-// kart_disi ile filtrelenmez (bu bir zorluk sinyali, havuz üyeliği
-// değil). meal_farki hariç: o gerçek bir hata değil, "zorluk" sinyaline
-// katılmamalı.
+// kök (ya da kök'süz kelimelerde yapısal grup — bkz.
+// kelimeTekrarAnahtarlari) başına kaç FARKLI ayette hata kaydı var —
+// TÜM geçmişe bakar, kart_disi ile filtrelenmez (bu bir zorluk
+// sinyali, havuz üyeliği değil). meal_farki hariç: o gerçek bir hata
+// değil, "zorluk" sinyaline katılmamalı.
 async function kokAyetSayaci() {
   const tumHata = (await kayit.hepsi("hata"))
     .filter((h) => h.kelime_sira != null && h.kategori !== "meal_farki");
   const kokAyetler = new Map();
   for (const h of tumHata) {
-    const { kok } = await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira);
-    if (!kok) continue;
-    if (!kokAyetler.has(kok)) kokAyetler.set(kok, new Set());
-    kokAyetler.get(kok).add(`${h.sure}:${h.ayet}`);
+    const anahtarlar = await kelimeTekrarAnahtarlari(h.sure, h.ayet, h.kelime_sira);
+    for (const anahtar of anahtarlar) {
+      if (!kokAyetler.has(anahtar)) kokAyetler.set(anahtar, new Set());
+      kokAyetler.get(anahtar).add(`${h.sure}:${h.ayet}`);
+    }
   }
   return kokAyetler;
 }
@@ -907,8 +935,11 @@ async function kartAgirlikliSecim(adet, haricAnahtarlar) {
   const tumGecmis = await kayit.hepsi("kart_gecmisi");
 
   const agirlikli = havuz.map((k) => {
-    const kokTekrar = k.kok && kokAyetler.has(k.kok)
-      ? Math.max(0, kokAyetler.get(k.kok).size - 1) : 0;
+    // Birden çok anahtarı varsa (ör. REM·ACC) en güçlü sinyali kullan.
+    const kokTekrar = k.tekrarAnahtarlari.reduce((en, anahtar) => {
+      const ayetSeti = kokAyetler.get(anahtar);
+      return ayetSeti ? Math.max(en, ayetSeti.size - 1) : en;
+    }, 0);
     const ilgiliGecmis = tumGecmis
       .filter((g) => k.hataIdler.includes(g.hata_id))
       .sort((a, b) => new Date(b.tarih) - new Date(a.tarih));
@@ -1150,8 +1181,10 @@ async function skorHesapla() {
 }
 
 /* Kendi beyanına dayanan İKİNCİ sayı — ana sayıyla ASLA harmanlanmaz.
-   Hata kaydı düştüğün kökler içinde, son kart sonucu "biliyordum"
-   olanların oranı. */
+   Hata kaydı düştüğün kök/kalıplar içinde, son kart sonucu "biliyordum"
+   olanların oranı. kelimeTekrarAnahtarlari ile aynı anahtarları
+   kullanır, yoksa kasem/vurgu edatı gibi köksüz kalıplar bu sayıya
+   hiç girmezdi. */
 async function kartSkoru() {
   const hatalar = (await kayit.hepsi("hata"))
     .filter((h) => h.kelime_sira != null && h.kategori !== "meal_farki");
@@ -1161,17 +1194,19 @@ async function kartSkoru() {
   for (const g of gecmis.sort((a, b) => (a.tarih < b.tarih ? -1 : 1))) {
     sonSonuc.set(g.hata_id, g.sonuc);
   }
-  const kokDurum = new Map();          // kök -> biliyor mu
+  const durum = new Map();          // anahtar -> biliyor mu
   for (const h of hatalar) {
-    const { kok } = await kelimeMorfolojisi(h.sure, h.ayet, h.kelime_sira);
-    if (!kok) continue;
+    const anahtarlar = await kelimeTekrarAnahtarlari(h.sure, h.ayet, h.kelime_sira);
+    if (!anahtarlar.length) continue;
     const biliyor = sonSonuc.get(h.id) === "biliyordum";
-    kokDurum.set(kok, (kokDurum.get(kok) || false) || biliyor);
+    for (const anahtar of anahtarlar) {
+      durum.set(anahtar, (durum.get(anahtar) || false) || biliyor);
+    }
   }
-  if (!kokDurum.size) return null;
+  if (!durum.size) return null;
   let biliniyor = 0;
-  kokDurum.forEach((v) => { if (v) biliniyor++; });
-  return { biliniyor, toplam: kokDurum.size };
+  durum.forEach((v) => { if (v) biliniyor++; });
+  return { biliniyor, toplam: durum.size };
 }
 
 async function skorGoster() {
@@ -1201,7 +1236,7 @@ async function skorGoster() {
     el("skor-kart").hidden = !kart;
     if (kart) {
       el("skor-kart").textContent =
-        `Hata kaydı düştüğün ${kart.toplam} kökten ${kart.biliniyor}`
+        `Hata kaydı düştüğün ${kart.toplam} kök/kalıptan ${kart.biliniyor}`
         + " tanesinde son kart sonucun \u201Cbiliyordum\u201D oldu."
         + " Bu senin kendi değerlendirmen, ölçüm değil.";
     }
